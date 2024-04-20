@@ -12,6 +12,7 @@ import com.example.adhdaily.model.entity.Task
 
 @Dao
 interface SettingsDAO {
+
     @Query("SELECT * FROM Settings WHERE UserId = :userId")
     fun findSettingsByUserId(userId: Long): List<Settings>
 
