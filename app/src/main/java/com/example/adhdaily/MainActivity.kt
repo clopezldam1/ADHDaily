@@ -42,5 +42,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //Eliminar toolbar por defecto:
+        supportActionBar?.hide()
     }
 }
