@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- boton ir a la fecha seleccionada -->
+    <Button
+        android:id="@+id/btn_gotoDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:drawableRight="@drawable/baseline_arrow_forward_24"
+        android:text="@string/btn_gotoDate"
+        android:layout_gravity="end"
+        android:padding="7dp"/>
+
+</LinearLayout>

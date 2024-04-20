@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue5dark</item>
         <item name="colorSecondaryVariant">@color/blue5dark</item>
-        <item name="colorOnSecondary">@color/blue2</item>
+        <item name="colorOnSecondary">@color/blue1</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
@@ -18,6 +18,9 @@
 
         <!-- Color texto y vectores de view -->
         <item name="android:textColor">?attr/colorOnSecondary</item>
+
+        <!-- tipo de letra -->
+        <item name="android:fontFamily">monospace</item>
 
         <!-- Customize your theme here. -->
     </style>

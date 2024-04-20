@@ -19,6 +19,9 @@ interface NotificationsDAO {
     @Query("SELECT NotifId FROM Notifications ORDER BY NotifId LIMIT 1")
     fun selectFirstPK(): Long
 
+    @Query("SELECT * FROM Notifications")
+    fun selectAll(): List<Notifications>
+
     @Update
     fun update(notifications: Notifications)
 

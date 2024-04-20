@@ -15,7 +15,6 @@ import androidx.room.PrimaryKey
 data class Notifications (
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "NotifId") var NotifId: Long,
 
-    @ColumnInfo(name = "Active") var Active: Boolean,
     @ColumnInfo(name = "ShowListOnNotifBar") var ShowListOnNotifBar: Boolean,
     @ColumnInfo(name = "PendingTasksOnNotifBar") var PendingTasksOnNotifBar: Boolean,
     @ColumnInfo(name = "RemindersPush") var RemindersPush: Boolean,

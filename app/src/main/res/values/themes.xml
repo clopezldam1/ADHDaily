@@ -19,6 +19,10 @@
         <!-- Color texto y vectores de view -->
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
 
+        <!-- tipo de letra -->
+        <item name="android:fontFamily">monospace</item>
+
+
         <!-- Customize your theme here. -->
     </style>
 </resources>

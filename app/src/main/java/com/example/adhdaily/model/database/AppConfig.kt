@@ -22,7 +22,6 @@ class AppConfig {
 
         val defaultNotifications = Notifications(
             NotifId = notificationsDao.selectFirstPK(),
-            Active = true,
             UserId_FK = settingsDao.selectFirstPK(),
             ShowListOnNotifBar = true,
             PendingTasksOnNotifBar = true,

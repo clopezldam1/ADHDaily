@@ -19,6 +19,9 @@ interface SettingsDAO {
     @Query("SELECT UserId FROM Settings ORDER BY UserId LIMIT 1")
     fun selectFirstPK(): Long
 
+    @Query("SELECT * FROM Settings")
+    fun selectAll(): List<Settings>
+
     @Update
     fun update(settings: Settings)
 
