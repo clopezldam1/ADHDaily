@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
-import com.example.adhdaily.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.ActivityAppSettingsBinding
-import com.example.adhdaily.databinding.ActivityMainBinding
 
 class AppSettingsActivity : AppCompatActivity() {
 

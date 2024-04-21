@@ -1,10 +1,9 @@
-package com.example.adhdaily
+package com.example.adhdaily.ui.activities
 
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.navigation.NavController
@@ -12,9 +11,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
-import com.example.adhdaily.ui.activities.AppSettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Date
 import java.util.Locale
