@@ -1,11 +1,10 @@
 package com.example.adhdaily
 
-import android.app.Dialog
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.Button
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.navigation.NavController
@@ -13,9 +12,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
 import com.example.adhdaily.ui.activities.AppSettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Date
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,14 +25,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    //Toolbar
     private lateinit var btnSelectDate: ImageButton
     private lateinit var btnGotoSettings: ImageButton
+
+    //select date dialog
+    val dateFormat = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
+    val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault()) //Locale.getDefault gets the timezone
+    lateinit var selectedDate: Date
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Al abrir la aplicación, obtenemos la fecha actual
+        selectedDate = Date() //EJEMPLO: Sun Apr 21 11:25:13 GMT+02:00 2024
+        //Log.i("FechaAct", "onCreate: MAINACTIVITY SELECTED DATE: " + selectedDate.toString())
 
         //readAppConfigData()
 
@@ -61,37 +73,16 @@ class MainActivity : AppCompatActivity() {
         btnGotoSettings.setOnClickListener {
             gotoAjustes()
         }
+
+
     }
 
     /***
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella
      */
     private fun openSelectDateDialog(){
-        //inflar y crear el dialog
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.dialog_select_date, null)
-        val dialog = Dialog(this)
-        dialog.setContentView(dialogView)
-
-        //HACER LÓGICA DEL DIALOG:
-        //botón de ir a la fecha (cierra dialogo y redirige)
-        dialogView.findViewById<Button>(R.id.btn_gotoDate).setOnClickListener {
-
-            Toast.makeText(this.applicationContext, "gotoDate", Toast.LENGTH_SHORT).show()
-
-            //cerrar el dialog
-            dialog.dismiss()
-        }
-
-        //mostrar el diálogo
-        dialog.show()
-    }
-
-    /**
-     * Método plantilla para crear un dialog (? aún no sé si esto se puede modularizar
-     */
-    public fun openDialog(){
-
+        val dialogFragment = SelectDateDialog(this)
+        dialogFragment.show()
     }
 
     /**
@@ -101,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, AppSettingsActivity::class.java)
         Toast.makeText(this.applicationContext, "switched to ajustes", Toast.LENGTH_SHORT).show()
         startActivity(intent)
+
         //Cambiar transicion a la activity de forma personalizada
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }

@@ -1,7 +1,10 @@
 <resources>
-
     <style name="Widget.Theme.ADHDaily.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
+    </style>
 
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
     </style>
 </resources>
