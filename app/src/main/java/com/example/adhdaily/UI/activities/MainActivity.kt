@@ -1,9 +1,6 @@
 package com.example.adhdaily.UI.activities
 
-import android.annotation.SuppressLint
-import android.app.ActivityManager.TaskDescription
 import android.app.NotificationChannel
-import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
