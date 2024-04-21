@@ -1,15 +1,21 @@
-package com.example.adhdaily.ui.fragments.calendarView
+package com.example.adhdaily.UI.fragments.newTask
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.adhdaily.databinding.FragmentCalendarViewBinding
+import com.example.adhdaily.databinding.FragmentNewTaskBinding
 
-class CalendarViewFragment : Fragment() {
 
-    private var _binding: FragmentCalendarViewBinding? = null
+/**
+ * A simple [Fragment] subclass.
+ * Use the [NewTaskFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class NewTaskFragment : Fragment() {
+
+    private var _binding: FragmentNewTaskBinding? = null
 
     //COMPONENTES DEL FRAGMENT:
 
@@ -20,8 +26,11 @@ class CalendarViewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         //INFLAR VISTA:
-        _binding = FragmentCalendarViewBinding.inflate(inflater, container, false)
+        _binding = FragmentNewTaskBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+        //TODO: deshabilitar el selectDate del toolbar cuando se crea este fragment
 
         //INICIALIZAR COMPONENTES DE LA VISTA:
 
@@ -37,7 +46,8 @@ class CalendarViewFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
+        //TODO: volver a habilitar el selectDate del toolbar cuando se crea este fragment
 
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.example.adhdaily.ui.fragments.dayView
+package com.example.adhdaily.UI.fragments.dayView
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.adhdaily.ui.activities
+package com.example.adhdaily.UI.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

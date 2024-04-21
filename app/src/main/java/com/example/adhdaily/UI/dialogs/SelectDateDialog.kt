@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
-import com.example.adhdaily.ui.activities.MainActivity
+import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.DialogSelectDateBinding
 

@@ -1,4 +1,4 @@
-package com.example.adhdaily.ui.dashboard
+package com.example.adhdaily.UI.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater

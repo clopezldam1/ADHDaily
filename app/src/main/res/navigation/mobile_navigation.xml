@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.adhdaily.ui.home.HomeFragment"
+        android:name="com.example.adhdaily.UI.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.adhdaily.ui.dashboard.DashboardFragment"
+        android:name="com.example.adhdaily.UI.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.adhdaily.ui.notifications.NotificationsFragment"
+        android:name="com.example.adhdaily.UI.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
@@ -27,21 +27,21 @@
     <!-- Month view (also could be year or week tho) -->
     <fragment
         android:id="@+id/navigation_calendarView"
-        android:name="com.example.adhdaily.ui.fragments.calendarView.CalendarViewFragment"
+        android:name="com.example.adhdaily.UI.fragments.calendarView.CalendarViewFragment"
         android:label="@string/title_calendarView"
         tools:layout="@layout/fragment_calendar_view" />
 
     <!-- Day view (list of tasks) -->
     <fragment
         android:id="@+id/navigation_dayView"
-        android:name="com.example.adhdaily.ui.fragments.dayView.DayViewFragment"
+        android:name="com.example.adhdaily.UI.fragments.dayView.DayViewFragment"
         android:label="@string/title_dayView"
         tools:layout="@layout/fragment_day_view" />
 
     <!-- Add task (new task form)-->
     <fragment
         android:id="@+id/navigation_newTaskView"
-        android:name="com.example.adhdaily.ui.fragments.newTask.NewTaskFragment"
+        android:name="com.example.adhdaily.UI.fragments.newTask.NewTaskFragment"
         android:label="@string/title_newTask"
         tools:layout="@layout/fragment_new_task" />
 </navigation>

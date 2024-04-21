@@ -1,4 +1,4 @@
-package com.example.adhdaily.ui.notifications
+package com.example.adhdaily.UI.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
