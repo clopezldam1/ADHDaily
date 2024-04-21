@@ -10,4 +10,7 @@
     <string name="btn_gotoDate">Ir a la fecha</string>
     <string name="txt_settingsTitle">Ajustes</string>
     <string name="lbl_selectDate">Fecha:</string>
+    <string name="title_calendarView">General</string>
+    <string name="title_dayView">Lista diaria</string>
+    <string name="title_newTask">Añadir tarea</string>
 </resources>
