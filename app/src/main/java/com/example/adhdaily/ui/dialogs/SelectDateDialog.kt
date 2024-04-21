@@ -54,6 +54,7 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
 
         val datePickerDialog = DatePickerDialog(
             context,
+            R.style.CustomDatePickerDialogTheme,
             DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)

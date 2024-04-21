@@ -22,6 +22,9 @@
         <!-- tipo de letra -->
         <item name="android:fontFamily">monospace</item>
 
+        <!-- tipo de letra -->
+        <item name="android:datePickerStyle">@drawable/rounded_corner</item>
+
 
         <!-- Customize your theme here. -->
     </style>

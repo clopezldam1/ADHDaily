@@ -1,10 +1,15 @@
 <resources>
-    <style name="Widget.Theme.ADHDaily.MyView" parent="">
-        <item name="android:background">@color/gray_400</item>
-    </style>
-
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
+    </style>
+
+    <style name="CustomDatePickerDialogTheme" parent="Theme.AppCompat.Dialog.MinWidth">
+        <item name="android:windowBackground">?attr/colorSecondaryVariant</item>
+        <item name="android:backgroundTint">?attr/colorSecondaryVariant</item>
+        <item name="android:textColorPrimary">?attr/colorOnSecondary</item>
+        <item name="colorAccent">?attr/colorSecondary</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:datePickerDialogTheme">@style/Theme.ADHDaily</item>
     </style>
 </resources>

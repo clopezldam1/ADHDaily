@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnSelectDate: ImageButton
     private lateinit var btnGotoSettings: ImageButton
 
-    //select date dialog
+    //Current date
     val dateFormat = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
     val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault()) //Locale.getDefault gets the timezone
     lateinit var selectedDate: Date
