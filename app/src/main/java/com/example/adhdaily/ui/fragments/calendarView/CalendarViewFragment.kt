@@ -5,27 +5,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.adhdaily.R
+import com.example.adhdaily.databinding.FragmentCalendarViewBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarViewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CalendarViewFragment : Fragment() {
 
+    private var _binding: FragmentCalendarViewBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    //COMPONENTES DEL FRAGMENT:
 
+
+    // This property is only valid between onCreateView and onDestroyView
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        //INFLAR VISTA:
+        _binding = FragmentCalendarViewBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        //INICIALIZAR COMPONENTES DE LA VISTA:
+
+
+        return root
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar_view, container, false)
+    //Método para cuando se ha creado la vista, poner aquí spinners de carga
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
