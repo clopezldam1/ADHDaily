@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                R.id.navigation_calendarView,
+                R.id.navigation_newTaskView,
+                R.id.navigation_dayView
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     /***
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella
      */
-     fun openSelectDateDialog(){
+    fun openSelectDateDialog(){
         val dialogFragment = SelectDateDialog(this)
         dialogFragment.show()
     }

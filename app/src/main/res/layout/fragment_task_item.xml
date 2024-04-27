@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/taskItemContainerListDayView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UI.fragments.TaskItemFragment">
+    android:layout_height="wrap_content"
+    tools:context=".UI.fragments.taskItem.TaskItemFragment"
+    android:layout_margin="15dp"
+    app:cardCornerRadius="10dp"
+    app:contentPadding="10dp"
+    android:background="@drawable/click_ripple_effect_textview_nobg"
+    android:backgroundTint="@color/transparent"
+    android:outlineSpotShadowColor="@color/transparent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="horizontal"
+        android:weightSum="7">
 
-</FrameLayout>
+        <CheckBox
+            android:id="@+id/checkbox_completeTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/txt_timeStartTask"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="[3pm]"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_weight="1.5"
+            android:inputType="text"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txt_titleTask"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:gravity="center|start"
+            android:text="Feed the cat and eat a lot of fruit and"
+            android:textSize="16dp"
+            android:paddingHorizontal="5dp"
+            android:inputType="text"
+            android:maxLength="30"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

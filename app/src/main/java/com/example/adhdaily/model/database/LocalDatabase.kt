@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.adhdaily.model.DAO.NotificationsDAO
 import com.example.adhdaily.model.DAO.ReminderDAO
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 
 @Database(entities = [Task::class, Settings::class, Reminder::class, Notifications::class],
         version = 2)
+
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDAO
     abstract fun settingsDao(): SettingsDAO
@@ -59,7 +61,7 @@ abstract class LocalDatabase : RoomDatabase() {
                                 }
                             }
                         })
-                           */
+                        */
                         .build()
 
                     INSTANCE = instance

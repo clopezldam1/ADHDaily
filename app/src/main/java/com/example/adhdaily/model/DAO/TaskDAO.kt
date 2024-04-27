@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.adhdaily.adapters.TaskAdapter
 import com.example.adhdaily.model.entity.Task
 
 
@@ -28,7 +29,11 @@ interface TaskDAO {
     fun update(task: Task)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(task: Task)
+    fun insert(task: Task){
+        val taskAdapter = TaskAdapter()
+        taskAdapter.insert(task);
+    }
+    //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
 
     @Insert
     fun insertAll(tasks: Task)

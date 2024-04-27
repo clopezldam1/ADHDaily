@@ -1,4 +1,4 @@
-package com.example.adhdaily.UI.fragments
+package com.example.adhdaily.UI.fragments.taskItem
 
 import android.os.Bundle
 import android.view.LayoutInflater
