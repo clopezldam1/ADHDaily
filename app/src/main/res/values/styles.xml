@@ -22,7 +22,7 @@
     </style>
 
     <style name="rippleEffectTextViewNoBg" parent="Widget.AppCompat.TextView">
-        <item name="android:background">@drawable/click_ripple_effect_textview</item>
+        <item name="android:background">@drawable/click_ripple_effect_textview_nobg</item>
     </style>
 
 </resources>
