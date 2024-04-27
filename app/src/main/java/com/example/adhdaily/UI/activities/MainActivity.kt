@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     /***
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella
      */
-    private fun openSelectDateDialog(){
+     fun openSelectDateDialog(){
         val dialogFragment = SelectDateDialog(this)
         dialogFragment.show()
     }

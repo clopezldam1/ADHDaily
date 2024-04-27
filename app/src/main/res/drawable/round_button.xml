@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <selector xmlns:android="http://schemas.android.com/apk/res/android">
-        <!-- Estado cuando el botón está presionado -->
-        <item android:state_pressed="true" android:color="?attr/colorPrimary" />
-
-        <!-- Estado cuando el botón está enfocado -->
-        <item android:state_focused="true" android:color="?attr/colorPrimary" />
-
-        <!-- Estado predeterminado -->
-        <item android:color="?attr/colorSecondary" />
-    </selector>
 </shape>
 
 

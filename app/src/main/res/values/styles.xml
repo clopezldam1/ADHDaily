@@ -12,4 +12,17 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:datePickerDialogTheme">@style/Theme.ADHDaily</item>
     </style>
+
+    <style name="rippleEffectImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/click_ripple_effect_imagebutton</item>
+    </style>
+
+    <style name="rippleEffectButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/click_ripple_effect_imagebutton</item>
+    </style>
+
+    <style name="rippleEffectTextViewNoBg" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/click_ripple_effect_textview</item>
+    </style>
+
 </resources>

@@ -28,7 +28,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="?attr/colorSecondary"
-            android:src="@drawable/round_arrow_back_ios_24"
+            android:src="@drawable/baseline_round_arrow_back_ios_24"
             tools:ignore="SpeakableTextPresentCheck"
             android:background="@drawable/round_button"/>
 

@@ -55,7 +55,7 @@ class CalendarViewFragment : Fragment() {
         return root
     }
 
-    //TODO: el paso de un mes a otro con las flechas de arriba lo hace mal
+    //TODO:  fix gotoPreviousMonth (el paso de un mes a otro con las flechas de arriba lo hace mal)
     private fun gotoNextMonth() {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.MONTH, 1) // Avanzar al mes siguiente
@@ -64,7 +64,7 @@ class CalendarViewFragment : Fragment() {
         calendarView.date = nextMonth // Actualizar el CalendarView al mes siguiente
     }
 
-    //TODO: el paso de un mes a otro con las flechas de arriba lo hace mal
+    //TODO: fix gotoPreviousMonth (el paso de un mes a otro con las flechas de arriba lo hace mal)
     private fun gotoPreviousMonth() {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.MONTH, -1) // Retroceder un mes

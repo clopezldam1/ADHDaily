@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Color when pressed is colorPrimary-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?attr/colorPrimary">
+
+    <!-- default color is colorSecondary -->
+    <item
+        android:id="@+id/mask"
+        android:drawable="?attr/colorSecondary"/>
+
+</ripple>

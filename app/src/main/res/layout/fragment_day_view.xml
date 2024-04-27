@@ -1,14 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/day_list_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.fragments.dayView.DayViewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Contenedor header, month name + pagination buttons -->
+    <LinearLayout
+        android:id="@+id/day_view_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/dayViewListContainer"
+        app:layout_constraintTop_toTopOf="@id/day_list_holder"
+        android:weightSum="4"
+        android:layout_marginVertical="10dp">
 
-</FrameLayout>
+        <!-- gotoPreviousMonth -->
+        <ImageButton
+            android:id="@+id/imgbtn_gotoPreviousDay"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/round_button"
+            android:backgroundTint="?attr/colorSecondary"
+            android:src="@drawable/baseline_round_arrow_back_ios_24"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
+
+        <!-- date text container -->
+        <LinearLayout
+            android:id="@+id/containerDateHeaderDayView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+            <!-- date text -->
+            <TextView
+                android:id="@+id/txt_dateHeaderDayView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="30 jan, tuesday"
+                android:gravity="center"
+                android:textSize="18dp"
+                style="@style/rippleEffectTextViewNoBg"/>
+
+        </LinearLayout>
+
+        <!-- gotoNextMonth -->
+        <ImageButton
+            android:id="@+id/imgbtn_gotoNextDay"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="?attr/colorSecondary"
+            android:src="@drawable/baseline_arrow_forward_ios_24"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </LinearLayout>
+
+    <!-- Contenedor del mes casilla por casilla -->
+    <LinearLayout
+        android:id="@+id/dayViewListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/day_view_header"
+        app:layout_constraintBottom_toBottomOf="@id/day_list_holder">
+
+        <!-- Contenedor scrolleable lista de tareas -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerTaskListDayView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
