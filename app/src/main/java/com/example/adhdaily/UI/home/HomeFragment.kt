@@ -43,11 +43,12 @@ class HomeFragment : Fragment() {
 
         btn = root.findViewById(R.id.btn)
         btn.setOnClickListener {
-            insertTask();
+            //insertTask();
         }
         return root
     }
 
+    /*
     private fun insertTask() {
 
         println("GUARDANDO")
@@ -61,6 +62,7 @@ class HomeFragment : Fragment() {
         }
 
     }
+     */
 
     override fun onDestroyView() {
         super.onDestroyView()

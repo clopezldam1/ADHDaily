@@ -1,7 +1,6 @@
 package com.example.adhdaily.UI.fragments.dayView
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
-
+import com.example.adhdaily.UI.recyclers.TaskListDayRecycler
 import com.example.adhdaily.databinding.FragmentDayViewBinding
+import com.example.adhdaily.model.database.LocalDatabase
+import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 
 class DayViewFragment : Fragment() {
@@ -110,26 +117,22 @@ class DayViewFragment : Fragment() {
     /**
      * Método que realiza la carga del RecyclerView (en un hilo a parte)
      */
+
     fun loadRecyclerDayView() {
-        //Todo: loadRecyclerDayView()
+        //Todo: loadRecyclerDayView(): que te pille los de la fecha actual
+//        val fechaHoraActual = LocalDateTime()
+//        val formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+//        val curdate = formato
+//
+//        Log.i("fecha", "loadRecyclerDayView: date(): " + curdate)  //.toGMTString()) //MainActivity().today.toGMTString() = 28 Apr 2024 13:31:14 GMT
         lifecycleScope.launch(Dispatchers.IO) {
-            /*
-            val cursosDAO = CursoDAO()
-            val listaDeCursos = cursosDAO.obtenerCursosConFiltros(edbuscador.text.toString(), spinnerFiltros.selectedItem.toString(), spinnerOrdenar.selectedItem.toString())
+            var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
+            recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
-            Log.i("BuscarFragment", "Cantidad de cursos: ${listaDeCursos.size}")
-
-            withContext(Dispatchers.Main) {
-                val adaptador = RecyclerBuscar(listaDeCursos,requireActivity() as RecyclerBuscar.OnItemClickListener, requireActivity() as RecyclerBuscar.OnItemCheckedChangeListener,(activity as MainActivity).username)
-
-                recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                recyclerView.adapter = adaptador
-
-                progressBar.visibility = View.GONE
-                contentLayout.visibility = View.VISIBLE
-
+            GlobalScope.launch(Dispatchers.IO) {
+                val tasks: List<Task> = localDatabase.taskDao().selectAllTasks()
+                recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
             }
-             */
         }
     }
 

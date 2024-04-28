@@ -4,7 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class Converters {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -26,6 +27,18 @@ class Converters {
     @TypeConverter
     fun dateToTimestampLong(date: Date?): Long? {
         return date?.time?.toLong()
+    }
+
+    @TypeConverter
+    fun fromLongToCalendar(l: Long?): Calendar? {
+        val c = Calendar.getInstance()
+        c.timeInMillis = l!!
+        return c
+    }
+
+    @TypeConverter
+    fun fromCalendarToLong(c: Calendar?): Long? {
+        return c?.time?.time
     }
 
 }

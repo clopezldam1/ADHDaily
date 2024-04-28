@@ -13,17 +13,18 @@ import java.sql.Date
 
 @Dao
 interface TaskDAO {
+
     @Query("SELECT * FROM Task;")
     fun selectAllTasks(): List<Task>
 
     @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
-    fun selectLastTaskId(): List<Long>
+    fun selectLastTaskId(): Long
 
 
     //Cuando le pasas una fecha, te devuelve todas las tasks evistentes que pasan por esa fecha
-    @Query("SELECT * FROM Task WHERE :fecha BETWEEN StartDate AND EndDate;")
+    @Query("SELECT * FROM Task WHERE DATE(:fecha) BETWEEN DATE(StartDate) AND DATE(EndDate);")
     fun selectActiveTasksOnDate(fecha: String): List<Task>
-
+    //SELECT * FROM Task WHERE DATE(startDate) BETWEEN DATE('2022-04-01') AND DATE('2022-05-01')
 
     @Query("SELECT * FROM Task WHERE Title LIKE :titulo;")
     fun selectTaskByTitle(titulo: String): List<Task>
@@ -33,7 +34,7 @@ interface TaskDAO {
     fun update(task: Task)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)  //SI PONES ESTO, CUANDO LOS ID COINCIDAN NO PASA AL SIGUIENTE, LO SOBRESCRIBE
-    fun insert(task: Task)
+    fun insert(task: Task): Long
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
 
     @Insert(onConflict = OnConflictStrategy.ABORT)

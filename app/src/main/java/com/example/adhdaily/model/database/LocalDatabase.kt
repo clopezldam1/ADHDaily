@@ -19,7 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [Task::class, Settings::class, Reminder::class, Notifications::class],
-        version = 2)
+        version = 3)
 //@TypeConverters(TypeConverters::class)
 
 abstract class LocalDatabase : RoomDatabase() {

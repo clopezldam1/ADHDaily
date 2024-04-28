@@ -18,6 +18,9 @@
         <!-- Status bar color -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">?attr/colorSecondaryVariant</item>
+
         <!-- View bg color -->
         <item name="android:windowBackground">?attr/colorSecondaryVariant</item>
 

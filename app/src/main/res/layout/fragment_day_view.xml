@@ -6,7 +6,10 @@
     android:id="@+id/day_list_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.fragments.dayView.DayViewFragment">
+    tools:context=".UI.fragments.dayView.DayViewFragment"
+    android:background="@drawable/list_bg"
+    android:backgroundTint="?attr/colorSecondaryVariant"
+    android:backgroundTintMode="multiply">
 
     <!-- Contenedor header, month name + pagination buttons -->
     <LinearLayout
@@ -78,7 +81,8 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/day_view_header"
-        app:layout_constraintBottom_toBottomOf="@id/day_list_holder">
+        app:layout_constraintBottom_toBottomOf="@id/day_list_holder"
+      >
 
         <!-- Contenedor scrolleable recyclerView -->
         <ScrollView

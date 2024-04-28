@@ -10,6 +10,7 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -38,19 +39,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnGotoSettings: ImageButton
 
     //Current date
-    val dateFormat = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
+    var dateFormat = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
     val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault()) //Locale.getDefault gets the timezone
-    lateinit var selectedDate: Date
+    val today = Date() //ej. Sun Apr 28 15:00:23 GMT+02:00 2024
+    var selectedDate: Date = today //por defecto, al abrir la app está seleccionada la fecha de hoy
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //Al abrir la aplicación, obtenemos la fecha actual
-        selectedDate = Date() //EJEMPLO: Sun Apr 21 11:25:13 GMT+02:00 2024
-        //Log.i("FechaAct", "onCreate: MAINACTIVITY SELECTED DATE: " + selectedDate.toString())
 
         //readAppConfigData()
 

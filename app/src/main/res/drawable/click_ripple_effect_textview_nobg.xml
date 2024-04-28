@@ -4,9 +4,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?attr/colorSecondary">
 
-    <!-- default color is colorSecondaryVariant-->
-    <item
-        android:id="@+id/mask"
-        android:drawable="?attr/colorSecondaryVariant"/>
+
 
 </ripple>

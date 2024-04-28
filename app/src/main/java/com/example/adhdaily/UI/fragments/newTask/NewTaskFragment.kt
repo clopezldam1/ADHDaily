@@ -7,12 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.databinding.FragmentNewTaskBinding
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.sql.Date
+import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.util.Locale
 
 
 class NewTaskFragment : Fragment() {
@@ -69,25 +76,25 @@ class NewTaskFragment : Fragment() {
         //var task = Task(0, etNombre.text.toString(), etEdad.text.toString().toInt(), "1233123123")
 
         GlobalScope.launch(Dispatchers.IO) {
-            Log.i("AAAAAA", "esto no va ")
             val queryResult = localDB.taskDao().selectAllTasks()
             Log.i("AAAAA", "selectTasks: " + queryResult)
         }
 
+        Log.i("FechaAct", "onCreate: MAINACTIVITY SELECTED DATE: " + MainActivity().selectedDate)
     }
 
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
     private fun addTrialTask() {
         val localDB = LocalDatabase.getInstance(this.requireContext())
-        //val newtTaskID: String = (localDB.taskDao().selectLastTaskId()[0]).toString()//consultar last ID +1
-        //Log.i("PATATAAAA", "addTrialTask: TASKID NEW" + newtTaskID)
-        val task = Task(7, "Tarea3", "DESC 2", "1233123123", "1233123123", false)
 
-        Log.i("PATATA", "addTrialTask:  1 ")
+        //Abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
-            Log.i("PATATA", "addTrialTask:  2 ")
+            Log.i("PATATAAAA", "addTrialTask:  LocalDateTime.now()" +  Locale.getDefault())
+
+            val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
+            val task = Task(newtTaskID, "Tarea3", "DESC 2", "2022-04-22", "10:34","2022-04-22" ,"10:34", false)
+
             localDB.taskDao().insert(task)
-            Log.i("PATATA", "addTrialTask:  3 ")
         }
     }
 
