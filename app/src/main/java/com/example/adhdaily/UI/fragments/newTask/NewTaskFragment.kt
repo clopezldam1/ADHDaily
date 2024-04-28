@@ -78,8 +78,10 @@ class NewTaskFragment : Fragment() {
 
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
     private fun addTrialTask() {
-        var localDB = LocalDatabase.getInstance(this.requireContext())
-        var task = Task(6, "Tarea2", "DESC 2", "1233123123", "1233123123", false)
+        val localDB = LocalDatabase.getInstance(this.requireContext())
+        //val newtTaskID: String = (localDB.taskDao().selectLastTaskId()[0]).toString()//consultar last ID +1
+        //Log.i("PATATAAAA", "addTrialTask: TASKID NEW" + newtTaskID)
+        val task = Task(7, "Tarea3", "DESC 2", "1233123123", "1233123123", false)
 
         Log.i("PATATA", "addTrialTask:  1 ")
         GlobalScope.launch(Dispatchers.IO) {

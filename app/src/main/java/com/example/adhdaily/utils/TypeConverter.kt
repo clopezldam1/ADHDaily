@@ -9,12 +9,23 @@ import java.util.*
 class Converters {
     @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDateTime? {
+    fun fromLocalDateTimeToDate(value: String?): LocalDateTime? {
         return value?.let { LocalDateTime.parse(it) }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDateTime?): String? {
+    fun dateToLocalDateTime(date: LocalDateTime?): String? {
         return date?.toString()
     }
+
+    @TypeConverter
+    fun fromTimestampLongToDate(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestampLong(date: Date?): Long? {
+        return date?.time?.toLong()
+    }
+
 }

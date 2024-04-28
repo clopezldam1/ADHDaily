@@ -8,32 +8,36 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.adhdaily.adapters.TaskAdapter
 import com.example.adhdaily.model.entity.Task
+import java.sql.Date
 
 
 @Dao
 interface TaskDAO {
-    @Query("SELECT * FROM Task")
+    @Query("SELECT * FROM Task;")
     fun selectAllTasks(): List<Task>
 
-    /*
+    @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
+    fun selectLastTaskId(): List<Long>
+
+
     //Cuando le pasas una fecha, te devuelve todas las tasks evistentes que pasan por esa fecha
-    @Query("SELECT * FROM Task WHERE :fecha BETWEEN StartDate AND EndDate")
+    @Query("SELECT * FROM Task WHERE :fecha BETWEEN StartDate AND EndDate;")
     fun selectActiveTasksOnDate(fecha: String): List<Task>
 
 
-    @Query("SELECT * FROM Task WHERE Title LIKE :titulo")
+    @Query("SELECT * FROM Task WHERE Title LIKE :titulo;")
     fun selectTaskByTitle(titulo: String): List<Task>
-     */
+
 
     @Update
     fun update(task: Task)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)  //SI PONES ESTO, CUANDO LOS ID COINCIDAN NO PASA AL SIGUIENTE, LO SOBRESCRIBE
     fun insert(task: Task)
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
 
-    @Insert
-    fun insertAll(tasks: Task)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertAll(tasks: List<Task>)
 
     @Delete
     fun delete(task: Task)

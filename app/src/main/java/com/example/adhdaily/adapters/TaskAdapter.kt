@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TaskAdapter: TaskDAO {
+class TaskAdapter {
     fun selectAllTasks(context: Context): List<Task> {
         var queryResult: List<Task>? = null
         var localDB = LocalDatabase.getInstance(context)
@@ -24,25 +24,25 @@ class TaskAdapter: TaskDAO {
         return localDB.taskDao().selectAllTasks()
     }
 
-    override fun selectAllTasks(): List<Task> {
+     fun selectAllTasks(): List<Task> {
         TODO("Not yet implemented")
     }
 
-    override fun update(task: Task) {
+     fun update(task: Task) {
         TODO("Not yet implemented")
     }
 
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
-    override fun insert(task: Task) {
+     fun insert(task: Task) {
         val title = task.Title
         val desc = task.Desc
     }
 
-    override fun insertAll(tasks: Task) {
+    fun insertAll(tasks: Task) {
         TODO("Not yet implemented")
     }
 
-    override fun delete(task: Task) {
+     fun delete(task: Task) {
         TODO("Not yet implemented")
     }
 

@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 
 @Database(entities = [Task::class, Settings::class, Reminder::class, Notifications::class],
         version = 2)
+//@TypeConverters(TypeConverters::class)
 
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDAO
@@ -43,7 +44,7 @@ abstract class LocalDatabase : RoomDatabase() {
                         LocalDatabase::class.java,
                         DB_ADHDAILY)
                         .fallbackToDestructiveMigration() //en vez de hacer migracion, destruyes lo anterior
-
+                        //.addTypeConverter(TypeConverters())
                         /*
                         // Insertar datos por defecto al crear la base de datos
                         .addCallback(object : RoomDatabase.Callback() {
