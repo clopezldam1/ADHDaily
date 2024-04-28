@@ -29,13 +29,13 @@
         android:id="@+id/txt_timeStartTask"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1.75"
+        android:gravity="center"
+        android:inputType="text"
         android:text="[03:00am]"
         android:textAlignment="center"
-        android:gravity="center"
         android:textSize="14dp"
-        android:layout_weight="1.75"
-        android:inputType="text"
-        />
+        tools:ignore="TextSizeCheck" />
     <!--TODO: android:visibility="gone" -->
 
     <TextView
