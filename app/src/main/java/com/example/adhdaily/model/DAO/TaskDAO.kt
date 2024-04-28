@@ -29,10 +29,7 @@ interface TaskDAO {
     fun update(task: Task)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(task: Task){
-        val taskAdapter = TaskAdapter()
-        taskAdapter.insert(task);
-    }
+    fun insert(task: Task)
     //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
 
     @Insert
