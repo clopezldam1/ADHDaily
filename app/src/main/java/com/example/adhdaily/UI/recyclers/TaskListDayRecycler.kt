@@ -70,6 +70,10 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
                 txtTimeStart.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
                 taskItemContainerListDayView.alpha = 0.4f //le bajamos la opacidad al 40% al contenedor entero
             }
+
+
+
+
         }
     }
 

@@ -24,6 +24,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
+import com.example.adhdaily.model.database.LocalDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Date
 import java.util.Locale

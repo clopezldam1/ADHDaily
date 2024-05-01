@@ -2,9 +2,6 @@ package com.example.adhdaily.utils
 
 import android.content.Context
 import android.content.res.Configuration
-import com.example.adhdaily.model.database.LocalDatabase
-import com.example.adhdaily.model.entity.Notifications
-import com.example.adhdaily.model.entity.Settings
 import java.util.Locale
 
 /***

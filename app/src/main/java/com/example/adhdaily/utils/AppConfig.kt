@@ -1,15 +1,17 @@
-package com.example.adhdaily.model.database
+package com.example.adhdaily.utils
 
 import android.content.Context
-import com.example.adhdaily.model.entity.Notifications
+import com.example.adhdaily.model.entity.NotificationSettings
 import com.example.adhdaily.model.entity.Settings
 import com.example.adhdaily.utils.DeviceSettings
 
 class AppConfig {
+    /*
     fun setDefaultSettings(context: Context): Settings {
         var deviceSettings= DeviceSettings();
+
         val localDatabase = LocalDatabase.getInstance(context)
-        val notificationsDao = localDatabase.notificationsDao()
+        val notificationsDao = localDatabase.notificationSettingsDao()
         val settingsDao = localDatabase.settingsDao()
 
         val defaultSettings = Settings(
@@ -17,12 +19,12 @@ class AppConfig {
             Idioma = deviceSettings.getDeviceLanguage(context),
             PushNotifsActive = true,
             NotifBarActiive = true,
-            UserId = settingsDao.selectFirstPK()
+            UserId = settingsDao.selectLastPK()
         )
 
-        val defaultNotifications = Notifications(
-            NotifId = notificationsDao.selectFirstPK(),
-            UserId_FK = settingsDao.selectFirstPK(),
+        val defaultNotificationSettings = NotificationSettings(
+            NotifId = notificationsDao.selectLastPK(),
+            UserId_FK = settingsDao.selectLastPK(),
             ShowListOnNotifBar = true,
             PendingTasksOnNotifBar = true,
             RemindersPush = true,
@@ -30,7 +32,9 @@ class AppConfig {
         )
 
         settingsDao.update(defaultSettings)
-        notificationsDao.update(defaultNotifications)
+        notificationsDao.update(defaultNotificationSettings)
+
         return defaultSettings
     }
+     */
 }

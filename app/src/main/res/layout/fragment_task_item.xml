@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/taskItemContainerListDayView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:orientation="horizontal"
     android:weightSum="7"
     tools:context=".UI.fragments.taskItem.TaskItemFragment"
@@ -14,7 +14,7 @@
     app:cardCornerRadius="10dp"
     app:contentPadding="10dp"
     style="@style/rippleEffectTextViewNoBg"
-    android:background="@drawable/click_ripple_effect_textview_nobg"
+    android:background="@drawable/task_color_tag_blue"
     android:backgroundTint="@color/transparent"
     android:alpha="1">
 

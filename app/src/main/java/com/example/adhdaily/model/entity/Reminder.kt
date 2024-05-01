@@ -15,7 +15,9 @@ import java.time.LocalDateTime
 
 data class Reminder (
     @PrimaryKey(autoGenerate = true) var ReminderId: Long,
-    @ColumnInfo(name = "TaskId_FK") var TaskId_FK: Long,
-    @ColumnInfo(name = "Text") var Text: String?,
-    @ColumnInfo(name = "DateTime") var DateTime: String
-    )
+
+    @ColumnInfo(name = "Title") var Text: String?,
+    @ColumnInfo(name = "DateTime") var DateTime: String,
+
+    @ColumnInfo(name = "TaskId_FK") var TaskId_FK: Long
+)

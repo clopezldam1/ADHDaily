@@ -20,7 +20,7 @@ interface TaskDAO {
     @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
     fun selectLastTaskId(): Long
 
-
+    /*
     //Cuando le pasas una fecha, te devuelve todas las tasks evistentes que pasan por esa fecha
     @Query("SELECT * FROM Task WHERE DATE(:fecha) BETWEEN DATE(StartDate) AND DATE(EndDate);")
     fun selectActiveTasksOnDate(fecha: String): List<Task>
@@ -28,7 +28,7 @@ interface TaskDAO {
 
     @Query("SELECT * FROM Task WHERE Title LIKE :titulo;")
     fun selectTaskByTitle(titulo: String): List<Task>
-
+    */
 
     @Update
     fun update(task: Task)
