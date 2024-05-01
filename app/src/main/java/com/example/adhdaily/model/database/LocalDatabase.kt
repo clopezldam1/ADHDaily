@@ -87,7 +87,7 @@ abstract class LocalDatabase : RoomDatabase() {
 
         //Inicializar configuración de las nofticaciones (NotificationSettings)
         val defaultNotifications = NotificationSettings(
-            NotifSettingsId = 0, //como es autoincrement, ponemos 0 para que lo pise con lo que sea
+            NotifSettingsId = 1,
             ShowListOnNotifBar = true,
             PendingTasksOnNotifBar = true,
             RemindersPush = true,
@@ -102,7 +102,7 @@ abstract class LocalDatabase : RoomDatabase() {
             useDarkMode = true
         }
         val defaultSettings = Settings(
-            UserId = 0, //como es autoincrement, ponemos 0 para que lo pise con lo que sea
+            UserId = 1,
             DarkMode = useDarkMode, //no obstante, por defecto app sigue UI del dispositivo a no ser que user lo cambie manualmente
             LanguageTagISO = ULocale.getDefault().language,
             CalendarViewMode = 1, //0=simple list, 1=progress graph

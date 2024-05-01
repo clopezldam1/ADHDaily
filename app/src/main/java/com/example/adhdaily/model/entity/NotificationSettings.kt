@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 
         )
 data class NotificationSettings (
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "NotifSettingsId") var NotifSettingsId: Long,
+    @PrimaryKey @ColumnInfo(name = "NotifSettingsId") var NotifSettingsId: Long,
 
     @ColumnInfo(name = "ShowListOnNotifBar") var ShowListOnNotifBar: Boolean,
     @ColumnInfo(name = "PendingTasksOnNotifBar") var PendingTasksOnNotifBar: Boolean,

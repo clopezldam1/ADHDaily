@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
+import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
 import kotlinx.coroutines.Dispatchers
@@ -87,7 +88,13 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
                 }else{
                     markPendant()
                 }
-                //TODO: UPDATE TASK.COMPLETED IN BD WHEN CHECK CHANGED
+
+                //UPDATE TASK.COMPLETED IN BD WHEN CHECK CHANGED
+                GlobalScope.launch(Dispatchers.IO) {
+                    task.Completed = isChecked
+                    val localDB = LocalDatabase.getInstance(context)
+                    localDB.taskDao().update(task)
+                }
             }
 
             //estado incial de la tarea
@@ -103,7 +110,6 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
 
             //Onclick del contenedor para ampliar detalles de tarea
             taskItemContainerListDayView.setOnClickListener {
-                Log.i("AAAAAAAAAA", "openTaskDetails:  222222")
                 openTaskDetails()
             }
 
@@ -136,7 +142,6 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
          */
         fun openTaskDetails(){
             //TODO: openTaskDetails()
-            Log.i("AAAAAAAAAA", "openTaskDetails: ")
         }
     }
 

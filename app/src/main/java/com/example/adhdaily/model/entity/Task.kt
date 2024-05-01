@@ -20,7 +20,7 @@ data class Task(
     @ColumnInfo(name = "StartTime") val StartTime: String?, //ifnull == all day
     @ColumnInfo(name = "EndDate") val EndDate: String?,
     @ColumnInfo(name = "EndTime") val EndTime: String?, //ifnull == all day
-    @ColumnInfo(name = "Completed") val Completed: Boolean = false,
+    @ColumnInfo(name = "Completed") var Completed: Boolean = false,
     //@ColumnInfo(name = "hasReminders") val HasReminders: Boolean,
     //@ColumnInfo(name = "repeats") val Repeats: Boolean,
     //@ColumnInfo(name = "orderInDayList") val OrderInDayList: Long,

@@ -15,7 +15,7 @@ import java.util.Date
             onDelete = ForeignKey.CASCADE)]
 )
 data class Settings (
-    @PrimaryKey(autoGenerate = true) var UserId: Long, //siempre será 1 bc solo hay un usuario
+    @PrimaryKey @ColumnInfo(name = "UserId") var UserId: Long, //siempre será 1 bc solo hay un usuario
 
     @ColumnInfo(name = "DarkMode") val DarkMode: Boolean,
     @ColumnInfo(name = "LanguageTagISO") val LanguageTagISO: String, //codigo de idioma por defecto del dispositivo, ej. "es", "en"
