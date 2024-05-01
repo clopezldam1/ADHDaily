@@ -1,9 +1,13 @@
 package com.example.adhdaily.UI.recyclers
 
 import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +19,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.model.entity.Task
+import com.example.adhdaily.utils.ColorTagHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapter<TaskListDayRecycler.ViewHolder>() {
+
+
 
     /**
      * Inflamos la vista asociada al viewHolder (de cada item)
@@ -50,30 +63,80 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
         private val txtTimeStart: TextView = view.findViewById(R.id.txt_timeStartTask)
         private val txtTitle: TextView = view.findViewById(R.id.txt_titleTask)
         private val taskItemContainerListDayView: LinearLayout = view.findViewById(R.id.taskItemContainerListDayView)
+        private lateinit var context : Context
 
         fun bind(task: Task) {
-
+            context = this.itemView.context
             txtTitle.text = task.Title
 
+            //binding y visibility del text de hora de inicio
             if (task.StartTime != null) {
                 txtTimeStart.text = "[${task.StartTime}]"
                 txtTimeStart.visibility = View.VISIBLE
+                txtTitle.filters =
+                    arrayOf(InputFilter.LengthFilter(25)) //maxChars = 25 cuando se muestra la hora de inicio
             } else {
                 txtTimeStart.visibility = View.GONE
             }
 
-            //TODO: hacer logica para fondo de container según etiqueta color selected
-
+            //listener y binding del check
             checkCompleted.isChecked = task.Completed
-            if(task.Completed) {
-                txtTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
-                txtTimeStart.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
-                taskItemContainerListDayView.alpha = 0.4f //le bajamos la opacidad al 40% al contenedor entero
+            checkCompleted.setOnCheckedChangeListener{  check, isChecked ->
+                if (isChecked) {
+                    markCompleted()
+                }else{
+                    markPendant()
+                }
+                //TODO: UPDATE TASK.COMPLETED IN BD WHEN CHECK CHANGED
             }
 
+            //estado incial de la tarea
+            if (task.Completed) {
+              markCompleted()
+            }
+
+            //cargar etiqueta de color
+            if (task.ColorTag_FK.toInt() != 1) {
+                val helper = ColorTagHelper()
+                helper.setColorTagInTaskItemBg(task.ColorTag_FK, context,taskItemContainerListDayView)
+            }
+
+            //Onclick del contenedor para ampliar detalles de tarea
+            taskItemContainerListDayView.setOnClickListener {
+                Log.i("AAAAAAAAAA", "openTaskDetails:  222222")
+                openTaskDetails()
+            }
+
+            //TODO: hacer que al mantener pulsado, puedas reordenar recyclerview
+
+        }
+
+        /**
+         * Marcar tarea como completada
+         */
+        fun markCompleted(){
+            Log.i("aux", "markCompleted: ")
+            txtTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
+            txtTimeStart.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
+            taskItemContainerListDayView.alpha = 0.4f //le bajamos la opacidad al 40% al contenedor entero
+        }
 
 
+        /**
+         * Volver a marcar tarea como pendiente
+         */
+        fun markPendant(){
+            txtTitle.paintFlags = 0
+            txtTimeStart.paintFlags = 0
+            taskItemContainerListDayView.alpha = 1f
+        }
 
+        /**
+         * Ver los detalles de una tarea al hacer click en ella
+         */
+        fun openTaskDetails(){
+            //TODO: openTaskDetails()
+            Log.i("AAAAAAAAAA", "openTaskDetails: ")
         }
     }
 

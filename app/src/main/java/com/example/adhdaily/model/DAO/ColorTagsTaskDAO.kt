@@ -14,6 +14,8 @@ import java.sql.Date
 
 @Dao
 interface ColorTagsTaskDAO {
+    @Query("SELECT * FROM ColorTagsTask WHERE ColorTagId = :colorTagId;")
+    fun selectColorTagById(colorTagId: Long): ColorTagsTask
 
     @Query("SELECT * FROM ColorTagsTask;")
     fun selectAllColorTags(): List<ColorTagsTask>

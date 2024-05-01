@@ -14,9 +14,10 @@
     app:cardCornerRadius="10dp"
     app:contentPadding="10dp"
     style="@style/rippleEffectTextViewNoBg"
-    android:background="@drawable/task_color_tag_blue"
-    android:backgroundTint="@color/transparent"
-    android:alpha="1">
+    android:background="@color/transparent"
+    android:alpha="1"
+    android:clickable="true"
+    android:focusable="true">
 
     <CheckBox
         android:id="@+id/checkbox_completeTask"

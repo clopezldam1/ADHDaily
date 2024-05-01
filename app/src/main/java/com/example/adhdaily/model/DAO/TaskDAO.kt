@@ -35,7 +35,7 @@ interface TaskDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)  //SI PONES ESTO, CUANDO LOS ID COINCIDAN NO PASA AL SIGUIENTE, LO SOBRESCRIBE
     fun insert(task: Task): Long
-    //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
+    //INSERT INTO Task (Title, `Desc`, StartDate, StartTime, EndDate, EndTime, completed, ColorTag_FK) VALUES ("Titulo","Descripcion","2024-05-01","11:21",null, null, true, 3);
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertAll(tasks: List<Task>)

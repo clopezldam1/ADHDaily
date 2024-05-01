@@ -60,8 +60,10 @@ class AppSettingsActivity : AppCompatActivity() {
      */
     private fun deleteAllData() {
         //TODO: deleteAllData() - show warning dialog "are you sure" to confirm, then erase (avisar de que la app se cerrará)
+
         val localDB = LocalDatabase.getInstance(this)
         localDB.deleteDatabase(this)
         //Cerrar aplicacion despues de borrar db
+        finishAffinity()
     }
 }

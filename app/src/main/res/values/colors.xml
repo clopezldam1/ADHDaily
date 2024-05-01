@@ -26,4 +26,10 @@
     <color name="blue5dark">#2B3040</color>
     <color name="transparent">#00FFFFFF</color>
 
+    <color name="colorTagBlue">#7F97AD</color>
+    <color name="colorTagGreen">#82A176</color>
+    <color name="colorTagPurple">#856C91</color>
+    <color name="colorTagRed">#B77663</color>
+    <color name="colorTagYellow">#BFBA70</color>
+
 </resources>

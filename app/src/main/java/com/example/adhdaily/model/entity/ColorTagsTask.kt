@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class ColorTagsTask(
     @PrimaryKey(autoGenerate = true) var ColorTagId: Long,
     @ColumnInfo(name = "name") var Name: String,
-    @ColumnInfo(name = "filename") var filename: String?
+    @ColumnInfo(name = "filename") var Filename: String?,
+    @ColumnInfo(name = "colorCode") var ColorCode: String
 )
