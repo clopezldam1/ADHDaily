@@ -92,7 +92,7 @@ class NewTaskFragment : Fragment() {
             Log.i("PATATAAAA", "addTrialTask:  LocalDateTime.now()" +  Locale.getDefault())
 
             val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
-            val task = Task(newtTaskID, "Tarea3", "DESC 2", "2022-04-22", "10:34","2022-04-22" ,"10:34", false)
+            val task = Task(newtTaskID, "Tarea3", "DESC 2", "2022-04-22", null,"2022-04-22" ,"10:34", true)
 
             localDB.taskDao().insert(task)
         }

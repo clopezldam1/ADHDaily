@@ -15,7 +15,8 @@
     app:contentPadding="10dp"
     style="@style/rippleEffectTextViewNoBg"
     android:background="@drawable/click_ripple_effect_textview_nobg"
-    android:backgroundTint="@color/transparent">
+    android:backgroundTint="@color/transparent"
+    android:alpha="1">
 
     <CheckBox
         android:id="@+id/checkbox_completeTask"
