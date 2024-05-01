@@ -32,15 +32,15 @@
                 android:id="@+id/txt_inputSelectedDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/rounded_corner"
                 android:layout_margin="10dp"
-                android:text="-- / -- / ----"
+                android:background="@drawable/rounded_corner"
                 android:inputType="date"
+                android:padding="8dp"
+                android:text="-- / -- / ----"
                 android:textAlignment="center"
-                android:textSize="15dp"
                 android:textColor="?attr/colorOnSecondary"
-                tools:ignore="TextSizeCheck" />
+                android:textSize="15dp"
+                tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
         </LinearLayout>
 
         <!-- boton ir a la fecha seleccionada -->

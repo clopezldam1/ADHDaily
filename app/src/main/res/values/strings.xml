@@ -13,4 +13,9 @@
     <string name="title_calendarView">General</string>
     <string name="title_dayView">Lista diaria</string>
     <string name="title_newTask">Añadir tarea</string>
+    <string name="lbl_inputTaskDate">Fecha:</string>
+    <string name="lbl_inputTaskTime">Hora:</string>
+    <string name="check_AllDay">Todo el día</string>
+    <string name="lbl_inputTaskTitle">Título:</string>
+    <string name="lbl_inputTaskDesc">Descripción</string>
 </resources>

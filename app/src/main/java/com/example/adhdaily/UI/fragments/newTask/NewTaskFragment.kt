@@ -52,6 +52,8 @@ class NewTaskFragment : Fragment() {
         }
 
 
+
+
         //TODO: deshabilitar el selectDate del toolbar cuando se crea este fragment
 
         return root

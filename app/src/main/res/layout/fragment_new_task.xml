@@ -1,35 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     tools:context=".UI.fragments.newTask.NewTaskFragment"
-    android:orientation="vertical"
-    android:layout_gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="select all tareas"
-        android:layout_gravity="center"/>
-    <Button
-        android:id="@+id/btn_selectAllTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="+"
-        android:layout_marginBottom="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="insert tarea"
-        android:layout_gravity="center"/>
-    <Button
-        android:id="@+id/btn_addTrialTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="+"/>
+        <!-- Contenedor config titulo-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="10dp">
+            <!-- container Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="3"
+                android:paddingVertical="10dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_inputTaskTitle"
+                    android:textSize="18dp"
+                    android:layout_gravity="start|center"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginBottom="5dp"/>
 
-</LinearLayout>
+                <EditText
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/rounded_corner"
+                    android:clickable="true"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- separador-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2.5dp"
+            android:background="?attr/colorSecondary"
+            android:layout_marginHorizontal="20dp"/>
+
+        <!-- Contenedor config fecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="10dp">
+
+            <!-- Contenedor row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+>
+
+                <!-- container Date -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="5dp"
+                    android:weightSum="3"
+                    android:paddingVertical="10dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_inputTaskDate"
+                        android:textSize="18dp"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:layout_weight="0.75"/>
+                    <TextView
+                        android:id="@+id/txt_startDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.25"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@drawable/rounded_corner"
+                        android:inputType="date"
+                        android:padding="8dp"
+                        android:text="-- / -- / ----"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15dp"
+                        tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
+                        android:clickable="true"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <!-- Contenedor row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <!-- container Time -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="2"
+                    android:paddingVertical="10dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_inputTaskTime"
+                        android:textSize="18dp"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:layout_weight="0.75"/>
+                    <TextView
+                        android:id="@+id/txt_startTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.25"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@drawable/rounded_corner"
+                        android:inputType="date"
+                        android:padding="8dp"
+                        android:text=" -- : --"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15dp"
+                        tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
+                        android:enabled="false"
+                        android:clickable="true"/>
+                </LinearLayout>
+
+                <!-- container All day -->
+                <CheckBox
+                    android:id="@+id/checkAllDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="15dp"
+                    android:layout_weight="1"
+                    android:paddingVertical="10dp"
+                    android:gravity="center"
+                    android:text="@string/check_AllDay"
+                    android:checked="true"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:autoSizeTextType="uniform"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- separador-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2.5dp"
+            android:background="?attr/colorSecondary"
+            android:layout_marginHorizontal="20dp"/>
+
+        <!-- Contenedor config descripcion -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="10dp">
+            <!-- container Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="3"
+                android:paddingVertical="10dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_inputTaskDesc"
+                    android:textSize="18dp"
+                    android:layout_gravity="start|center"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <EditText
+                    android:id="@+id/txt_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/rounded_corner"
+                    android:clickable="true"
+                    android:inputType="textMultiLine"
+                    android:lineHeight="20dp"
+                    android:minHeight="60dp"
+                    android:padding="8dp"
+                    android:singleLine="false"
+                    android:text=""
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="select all tareas"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/btn_selectAllTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="insert tarea"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/btn_addTrialTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+"/>
+
+    </LinearLayout>
+</ScrollView>
+
+
+
+
+
+
