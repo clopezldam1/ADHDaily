@@ -132,7 +132,7 @@ class DayViewFragment : Fragment() {
 
             GlobalScope.launch(Dispatchers.IO) {
                 //todo: cambiar esta consulta por las del dia seleccionado
-                val tasks: List<Task> = localDatabase.taskDao().selectTasksStartToday()
+                val tasks: List<Task> = localDatabase.taskDao().selectAllTasks()  //.selectTasksStartToday()
                 recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
             }
         }

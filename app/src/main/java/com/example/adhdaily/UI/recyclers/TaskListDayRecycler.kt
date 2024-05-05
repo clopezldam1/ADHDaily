@@ -1,11 +1,7 @@
 package com.example.adhdaily.UI.recyclers
 
-import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.Paint
-import android.graphics.PorterDuff
 import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,19 +10,14 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
-import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapter<TaskListDayRecycler.ViewHolder>() {
 
@@ -38,7 +29,7 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.fragment_task_item, viewGroup, false)
+            .inflate(R.layout.recycler_task_item, viewGroup, false)
 
         return ViewHolder(view)
     }

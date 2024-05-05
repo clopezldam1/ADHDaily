@@ -20,13 +20,13 @@
     <!-- OTHER COLORS -->
     <color name="light_blue_400">#FF29B6F6</color>
     <color name="light_blue_600">#FF039BE5</color>
-    <color name="gray1">#D0D1D8</color>
-    <color name="gray2">#A5A7AF</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
 
     <color name="blue5dark">#2B3040</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="gray1">#D0D1D8</color>
+    <color name="gray2">#A5A7AF</color>
 
     <color name="colorTagBlue">#7F97AD</color>
     <color name="colorTagGreen">#82A176</color>

@@ -24,4 +24,11 @@
     <string name="txt_none">Ninguno</string>
     <string name="txt_doNotRepeat">No repetir</string>
     <string name="lbl_inputTaskRepeat">Repetir</string>
+    <string name="btn_selectColorConfirm">Seleccionar</string>
+    <string name="lbl_colorTagNone">Ninguno</string>
+    <string name="lbl_colorTagBlue">Azul</string>
+    <string name="lbl_colorTagGreen">Verde</string>
+    <string name="lbl_colorTagPurple">Morado</string>
+    <string name="lbl_colorTagYellow">Amarillo</string>
+    <string name="lbl_colorTagRed">Rojo</string>
 </resources>

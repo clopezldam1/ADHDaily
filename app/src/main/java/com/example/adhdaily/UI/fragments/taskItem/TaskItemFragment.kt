@@ -19,7 +19,7 @@ class TaskItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_item, container, false)
+        return inflater.inflate(R.layout.recycler_task_item, container, false)
     }
 
 

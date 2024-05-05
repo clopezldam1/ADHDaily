@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    app:cardBackgroundColor="?attr/colorSecondaryVariant">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Contenedor texto y campo -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- place colors -->
+        <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:padding="10dp">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/colorTagBlue"
+                    android:text="@string/lbl_colorTagBlue"
+                    android:paddingStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/colorTagGreen"
+                    android:text="@string/lbl_colorTagGreen"
+                    android:paddingStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/colorTagPurple"
+                    android:text="@string/lbl_colorTagPurple"
+                    android:paddingStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/colorTagYellow"
+                    android:text="@string/lbl_colorTagYellow"
+                    android:paddingStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/colorTagRed"
+                    android:text="@string/lbl_colorTagRed"
+                    android:paddingStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_colorTag_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/custom_radio_button"
+                    android:buttonTint="@color/gray2"
+                    android:text="@string/lbl_colorTagNone"
+                    android:paddingStart="10dp"
+                    android:checked="true" />
+            </RadioGroup>
+
+
+
+
+        </LinearLayout>
+
+        <!-- place remining colors -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+
+        <!-- boton seleccionar color -->
+        <Button
+            android:id="@+id/btn_selectColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="0.5"
+            android:backgroundTint="?attr/colorSecondary"
+            android:textColor="?attr/colorOnSecondary"
+            android:drawableTint="?attr/colorOnSecondary"
+            android:padding="7dp"
+            android:text="@string/btn_selectColorConfirm"
+            tools:ignore="TextContrastCheck"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
