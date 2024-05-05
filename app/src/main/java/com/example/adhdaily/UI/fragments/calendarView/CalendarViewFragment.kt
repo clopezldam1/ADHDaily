@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.databinding.FragmentCalendarViewBinding
 import java.util.Calendar
 
@@ -22,6 +24,7 @@ class CalendarViewFragment : Fragment() {
     private lateinit var txt_yearHeaderMonthView:  TextView
     private lateinit var imgbtn_gotoPreviousMonth:  ImageButton
     private lateinit var imgbtn_gotoNextMonth:  ImageButton
+    private lateinit var layout_openSelectDateDialog:  LinearLayout
 
 
     // This property is only valid between onCreateView and onDestroyView
@@ -52,7 +55,22 @@ class CalendarViewFragment : Fragment() {
             gotoNextMonth()
         }
 
+        layout_openSelectDateDialog = binding.layoutOpenSelectDateDialog
+        layout_openSelectDateDialog.setOnClickListener {
+           openSelectDateDialog()
+        }
+
         return root
+    }
+
+    //Método para cuando se ha creado la vista, poner aquí spinners de carga
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     //TODO:  fix gotoPreviousMonth (el paso de un mes a otro con las flechas de arriba lo hace mal)
@@ -74,14 +92,11 @@ class CalendarViewFragment : Fragment() {
 
     }
 
-    //Método para cuando se ha creado la vista, poner aquí spinners de carga
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    /**
+     * Abre el diálogo de seleccionar fecha y te lleva a la seleccionada
+     */
+    private fun openSelectDateDialog() {
+        (this.activity as MainActivity).openSelectDateDialog()
     }
 
 

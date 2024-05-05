@@ -1,0 +1,14 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Estado cuando se presiona el elemento -->
+    <item android:state_pressed="true">
+        <ripple android:color="?attr/colorSecondary"> <!-- Ripple color is set to colorSecondary -->
+            <item android:drawable="?attr/colorSecondary" /> <!-- Background color is set to colorSecondaryVariant -->
+        </ripple>
+    </item>
+    <!-- Estado predeterminado -->
+    <item>
+        <ripple android:color="@android:color/transparent"> <!-- Ripple color is set to transparent -->
+            <item android:drawable="@android:color/transparent"/> <!-- Background color is set to transparent -->
+        </ripple>
+    </item>
+</selector>
