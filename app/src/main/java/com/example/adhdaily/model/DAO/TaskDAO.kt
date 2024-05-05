@@ -17,6 +17,9 @@ interface TaskDAO {
     @Query("SELECT * FROM Task;")
     fun selectAllTasks(): List<Task>
 
+    @Query("SELECT * FROM Task WHERE DATE(StartDate) = date('now');")
+    fun selectTasksStartToday(): List<Task>
+
     @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
     fun selectLastTaskId(): Long
 

@@ -125,12 +125,14 @@ class DayViewFragment : Fragment() {
 //        val curdate = formato
 //
 //        Log.i("fecha", "loadRecyclerDayView: date(): " + curdate)  //.toGMTString()) //MainActivity().today.toGMTString() = 28 Apr 2024 13:31:14 GMT
+
         lifecycleScope.launch(Dispatchers.IO) {
             var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
             recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
             GlobalScope.launch(Dispatchers.IO) {
-                val tasks: List<Task> = localDatabase.taskDao().selectAllTasks()
+                //todo: cambiar esta consulta por las del dia seleccionado
+                val tasks: List<Task> = localDatabase.taskDao().selectTasksStartToday()
                 recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
             }
         }

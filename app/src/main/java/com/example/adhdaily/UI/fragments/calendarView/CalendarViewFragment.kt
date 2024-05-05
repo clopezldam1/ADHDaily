@@ -63,11 +63,6 @@ class CalendarViewFragment : Fragment() {
         return root
     }
 
-    //Método para cuando se ha creado la vista, poner aquí spinners de carga
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
