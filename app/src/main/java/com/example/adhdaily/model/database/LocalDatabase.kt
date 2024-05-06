@@ -77,7 +77,7 @@ abstract class LocalDatabase : RoomDatabase() {
         val settingsDao = localDatabase.settingsDao()
 
         //Inicializamos todas las opciones de colorTags
-        colorTagsDao.insert(ColorTagsTask(1, "None",null,"#A5A7AF"))
+        colorTagsDao.insert(ColorTagsTask(1, "None",null,"#00FFFFFF"))
         colorTagsDao.insert(ColorTagsTask(2, "Blue","task_color_tag_blue","#7F97AD"))
         colorTagsDao.insert(ColorTagsTask(3, "Green","task_color_tag_green","#82A176"))
         colorTagsDao.insert(ColorTagsTask(4, "Purple","task_color_tag_purple","#856C91"))
