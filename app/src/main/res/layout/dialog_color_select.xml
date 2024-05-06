@@ -3,20 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="260dp"
     android:layout_height="match_parent"
-    android:padding="30dp"
-    app:cardBackgroundColor="?attr/colorSecondaryVariant">
+    app:cardBackgroundColor="?attr/colorSecondaryVariant"
+    android:layout_gravity="center">
 
     <!-- Contenedor texto y campo -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
         <!-- place colors -->
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="horizontal"
            android:padding="10dp">
@@ -30,7 +31,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/colorTagBlue"
@@ -39,7 +40,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/colorTagGreen"
@@ -48,7 +49,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/colorTagPurple"
@@ -57,7 +58,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/colorTagYellow"
@@ -66,7 +67,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/colorTagRed"
@@ -75,7 +76,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_colorTag_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@drawable/custom_radio_button"
                     android:buttonTint="@color/gray2"
@@ -86,14 +87,6 @@
 
 
 
-
-        </LinearLayout>
-
-        <!-- place remining colors -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
         </LinearLayout>
 

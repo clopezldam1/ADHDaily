@@ -24,6 +24,5 @@ data class Task(
     //@ColumnInfo(name = "hasReminders") val HasReminders: Boolean,
     //@ColumnInfo(name = "repeats") val Repeats: Boolean,
     //@ColumnInfo(name = "orderInDayList") val OrderInDayList: Long,
-
     @ColumnInfo(name = "ColorTag_FK") val ColorTag_FK: Long = 1 //1=transparent, 2=blue, 3=green, 4=purple, 5=yellow, 6=red
 )

@@ -4,6 +4,9 @@
     <!-- Color por defecto -->
     <solid android:color="@color/gray2"/>
     <size
-        android:width="30dp"
-        android:height="30dp" />
+        android:width="35dp"
+        android:height="35dp"/>
+    <stroke
+        android:width="3dp"
+        android:color="@android:color/transparent"/>
 </shape>

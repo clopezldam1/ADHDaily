@@ -12,7 +12,7 @@ import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.DialogSelectDateBinding
 
-class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTheme) {
+class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTheme1) {
 
     private lateinit var binding: DialogSelectDateBinding
     lateinit var txtSelectDate: TextView

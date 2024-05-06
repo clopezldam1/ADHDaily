@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.adhdaily.UI.activities.MainActivity
+import com.example.adhdaily.UI.dialogs.ColorSelectDialog
+import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.FragmentNewTaskBinding
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
@@ -18,7 +21,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.sql.Date
 import java.sql.Timestamp
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.Locale
 
 
@@ -29,6 +34,19 @@ class NewTaskFragment : Fragment() {
     //COMPONENTES DEL FRAGMENT:
     private lateinit var btnTrialTaskInsert: Button
     private lateinit var btnSelectAllTasks: Button
+    private lateinit var layoutSelectColor: LinearLayout
+
+    //VARIABLES DEL FRAGMENT:
+    var titulo: String = ""
+    var descripcion: String? = null
+    var startDate: String = LocalDate.now().toString()
+    var startTime: String? = null
+    var endDate: String? = null
+    var endTime: String? = null
+    var completed: Boolean = false
+    var colorTagId: Int = 1
+
+    lateinit var newTask: Task //la nueva tarea a crear
 
 
     // This property is only valid between onCreateView and onDestroyView
@@ -45,20 +63,21 @@ class NewTaskFragment : Fragment() {
         btnSelectAllTasks.setOnClickListener {
             selectTasks()
         }
-
         btnTrialTaskInsert = binding.btnAddTrialTask
         btnTrialTaskInsert.setOnClickListener {
             addTrialTask()
         }
 
-
+        layoutSelectColor = binding.layoutOpenColorTagDialog
+        layoutSelectColor.setOnClickListener {
+            openSelectColorTagDialog()
+        }
 
 
         //TODO: deshabilitar el selectDate del toolbar cuando se crea este fragment
 
         return root
     }
-
 
     //Método para cuando se ha creado la vista, poner aquí spinners de carga
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,8 +120,12 @@ class NewTaskFragment : Fragment() {
                 Log.i("CATCH", "addTrialTask: " + ex.message)
             }
 
-
         }
+    }
+
+    private fun openSelectColorTagDialog() {
+        val dialog = ColorSelectDialog(requireContext(),this)
+        dialog.show()
     }
 
 

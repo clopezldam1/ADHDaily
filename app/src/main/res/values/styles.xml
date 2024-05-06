@@ -1,5 +1,5 @@
 <resources>
-    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
+    <style name="CustomDialogTheme1" parent="Theme.AppCompat.Dialog">
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
     </style>

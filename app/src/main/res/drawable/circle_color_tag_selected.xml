@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Círculo exterior (borde) -->
-    <item>
-        <shape android:shape="oval">
-            <size
-                android:width="30dp"
-                android:height="30dp" />
-            <stroke
-                android:width="2dp"
-                android:color="@color/gray2" />
-        </shape>
-    </item>
-
-    <!-- Círculo interior (sólido) -->
-    <item android:top="5dp" android:bottom="5dp" android:left="5dp" android:right="5dp">
-        <shape android:shape="oval">
-            <solid android:color="@color/gray2" />
-        </shape>
-    </item>
-</layer-list>
+<vector
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="22"
+    android:viewportHeight="22"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <path
+        android:pathData="M11,6c-2.76,0 -5,2.24 -5,5s2.24,5 5,5 5,-2.24 5,-5 -2.24,-5 -5,-5zM11,1C5.48,1 1,5.48 1,11s4.48,10 10,10 10,-4.48 10,-10S16.52,1 11,1zM11,19c-4.42,0 -8,-3.58 -8,-8s3.58,-8 8,-8 8,3.58 8,8 -3.58,8 -8,8z"
+        android:fillColor="@color/gray2"
+        android:fillType="evenOdd"/>
+</vector>
