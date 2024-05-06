@@ -140,9 +140,7 @@ class NewTaskFragment : Fragment() {
         (activity as MainActivity).btnSelectDate.isEnabled = false
         (activity as MainActivity).btnSelectDate.alpha = 0.5f
 
-        txtDesc.setText("")
-        txtTitle.setText("")
-        txtStartDate.setText(startDate.format(MainActivity().dateTimeFormatter).toString())
+
     }
 
     override fun onDestroyView() {
@@ -153,7 +151,16 @@ class NewTaskFragment : Fragment() {
         (activity as MainActivity).btnSelectDate.isEnabled = true
         (activity as MainActivity).btnSelectDate.alpha = 1f
 
+        cleanForm()
+    }
 
+    /**
+     * Cada vez que cambiamos de fragmento y volvemos a este,
+     * se nos limpia el formulario
+     */
+    override fun onResume() {
+        super.onResume()
+        cleanForm()
     }
 
     private fun createNewTask(){
@@ -175,6 +182,10 @@ class NewTaskFragment : Fragment() {
             }catch (ex:Exception){
                 Log.i("CATCH", "addTrialTask: " + ex.message)
             }
+
+            //después de crearla, limpiamos el formulario
+            cleanForm()
+            //TODO: redirigir a algún lado después de crear esa tarea, no se a donde lol igual al month view?
 
         }
     }
@@ -227,6 +238,15 @@ class NewTaskFragment : Fragment() {
      */
     private fun openHourPickerDialog() {
         //TODO: openHourPickerDialog
+    }
+
+    /**
+     * Vuelve a poner el formulario en blanco
+     */
+    private fun cleanForm(){
+        txtDesc.setText("")
+        txtTitle.setText("")
+        txtStartDate.setText(startDate.format(MainActivity().dateTimeFormatter).toString())
     }
 
     private fun selectTasks() {
