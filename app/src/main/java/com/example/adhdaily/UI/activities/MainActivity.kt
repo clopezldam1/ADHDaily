@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     //Toolbar
-    private lateinit var btnSelectDate: ImageButton
+    lateinit var btnSelectDate: ImageButton
     private lateinit var btnGotoSettings: ImageButton
 
     //Current date

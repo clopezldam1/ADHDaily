@@ -82,13 +82,24 @@ class NewTaskFragment : Fragment() {
     //Método para cuando se ha creado la vista, poner aquí spinners de carga
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //deshabilitar el boton selectDate del toolbar cuando se cierra este fragment
+        (activity as MainActivity).btnSelectDate.isEnabled = false
+        (activity as MainActivity).btnSelectDate.alpha = 0.5f
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        //TODO: volver a habilitar el selectDate del toolbar cuando se crea este fragment
 
+        //volver a habilitar el boton selectDate del toolbar cuando se cierra este fragment
+        (activity as MainActivity).btnSelectDate.isEnabled = true
+        (activity as MainActivity).btnSelectDate.alpha = 1f
+    }
+
+    private fun openSelectColorTagDialog() {
+        val dialog = ColorSelectDialog(requireContext(),this)
+        dialog.show()
     }
 
 
@@ -122,12 +133,4 @@ class NewTaskFragment : Fragment() {
 
         }
     }
-
-    private fun openSelectColorTagDialog() {
-        val dialog = ColorSelectDialog(requireContext(),this)
-        dialog.show()
-    }
-
-
-
 }
