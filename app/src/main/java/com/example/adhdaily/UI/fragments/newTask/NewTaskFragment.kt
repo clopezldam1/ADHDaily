@@ -6,24 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.UI.dialogs.ColorSelectDialog
-import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.FragmentNewTaskBinding
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.sql.Date
-import java.sql.Timestamp
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 import java.util.Locale
 
 
@@ -36,6 +31,9 @@ class NewTaskFragment : Fragment() {
     private lateinit var btnSelectAllTasks: Button
     private lateinit var layoutSelectColor: LinearLayout
 
+    lateinit var imgvwColorTagIcon: ImageView
+    lateinit var txtColorTagName: TextView
+
     //VARIABLES DEL FRAGMENT:
     var titulo: String = ""
     var descripcion: String? = null
@@ -44,7 +42,7 @@ class NewTaskFragment : Fragment() {
     var endDate: String? = null
     var endTime: String? = null
     var completed: Boolean = false
-    var colorTagId: Int = 1
+    var colorTagId: Long = 1
 
     lateinit var newTask: Task //la nueva tarea a crear
 
@@ -73,6 +71,8 @@ class NewTaskFragment : Fragment() {
             openSelectColorTagDialog()
         }
 
+        imgvwColorTagIcon = binding.imgvwColorTagIcon
+        txtColorTagName = binding.txtColorTagName
 
         //TODO: deshabilitar el selectDate del toolbar cuando se crea este fragment
 

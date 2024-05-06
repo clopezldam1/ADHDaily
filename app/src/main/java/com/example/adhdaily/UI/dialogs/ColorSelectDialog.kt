@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.fragments.newTask.NewTaskFragment
+import com.example.adhdaily.utils.ColorTagHelper
 
 class ColorSelectDialog(context: Context, private val newTaskFragment: NewTaskFragment) : Dialog(context) {
 
@@ -35,10 +36,16 @@ class ColorSelectDialog(context: Context, private val newTaskFragment: NewTaskFr
 
         //obtenemos el número al final del id del radiobutton para saber a qué colorTagId corresponde
         val selectedColorTagId = selectedRadioButton.toString().split("_").last()[0]
-        Log.i("RadioButton", "Color Tag seleccionado: $selectedColorTagId")
+        newTaskFragment.colorTagId = selectedColorTagId.digitToInt().toLong()
+        Log.i("RadioButton", "selectColorTagId: " + selectedColorTagId)
 
-        newTaskFragment.colorTagId = selectedColorTagId.digitToInt() //pasamos el char a int
-        Log.i("RadioButton", "selectColorTag: EN FRAGMENT:" +  newTaskFragment.colorTagId )
+        //Ahora cambiamos el nombre del color seleccionado en el fragment
+        val helper = ColorTagHelper()
+        helper.setTextToTextViewFromColorTagId(newTaskFragment.colorTagId , context, newTaskFragment.txtColorTagName)
+
+        //Ahora cambiamos el color del circulito según el colorTag seleccionado
+        helper.setColorToImageViewFromColorTagId(newTaskFragment.colorTagId , context, newTaskFragment.imgvwColorTagIcon)
+
         this.dismiss()
     }
 

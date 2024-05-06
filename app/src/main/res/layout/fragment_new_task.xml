@@ -255,10 +255,11 @@
                 tools:ignore="TouchTargetSizeCheck"
                 android:background="@drawable/click_ripple_effect_yesbg_1">
                 <ImageView
-                    android:id="@+id/circle_colorTag"
+                    android:id="@+id/imgvw_colorTagIcon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/circle_color_tag" />
+                    android:src="@drawable/circle_color_tag"
+                    app:tint="@color/gray2"/>
                 <TextView
                     android:id="@+id/txt_colorTagName"
                     android:layout_width="wrap_content"
