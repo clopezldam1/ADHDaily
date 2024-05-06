@@ -31,4 +31,7 @@
     <string name="lbl_colorTagPurple">Morado</string>
     <string name="lbl_colorTagYellow">Amarillo</string>
     <string name="lbl_colorTagRed">Rojo</string>
+    <string name="btn_addNewTask">Crear tarea</string>
+    <string name="toast_titleRequired">Título obligatorio</string>
+    <string name="toast_startTime">Hora inicio obligatoria</string>
 </resources>

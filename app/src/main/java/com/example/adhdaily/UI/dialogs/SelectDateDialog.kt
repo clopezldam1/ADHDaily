@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.DialogSelectDateBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTheme1) {
 
@@ -18,7 +20,7 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
     lateinit var txtSelectDate: TextView
     lateinit var btnGotoDate: Button
 
-    private val dateFormatter = MainActivity().dateFormatter //SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+    private val dateFormatter = MainActivity().simpleDateFormat //SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
 
     init {
         //Darle el layout al dialog
@@ -64,7 +66,8 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
                 txtSelectDate.setText(formattedDate)
 
                 //Modificamos selectedDate en la activity (variable global)
-                MainActivity().selectedDate = selectedDate.time
+                val pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                MainActivity().selectedDate = LocalDate.parse(formattedDate, pattern)
                 //Log.i("PATATA", "openDatePickerDialog- SELECTED DATE: " +  MainActivity().selectedDate) //Sun Apr 21 11:21:30 GMT+02:00 2024
             },
             calendar.get(Calendar.YEAR),

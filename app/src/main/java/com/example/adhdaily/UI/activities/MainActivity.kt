@@ -10,7 +10,6 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -24,9 +23,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
-import com.example.adhdaily.model.database.LocalDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.Date
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
@@ -40,10 +39,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnGotoSettings: ImageButton
 
     //Current date
-    var dateFormat = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
-    val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault()) //Locale.getDefault gets the timezone
-    val today = Date() //ej. Sun Apr 28 15:00:23 GMT+02:00 2024
-    var selectedDate: Date = today //por defecto, al abrir la app está seleccionada la fecha de hoy
+    var dateFormatPattern = "dd/MM/yyyy" //Cambiar el formato de la fecha aquí //TODO: Incluir ajuste para cambiar el date format entre europeo y americano
+    val simpleDateFormat = SimpleDateFormat(dateFormatPattern, Locale.getDefault()) //Locale.getDefault gets the timezone
+    val dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormatPattern)
+    val today = LocalDate.now().format(dateTimeFormatter)
+    var selectedDate: LocalDate = LocalDate.parse(today, dateTimeFormatter) //por defecto, al abrir la app está seleccionada la fecha de hoy
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

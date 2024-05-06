@@ -98,7 +98,7 @@
                         android:background="@drawable/rounded_corner"
                         android:inputType="date"
                         android:padding="8dp"
-                        android:text="-- / -- / ----"
+                        android:hint="-- / -- / ----"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="15dp"
@@ -141,13 +141,13 @@
                         android:background="@drawable/rounded_corner"
                         android:inputType="date"
                         android:padding="8dp"
-                        android:text=" -- : --"
+                        android:hint=" -- : --"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="15dp"
                         tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
                         android:enabled="false"
-                        android:clickable="true"/>
+                        android:alpha="0.3"/>
                 </LinearLayout>
 
                 <!-- container All day -->
@@ -161,7 +161,7 @@
                     android:gravity="center"
                     android:text="@string/check_AllDay"
                     android:checked="true"
-                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textColor="?attr/colorOnSecondary"
                     android:autoSizeTextType="uniform"/>
             </LinearLayout>
         </LinearLayout>
@@ -395,6 +395,23 @@
 
         </LinearLayout>
 
+        <!-- separador-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2.5dp"
+            android:background="?attr/colorSecondary"
+            android:layout_marginHorizontal="20dp"/>
+
+        <Button
+            android:id="@+id/btn_addNewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/btn_addNewTask"/>
+
+
+
+
 
 
         <!-- TODO: DELETE ALL OF THIS DOWN -->
@@ -404,7 +421,6 @@
             android:layout_height="2.5dp"
             android:background="?attr/colorSecondary"
             android:layout_marginHorizontal="20dp"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
