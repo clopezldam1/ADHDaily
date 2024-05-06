@@ -1,6 +1,7 @@
 package com.example.adhdaily.UI.fragments.newTask
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -183,11 +184,10 @@ class NewTaskFragment : Fragment() {
                 Log.i("CATCH", "addTrialTask: " + ex.message)
             }
 
-            //después de crearla, limpiamos el formulario
-            cleanForm()
-            //TODO: redirigir a algún lado después de crear esa tarea, no se a donde lol igual al month view?
-
         }
+        //después de crearla, limpiamos el formulario
+        cleanForm()
+        //TODO: redirigir a algún lado después de crear esa tarea, no se a donde lol igual al month view?
     }
 
     /**
@@ -247,6 +247,9 @@ class NewTaskFragment : Fragment() {
         txtDesc.setText("")
         txtTitle.setText("")
         txtStartDate.setText(startDate.format(MainActivity().dateTimeFormatter).toString())
+        imgvwColorTagIcon.setColorFilter(Color.parseColor("#A5A7AF")) //gray2
+        txtColorTagName.setText(R.string.lbl_colorTagNone)
+        checkAllDay.isChecked = true
     }
 
     private fun selectTasks() {
