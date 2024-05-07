@@ -28,17 +28,24 @@
             android:gravity="start">
 
             <!-- boton retroceder -->
-            <ImageButton
-                android:id="@+id/btn_back"
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
                 android:layout_weight="1"
-                android:background="#00FFFFFF"
-                android:padding="7dp"
-                android:src="@drawable/baseline_arrow_back_24"
-                app:tint="@color/blue1"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:cardCornerRadius="100dp"
+                android:outlineSpotShadowColor="@color/transparent"
+                android:backgroundTint="@color/transparent">
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="@drawable/click_ripple_effect_yesbg_3"
+                    android:padding="7dp"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:tint="@color/blue1"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </androidx.cardview.widget.CardView>
 
             <!-- View title -->
             <TextView

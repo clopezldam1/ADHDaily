@@ -10,9 +10,9 @@
         <item name="colorSecondaryVariant">@color/blue5dark</item>
         <item name="colorOnSecondary">@color/blue1</item>
         <!-- Higlight color-->
-        <item name="colorAccent">?attr/colorPrimaryVariant</item>
-        <item name="colorControlActivated">?attr/colorPrimaryVariant</item>
-        <item name="colorControlHighlight">?attr/colorPrimaryVariant</item>
+        <item name="colorAccent">@color/blue3</item>
+        <item name="colorControlActivated">@color/blue3</item>
+        <item name="colorControlHighlight">@color/blue3</item>
 
 
         <!-- Status bar color. -->

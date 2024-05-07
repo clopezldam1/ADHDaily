@@ -1,5 +1,6 @@
 package com.example.adhdaily.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -24,18 +25,21 @@ class ColorTagHelper {
             val colorTag = localDB.colorTagsTaskDao().selectColorTagById(colorTagId)
             val filename = colorTag.Filename
 
-            if(filename != null) {
-                val resourceId =  context.resources.getIdentifier(filename, "drawable", context.packageName)
-                if (resourceId != 0) {
-                    //si el recurso existe
-                    container.setBackgroundResource(resourceId)
+            (context as Activity).runOnUiThread {
+                if (filename != null) {
+                    val resourceId =
+                        context.resources.getIdentifier(filename, "drawable", context.packageName)
+                    if (resourceId != 0) {
+                        //si el recurso existe
+                        container.setBackgroundResource(resourceId)
+                    } else {
+                        //si recurso no existe
+                        container.setBackgroundResource(R.color.transparent)
+                    }
                 } else {
-                    //si recurso no existe
+                    //no hay colorTagAsignado
                     container.setBackgroundResource(R.color.transparent)
                 }
-            } else {
-                //no hay colorTagAsignado
-                container.setBackgroundResource(R.color.transparent)
             }
         }
     }

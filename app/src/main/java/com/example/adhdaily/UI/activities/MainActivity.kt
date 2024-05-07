@@ -5,11 +5,14 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -75,9 +78,12 @@ class MainActivity : AppCompatActivity() {
 
         //inicializar y gestionar eventos boton selectDate Toolbar
         btnSelectDate = binding.btnSelectDate
-        btnSelectDate.setOnClickListener {
-            openSelectDateDialog()
+        if (::btnSelectDate.isInitialized) {
+            btnSelectDate.setOnClickListener {
+                openSelectDateDialog()
+            }
         }
+
 
         //inicializar y gestionar eventos boton gotoSettings Toolbar
         btnGotoSettings = binding.btnGotoSettings
@@ -85,6 +91,27 @@ class MainActivity : AppCompatActivity() {
             gotoAjustes()
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Verificar y manejar el cambio en el modo de interfaz de usuario aquí
+        val uiMode = resources.configuration.uiMode
+        when (uiMode) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                // Modo oscuro activado
+                // Realizar acciones necesarias para adaptarse al modo oscuro
+                //this.view?.context?.setTheme(R.style.Theme_ADHDaily_Night)
+                this.application.setTheme(R.style.Theme_ADHDaily)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                // Modo oscuro desactivado
+                // Realizar acciones necesarias para adaptarse al modo claro
+                this.application.setTheme(R.style.Theme_ADHDaily)
+            }
+        }
 
     }
 

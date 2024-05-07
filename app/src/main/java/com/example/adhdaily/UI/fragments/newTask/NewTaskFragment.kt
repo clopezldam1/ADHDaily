@@ -1,6 +1,7 @@
 package com.example.adhdaily.UI.fragments.newTask
 
 import android.app.DatePickerDialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -138,10 +139,14 @@ class NewTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //deshabilitar el boton selectDate del toolbar cuando se cierra este fragment
+        /*TODO: disable the selectDate button from toolbar.
+        //This code rn explodes bc its not able to inflate the mainActivity properly,
+        //u gotta find a way of getting the button that actually grabs the new instance of the
+        //button each time the activity is recreated
+
         (activity as MainActivity).btnSelectDate.isEnabled = false
         (activity as MainActivity).btnSelectDate.alpha = 0.5f
-
-
+         */
     }
 
     override fun onDestroyView() {
@@ -149,8 +154,14 @@ class NewTaskFragment : Fragment() {
         _binding = null
 
         //volver a habilitar el boton selectDate del toolbar cuando se cierra este fragment
+        /*TODO: disable the selectDate button from toolbar.
+        //This code rn explodes bc its not able to inflate the mainActivity properly,
+        //u gotta find a way of getting the button that actually grabs the new instance of the
+        //button each time the activity is recreated
+
         (activity as MainActivity).btnSelectDate.isEnabled = true
         (activity as MainActivity).btnSelectDate.alpha = 1f
+         */
 
         cleanForm()
     }
@@ -162,6 +173,8 @@ class NewTaskFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         cleanForm()
+
+
     }
 
     private fun createNewTask(){
@@ -178,7 +191,7 @@ class NewTaskFragment : Fragment() {
 
             val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
             try {
-                newTask = Task(newtTaskID, titulo, descripcion, startDate.toString(), startTime, endDate ,endTime, false, colorTagId)
+                newTask = Task(newtTaskID, titulo, descripcion, startDate.toString(), startTime, endDate ,endTime, completed, colorTagId)
                 localDB.taskDao().insert(newTask)
             }catch (ex:Exception){
                 Log.i("CATCH", "addTrialTask: " + ex.message)
@@ -251,6 +264,13 @@ class NewTaskFragment : Fragment() {
         txtColorTagName.setText(R.string.lbl_colorTagNone)
         checkAllDay.isChecked = true
     }
+
+
+
+
+
+
+
 
     private fun selectTasks() {
         var localDB = LocalDatabase.getInstance(this.requireContext())
