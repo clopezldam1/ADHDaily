@@ -32,19 +32,21 @@
             <!-- boton seleccionar fecha -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="100dp"
                 android:outlineSpotShadowColor="@color/transparent"
-                android:backgroundTint="@color/transparent">
+                android:backgroundTint="@color/transparent"
+                android:layout_gravity="center">
                 <ImageButton
                     android:id="@+id/btn_selectDate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/click_ripple_effect_yesbg_3"
-                    android:src="@drawable/baseline_search_24"
+                    android:src="@drawable/ic_search_date_lines"
+                    android:scaleType="centerInside"
                     app:tint="@color/blue1"
-                    android:layout_gravity="end"
+                    android:layout_gravity="center"
                     android:padding="7dp"
                     android:contentDescription="@string/desc_selectDateBtn"/>
             </androidx.cardview.widget.CardView>
