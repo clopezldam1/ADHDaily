@@ -9,6 +9,7 @@ import androidx.room.Update
 import com.example.adhdaily.adapters.TaskAdapter
 import com.example.adhdaily.model.entity.Task
 import java.sql.Date
+import java.time.LocalDate
 
 
 @Dao
@@ -19,6 +20,9 @@ interface TaskDAO {
 
     @Query("SELECT * FROM Task WHERE DATE(StartDate) = date('now');")
     fun selectTasksStartToday(): List<Task>
+
+    @Query("SELECT * FROM Task WHERE DATE(StartDate) = date(:date);")
+    fun selectTasksStartOnDate(date: String): List<Task>
 
     @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
     fun selectLastTaskId(): Long

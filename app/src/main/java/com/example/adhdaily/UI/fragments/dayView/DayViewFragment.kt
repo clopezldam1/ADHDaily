@@ -1,6 +1,8 @@
 package com.example.adhdaily.UI.fragments.dayView
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -30,6 +33,8 @@ import java.util.Locale
 class DayViewFragment : Fragment() {
 
     private var _binding: FragmentDayViewBinding? = null
+
+    var selectedDate: LocalDate = MainActivity().selectedDate
 
     //COMPONENTES DEL FRAGMENT:
     private lateinit var btnNextDay: ImageButton
@@ -75,6 +80,15 @@ class DayViewFragment : Fragment() {
         return root
     }
 
+    /**
+     * Coloca la fecha seleccionada en la parte superior de la pantalla para mostrar sólamente esas tareas
+     */
+    private fun setSelectedDateOnHeader() {
+        val dateFormat = DateTimeFormatter.ofPattern("dd MMM, EEEE", Locale.getDefault())
+        val formattedDate = selectedDate.format(dateFormat)
+        txtDateHeaderDayView.text = formattedDate
+    }
+
     //Método para cuando se ha creado la vista, poner aquí spinners de carga
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,6 +96,7 @@ class DayViewFragment : Fragment() {
         //Rellenamos el recycler una vez creada la vista
         recyclerTaskListDayView = view.findViewById(R.id.recyclerTaskListDayView)
         loadRecyclerDayView()
+        setSelectedDateOnHeader()
     }
 
     /**
@@ -104,68 +119,33 @@ class DayViewFragment : Fragment() {
      * Cambiar al día siguiente (hacia la derecha)
      */
     private fun gotoNextDay() {
-        //TODO: gotoNextDay()
+        (activity as MainActivity).selectedDate = selectedDate.plusDays(1)
+        selectedDate = (activity as MainActivity).selectedDate
+        setSelectedDateOnHeader()
+        loadRecyclerDayView()
     }
 
     /**
      * Cambiar al día anterior (hacia la izquierda)
      */
     private fun gotoPreviousDay() {
-        //TODO: gotoPreviousDay()
+        (activity as MainActivity).selectedDate = selectedDate.minusDays(1)
+        selectedDate = (activity as MainActivity).selectedDate
+        setSelectedDateOnHeader()
+        loadRecyclerDayView()
     }
 
     /**
-     * Método que realiza la carga del RecyclerView (en un hilo a parte)
+     * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
-
     fun loadRecyclerDayView() {
-        //Todo: loadRecyclerDayView(): que te pille los de la fecha actual
-//        val fechaHoraActual = LocalDateTime()
-//        val formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-//        val curdate = formato
-//
-//        Log.i("fecha", "loadRecyclerDayView: date(): " + curdate)  //.toGMTString()) //MainActivity().today.toGMTString() = 28 Apr 2024 13:31:14 GMT
+        var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
+        recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
-            recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
-
-            GlobalScope.launch(Dispatchers.IO) {
-                //todo: cambiar esta consulta por las del dia seleccionado
-                val tasks: List<Task> = localDatabase.taskDao().selectAllTasks()  //.selectTasksStartToday()
-                recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
-            }
+        GlobalScope.launch(Dispatchers.IO) {
+            val tasks: List<Task> = localDatabase.taskDao().selectTasksStartOnDate(selectedDate.toString())
+            recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
         }
     }
-
-
-    /**
-     * Método que realiza la consulta para el recyclerView
-     *
-     * @param curDate = fecha del día que se está visualizando
-     */
-    fun selectTasksOnDate(curDate: String) {
-        //Todo: selectTasksOnDate()
-        lifecycleScope.launch(Dispatchers.IO) {
-            /*
-            val cursosDAO = CursoDAO()
-            val listaDeCursos = cursosDAO.obtenerCursosConFiltros(
-                edbuscador.text.toString(),
-                spinnerFiltros.selectedItem.toString(),
-                spinnerOrdenar.selectedItem.toString()
-            )
-
-            Log.i("BuscarFragment", "Cantidad de cursos: ${listaDeCursos.size}")
-
-            withContext(Dispatchers.Main) {
-                val adaptador = RecyclerBuscar(listaDeCursos, requireActivity() as RecyclerBuscar.OnItemClickListener, requireActivity() as RecyclerBuscar.OnItemCheckedChangeListener, (activity as MainActivity).username)
-
-                recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                recyclerView.adapter = adaptador
-            }
-             */
-        }
-    }
-
 
 }
