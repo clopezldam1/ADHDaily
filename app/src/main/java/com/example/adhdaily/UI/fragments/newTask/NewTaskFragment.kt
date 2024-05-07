@@ -173,8 +173,6 @@ class NewTaskFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         cleanForm()
-
-
     }
 
     private fun createNewTask(){
@@ -259,7 +257,7 @@ class NewTaskFragment : Fragment() {
     private fun cleanForm(){
         txtDesc.setText("")
         txtTitle.setText("")
-        txtStartDate.setText(startDate.format(MainActivity().dateTimeFormatter).toString())
+        txtStartDate.setText((activity as MainActivity).selectedDate.format(MainActivity().dateTimeFormatter).toString())
         imgvwColorTagIcon.setColorFilter(Color.parseColor("#A5A7AF")) //gray2
         txtColorTagName.setText(R.string.lbl_colorTagNone)
         checkAllDay.isChecked = true

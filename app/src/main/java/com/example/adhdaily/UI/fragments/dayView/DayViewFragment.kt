@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -139,12 +140,20 @@ class DayViewFragment : Fragment() {
      * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
     fun loadRecyclerDayView() {
+
         var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
         GlobalScope.launch(Dispatchers.IO) {
             val tasks: List<Task> = localDatabase.taskDao().selectTasksStartOnDate(selectedDate.toString())
-            recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
+            //(context as Activity).runOnUiThread {
+                if (!tasks.isEmpty()) {
+                    recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
+                } else {
+                    //TODO: vaciar recycler aqui porfa que es cuando no hay tareas :c
+                    recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
+                }
+            //}
         }
     }
 
