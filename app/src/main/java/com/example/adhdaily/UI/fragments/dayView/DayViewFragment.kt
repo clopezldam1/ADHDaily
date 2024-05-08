@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
@@ -22,6 +23,7 @@ import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 
 import java.time.LocalDate
@@ -36,6 +38,7 @@ class DayViewFragment : Fragment() {
     private var _binding: FragmentDayViewBinding? = null
 
     var selectedDate: LocalDate = MainActivity().selectedDate
+    var taskList: List<Task> = emptyList()
 
     //COMPONENTES DEL FRAGMENT:
     private lateinit var btnNextDay: ImageButton
@@ -96,8 +99,7 @@ class DayViewFragment : Fragment() {
 
         //Rellenamos el recycler una vez creada la vista
         recyclerTaskListDayView = view.findViewById(R.id.recyclerTaskListDayView)
-        loadRecyclerDayView()
-        setSelectedDateOnHeader()
+        loadDayData()
     }
 
     /**
@@ -122,8 +124,7 @@ class DayViewFragment : Fragment() {
     private fun gotoNextDay() {
         (activity as MainActivity).selectedDate = selectedDate.plusDays(1)
         selectedDate = (activity as MainActivity).selectedDate
-        setSelectedDateOnHeader()
-        loadRecyclerDayView()
+        loadDayData()
     }
 
     /**
@@ -132,6 +133,10 @@ class DayViewFragment : Fragment() {
     private fun gotoPreviousDay() {
         (activity as MainActivity).selectedDate = selectedDate.minusDays(1)
         selectedDate = (activity as MainActivity).selectedDate
+        loadDayData()
+    }
+
+    private fun loadDayData(){
         setSelectedDateOnHeader()
         loadRecyclerDayView()
     }
@@ -140,20 +145,27 @@ class DayViewFragment : Fragment() {
      * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
     fun loadRecyclerDayView() {
-
-        var localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val tasks: List<Task> = localDatabase.taskDao().selectTasksStartOnDate(selectedDate.toString())
-            //(context as Activity).runOnUiThread {
-                if (!tasks.isEmpty()) {
-                    recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
-                } else {
-                    //TODO: vaciar recycler aqui porfa que es cuando no hay tareas :c
-                    recyclerTaskListDayView.adapter = TaskListDayRecycler(tasks)
-                }
-            //}
+        //getTaskListDay()
+
+        // Obtener la lista de tareas en un hilo de fondo
+        lifecycleScope.launch {
+            taskList = getTaskListDay()
+            if (!taskList.isEmpty()) {
+                recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList)
+            } else {
+                //TODO: vaciar recycler aqui porfa que es cuando no hay tareas :c
+                //recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList)
+                recyclerTaskListDayView.adapter = null
+            }
+        }
+    }
+
+    private suspend fun getTaskListDay(): List<Task> {
+        return withContext(Dispatchers.IO) {
+            val localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
+            localDatabase.taskDao().selectTasksStartOnDate(selectedDate.toString())
         }
     }
 

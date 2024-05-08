@@ -41,29 +41,35 @@ abstract class LocalDatabase : RoomDatabase() {
         private var INSTANCE: LocalDatabase? = null
 
         fun getInstance(context: Context): LocalDatabase {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
+            return INSTANCE ?: synchronized(this) {
+                val databaseFile = context.getDatabasePath(DB_ADHDAILY)
+                if (databaseFile.exists()) {
+                    INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         LocalDatabase::class.java,
-                        DB_ADHDAILY)
-                        .fallbackToDestructiveMigration() //en vez de hacer migracion, destruyes lo anterior
+                        DB_ADHDAILY
+                    ).build()
+                } else {
+                    // La base de datos no existe, crearla
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        LocalDatabase::class.java,
+                        DB_ADHDAILY
+                    )
+                        .fallbackToDestructiveMigration() // En vez de hacer migración, destruyes lo anterior
                         //.addTypeConverter(TypeConverters())
                         .build()
 
-                    INSTANCE = instance
-
-                    //Añadir datos por defecto una vez creada BD
+                    // Añadir datos por defecto una vez creada BD
                     GlobalScope.launch(Dispatchers.IO) {
-                        instance.loadDefaultDatabaseData(instance)
+                        INSTANCE?.loadDefaultDatabaseData(INSTANCE!!)
                     }
                 }
-                return instance
+                INSTANCE!!
             }
         }
     }
+
 
     /**
      * Al crear la base de datos por primera vez, cuando instalamos la aplicación,

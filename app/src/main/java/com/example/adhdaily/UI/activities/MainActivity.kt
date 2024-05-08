@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /*
     override fun onResume() {
         super.onResume()
 
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+     */
 
     /***
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella

@@ -42,8 +42,10 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val task: Task = taskList[position]
-        viewHolder.bind(task)
+        if(taskList.isNotEmpty()) {
+            val task: Task = taskList[position]
+            viewHolder.bind(task)
+        }
     }
 
     /**
