@@ -46,6 +46,8 @@
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="15dp"
+                    android:textIsSelectable="false"
+                    android:importantForAutofill="no"
                     tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.NavController
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.DialogSelectDateBinding
@@ -18,6 +19,8 @@ import java.time.format.DateTimeFormatter
 class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTheme1) {
 
     private lateinit var binding: DialogSelectDateBinding
+    //private lateinit var navController: NavController
+
     lateinit var txtSelectDate: TextView
     lateinit var btnGotoDate: Button
 
@@ -26,9 +29,11 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
     init {
         //Darle el layout al dialog
         setContentView(R.layout.dialog_select_date)
+        //navController = MainActivity().navController
 
         //Configurar binding elementos dialog
         txtSelectDate = findViewById<TextView>(R.id.txt_inputSelectedDate)
+        txtSelectDate.text = MainActivity().today.format(MainActivity().dateTimeFormatter)
         txtSelectDate.setOnClickListener {
             openDatePickerDialog()
 
@@ -51,6 +56,9 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
         this.dismiss()
 
         //TODO: te lleva al DayView de la fecha seleccionada
+        MainActivity().selectedDate = LocalDate.parse(txtSelectDate.text, MainActivity().dateTimeFormatter)
+        //MainActivity().navController.navigate(R.id.navigation_dayView)
+
         Toast.makeText(context, "gotoDate", Toast.LENGTH_SHORT).show()
     }
 
