@@ -11,10 +11,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.UI.recyclers.TaskListDayRecycler
@@ -48,6 +51,7 @@ class DayViewFragment : Fragment() {
     private lateinit var btnPreviousDayTouchTarget: FrameLayout
     private lateinit var txtDateHeaderDayView: TextView
     private lateinit var recyclerTaskListDayView: RecyclerView
+    //private lateinit var viewPagerDeslizar: ViewPager --> FUTURE UPDATE
 
     // This property is only valid between onCreateView and onDestroyView
     private val binding get() = _binding!!
@@ -93,6 +97,33 @@ class DayViewFragment : Fragment() {
         }
 
         //TODO: hacer que al slide hacia la derecha o la izquierda, te navege por los dias (aka llamando a gotoNextDay o gotoPreviousDay)
+        /*
+        viewPagerDeslizar = binding.viewPager
+        var previousPosition = 0
+        viewPagerDeslizar.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                // Este método se llama cuando se está desplazando entre páginas
+            }
+
+            override fun onPageSelected(position: Int) {
+                // Este método se llama cuando se selecciona una nueva página
+                if (position > previousPosition) {
+                    // El usuario ha deslizado hacia la derecha
+                    btnNextDay.callOnClick()
+                } else if (position < previousPosition) {
+                    // El usuario ha deslizado hacia la izquierda
+                    btnPreviousDay.callOnClick()
+                }
+
+                // Actualizar la posición anterior
+                previousPosition = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
+        */
 
         return root
     }
@@ -149,6 +180,9 @@ class DayViewFragment : Fragment() {
         loadDayData()
     }
 
+    /**
+     * Cuando se cambia de día, se modifica el header y se vuelve a recargar el recycler
+     */
     private fun loadDayData(){
         loadRecyclerDayView()
         setSelectedDateOnHeader()
@@ -160,16 +194,12 @@ class DayViewFragment : Fragment() {
     fun loadRecyclerDayView() {
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
-        //getTaskListDay()
-
         // Obtener la lista de tareas en un hilo de fondo
         lifecycleScope.launch {
             taskList = getTaskListDay()
             if (!taskList.isEmpty()) {
                 recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList)
             } else {
-                //TODO: vaciar recycler aqui porfa que es cuando no hay tareas :c
-                //recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList)
                 recyclerTaskListDayView.adapter = null
             }
         }

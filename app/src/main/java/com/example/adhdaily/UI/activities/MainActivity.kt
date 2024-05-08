@@ -84,38 +84,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         //inicializar y gestionar eventos boton gotoSettings Toolbar
         btnGotoSettings = binding.btnGotoSettings
         btnGotoSettings.setOnClickListener {
             gotoAjustes()
         }
 
-
     }
-
-    /*
-    override fun onResume() {
-        super.onResume()
-
-        // Verificar y manejar el cambio en el modo de interfaz de usuario aquí
-        val uiMode = resources.configuration.uiMode
-        when (uiMode) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                // Modo oscuro activado
-                // Realizar acciones necesarias para adaptarse al modo oscuro
-                //this.view?.context?.setTheme(R.style.Theme_ADHDaily_Night)
-                this.application.setTheme(R.style.Theme_ADHDaily)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                // Modo oscuro desactivado
-                // Realizar acciones necesarias para adaptarse al modo claro
-                this.application.setTheme(R.style.Theme_ADHDaily)
-            }
-        }
-
-    }
-     */
 
     /***
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella
