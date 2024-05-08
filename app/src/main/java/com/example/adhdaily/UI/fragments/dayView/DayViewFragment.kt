@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.view.isGone
@@ -42,7 +43,9 @@ class DayViewFragment : Fragment() {
 
     //COMPONENTES DEL FRAGMENT:
     private lateinit var btnNextDay: ImageButton
+    private lateinit var btnNextDayTouchTarget: FrameLayout
     private lateinit var btnPreviousDay: ImageButton
+    private lateinit var btnPreviousDayTouchTarget: FrameLayout
     private lateinit var txtDateHeaderDayView: TextView
     private lateinit var recyclerTaskListDayView: RecyclerView
 
@@ -78,6 +81,16 @@ class DayViewFragment : Fragment() {
         recyclerTaskListDayView = binding.recyclerTaskListDayView
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
+
+        btnPreviousDayTouchTarget = binding.touchTargetImgbtnGotoPreviousDay
+        btnPreviousDayTouchTarget.setOnClickListener {
+            btnPreviousDay.callOnClick()
+        }
+
+        btnNextDayTouchTarget = binding.touchTargetImgbtnGotoNextDay
+        btnNextDayTouchTarget.setOnClickListener {
+            btnNextDay.callOnClick()
+        }
 
         //TODO: hacer que al slide hacia la derecha o la izquierda, te navege por los dias (aka llamando a gotoNextDay o gotoPreviousDay)
 
@@ -137,8 +150,8 @@ class DayViewFragment : Fragment() {
     }
 
     private fun loadDayData(){
-        setSelectedDateOnHeader()
         loadRecyclerDayView()
+        setSelectedDateOnHeader()
     }
 
     /**

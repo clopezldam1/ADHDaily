@@ -23,25 +23,34 @@
         android:layout_marginVertical="10dp">
 
         <!-- gotoPreviousMonth -->
-        <androidx.cardview.widget.CardView
+        <FrameLayout
+            android:id="@+id/touchTarget_imgbtn_gotoPreviousDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="10dp"
+            android:padding="20dp"
+            android:layout_marginStart="10dp"
             android:layout_gravity="center"
-            app:cardCornerRadius="40dp">
-            <ImageButton
-                android:id="@+id/imgbtn_gotoPreviousDay"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@drawable/click_ripple_effect_yesbg_2"
-                android:backgroundTint="?attr/colorSecondary"
-                android:foregroundGravity="center"
-                android:src="@drawable/baseline_round_arrow_back_ios_24"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
-        </androidx.cardview.widget.CardView>
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/click_ripple_effect_nobg_3">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="40dp">
+                <ImageButton
+                    android:id="@+id/imgbtn_gotoPreviousDay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/click_ripple_effect_yesbg_2"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/baseline_round_arrow_back_ios_24"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
         <!-- date text container -->
         <LinearLayout
@@ -65,23 +74,32 @@
         </LinearLayout>
 
         <!-- gotoNextMonth -->
-        <androidx.cardview.widget.CardView
+        <FrameLayout
+            android:id="@+id/touchTarget_imgbtn_gotoNextDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            app:cardCornerRadius="40dp">
-            <ImageButton
-                android:id="@+id/imgbtn_gotoNextDay"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/click_ripple_effect_yesbg_2"
-                android:backgroundTint="?attr/colorSecondary"
-                android:foregroundGravity="center"
-                android:src="@drawable/baseline_arrow_forward_ios_24"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-        </androidx.cardview.widget.CardView>
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/click_ripple_effect_nobg_3">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="40dp">
+                <ImageButton
+                    android:id="@+id/imgbtn_gotoNextDay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/click_ripple_effect_yesbg_2"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/baseline_arrow_forward_ios_24"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
     </LinearLayout>
 
     <!-- Contenedor de lista de tareas -->

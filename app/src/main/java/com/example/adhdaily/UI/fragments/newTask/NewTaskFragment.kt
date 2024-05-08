@@ -119,7 +119,7 @@ class NewTaskFragment : Fragment() {
         btnCreateTask = binding.btnAddNewTask
         btnCreateTask.setOnClickListener {
             //Title is a required field for newTask, can't create if empty
-            if(!txtTitle.text.isEmpty()) {
+            if(!txtTitle.text.isNullOrBlank()) {
                 //startTime is required field when checkAllDay is NOT checked
                 if(!checkAllDay.isChecked && txtDesc.text.isEmpty()){
                     Toast.makeText(requireContext().applicationContext, R.string.toast_startTime, Toast.LENGTH_SHORT).show()
