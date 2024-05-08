@@ -5,25 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_dayView">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.adhdaily.UI.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.adhdaily.UI.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.adhdaily.UI.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-
     <!-- Month view (also could be year or week tho) -->
     <fragment
         android:id="@+id/navigation_calendarView"

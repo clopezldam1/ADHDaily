@@ -17,6 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.UI.dialogs.ColorSelectDialog
@@ -34,11 +36,9 @@ import java.util.Locale
 class NewTaskFragment : Fragment() {
 
     private var _binding: FragmentNewTaskBinding? = null
+    private lateinit var navController: NavController
 
     //COMPONENTES DEL FRAGMENT:
-    private lateinit var btnTrialTaskInsert: Button
-    private lateinit var btnSelectAllTasks: Button
-
     private lateinit var layoutSelectColor: LinearLayout
     private lateinit var btnCreateTask: Button
 
@@ -49,7 +49,6 @@ class NewTaskFragment : Fragment() {
     lateinit var checkAllDay: CheckBox
     lateinit var txtDesc: TextView
     lateinit var txtTitle: TextView
-
 
     //VARIABLES DEL FRAGMENT:
     var titulo: String = ""
@@ -72,16 +71,9 @@ class NewTaskFragment : Fragment() {
         //INFLAR VISTA:
         _binding = FragmentNewTaskBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        navController = (activity as MainActivity).navController
 
         //INICIALIZAR COMPONENTES DE LA VISTA:
-        btnSelectAllTasks = binding.btnSelectAllTasks
-        btnSelectAllTasks.setOnClickListener {
-            selectTasks()
-        }
-        btnTrialTaskInsert = binding.btnAddTrialTask
-        btnTrialTaskInsert.setOnClickListener {
-            addTrialTask()
-        }
 
         layoutSelectColor = binding.layoutOpenColorTagDialog
         layoutSelectColor.setOnClickListener {
@@ -197,7 +189,11 @@ class NewTaskFragment : Fragment() {
         }
         //después de crearla, limpiamos el formulario
         cleanForm()
+
+        Toast.makeText(requireContext().applicationContext, R.string.toast_taskCreatedSuccess, Toast.LENGTH_SHORT).show()
+
         //TODO: redirigir a algún lado después de crear esa tarea, no se a donde lol igual al month view?
+        navController.navigate(R.id.navigation_dayView) //cambiar a month view cuando esté hecho
     }
 
     /**
@@ -288,41 +284,6 @@ class NewTaskFragment : Fragment() {
 
 
 
-
-
-
-
-
-    private fun selectTasks() {
-        var localDB = LocalDatabase.getInstance(this.requireContext())
-        //var task = Task(0, etNombre.text.toString(), etEdad.text.toString().toInt(), "1233123123")
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val queryResult = localDB.taskDao().selectAllTasks()
-            Log.i("AAAAA", "selectTasks: " + queryResult)
-        }
-
-        Log.i("FechaAct", "onCreate: MAINACTIVITY SELECTED DATE: " + MainActivity().selectedDate)
-    }
-
-    //INSERT INTO Task (title, `desc`, startDate, endDate, completed) VALUES ("Titulo","Descripcion","Sun Apr 21 11:21:30 GMT+02:00 2024","Sun Apr 21 11:21:30 GMT+02:00 2024",true);
-    private fun addTrialTask() {
-        val localDB = LocalDatabase.getInstance(this.requireContext())
-
-        //Abrimos hilo para operar en base de datos
-        GlobalScope.launch(Dispatchers.IO) {
-            Log.i("PATATAAAA", "addTrialTask:  LocalDateTime.now()" +  Locale.getDefault())
-
-            val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
-            try {
-                val task = Task(newtTaskID, "Tarea3", "DESC 2", "2022-04-22", null,"2022-04-22" ,"10:34", false, 2)
-                localDB.taskDao().insert(task)
-            }catch (ex:Exception){
-                Log.i("CATCH", "addTrialTask: " + ex.message)
-            }
-
-        }
-    }
 
 
     /**

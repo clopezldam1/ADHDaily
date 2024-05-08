@@ -35,4 +35,5 @@
     <string name="toast_titleRequired">Título obligatorio</string>
     <string name="toast_startTime">Hora inicio obligatoria</string>
     <string name="desc_selectDateBtn">Seleccionar una fecha</string>
+    <string name="toast_taskCreatedSuccess">Tarea creada con éxito</string>
 </resources>

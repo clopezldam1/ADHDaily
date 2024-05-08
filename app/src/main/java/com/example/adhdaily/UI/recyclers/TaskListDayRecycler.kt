@@ -61,7 +61,13 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
 
         fun bind(task: Task) {
             context = this.itemView.context
-            txtTitle.text = task.Title
+
+            //truncate title if too long
+            if (task.Title.length > 31) {
+                txtTitle.text = task.Title.substring(0, 31 - 3) + "..."
+            } else {
+                txtTitle.text = task.Title
+            }
 
             //binding y visibility del text de hora de inicio
             if (task.StartTime.equals("null")) {
@@ -69,6 +75,13 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
             } else {
                 txtTimeStart.text = "[${task.StartTime}]"
                 txtTimeStart.visibility = View.VISIBLE
+
+                //truncate title if too long
+                if (task.Title.length > 23) {
+                    txtTitle.text = task.Title.substring(0, 23 - 3) + "..."
+                } else {
+                    txtTitle.text = task.Title
+                }
                 txtTitle.filters = arrayOf(InputFilter.LengthFilter(25)) //maxChars = 25 cuando se muestra la hora de inicio
             }
 

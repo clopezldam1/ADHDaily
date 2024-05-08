@@ -47,6 +47,5 @@
         android:text="Feed the cat and eat a lot of fruit and"
         android:textSize="16dp"
         android:paddingHorizontal="5dp"
-        android:inputType="text"
-        android:maxLength="30"/>
+        android:inputType="text" />
 </LinearLayout>

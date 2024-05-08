@@ -9,6 +9,7 @@
         <item name="colorSecondary">@color/blue4</item>
         <item name="colorSecondaryVariant">@color/blue5dark</item>
         <item name="colorOnSecondary">@color/blue1</item>
+        <item name="colorSecondaryContainer">@color/transparent</item>
         <!-- Higlight color-->
         <item name="colorAccent">@color/blue3</item>
         <item name="colorControlActivated">@color/blue3</item>

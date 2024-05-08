@@ -47,6 +47,7 @@
                     android:textAlignment="textStart"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="15dp"
+                    android:nestedScrollingEnabled="true"
                     tools:ignore="TextSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
             </LinearLayout>
         </LinearLayout>
@@ -395,60 +396,13 @@
 
         </LinearLayout>
 
-        <!-- separador-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2.5dp"
-            android:background="?attr/colorSecondary"
-            android:layout_marginHorizontal="20dp"/>
-
         <Button
             android:id="@+id/btn_addNewTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/btn_addNewTask"/>
-
-
-
-
-
-
-        <!-- TODO: DELETE ALL OF THIS DOWN -->
-        <!-- separador-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2.5dp"
-            android:background="?attr/colorSecondary"
-            android:layout_marginHorizontal="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="select all tareas"
-            android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/btn_selectAllTasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="+"
-            android:layout_marginBottom="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="insert tarea"
-            android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/btn_addTrialTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="+"/>
-
-
-
-
+            android:text="@string/btn_addNewTask"
+            android:layout_margin="20dp"/>
 
     </LinearLayout>
 </ScrollView>
