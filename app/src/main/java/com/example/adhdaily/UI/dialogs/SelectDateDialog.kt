@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.DialogSelectDateBinding
+import com.example.adhdaily.utils.DateTimePickerDialogs
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -30,26 +31,31 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
         txtSelectDate = findViewById<TextView>(R.id.txt_inputSelectedDate)
         txtSelectDate.setOnClickListener {
             openDatePickerDialog()
+
+            //TODO: lograr usar estos dialogs pequeños en una clase de utils para reducir codigo repetido
+            /*
+            val datePicker = DateTimePickerDialogs()
+            datePicker.openDatePickerDialog(context)
+            txtSelectDate.setText(datePicker.formattedDate)
+            */
         }
 
         btnGotoDate = findViewById<Button>(R.id.btn_gotoDate)
         btnGotoDate.setOnClickListener {
-            // Lógica para el clic en el botón
             goToDate()
         }
     }
 
     private fun goToDate() {
-        Toast.makeText(context, "gotoDate", Toast.LENGTH_SHORT).show()
-
-        //cerrar el dialog
+        //cerrar dialog
         this.dismiss()
 
         //TODO: te lleva al DayView de la fecha seleccionada
+        Toast.makeText(context, "gotoDate", Toast.LENGTH_SHORT).show()
     }
 
     private fun openDatePickerDialog() {
-        // Obtener la fecha actual para preseleccionarla en el DatePicker
+        //obtener la fecha actual para preseleccionarla en DatePicker
         val calendar = Calendar.getInstance()
 
         val datePickerDialog = DatePickerDialog(
@@ -59,23 +65,21 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
 
-                // Formatear la fecha seleccionada al formato deseado
+                //formatear fecha seleccionada en formato deseado
                 val formattedDate = this.dateFormatter.format(selectedDate.time)
 
-                // Establecer la fecha formateada en el EditText
+                //establecer fecha formateada en editText
                 txtSelectDate.setText(formattedDate)
 
-                //Modificamos selectedDate en la activity (variable global)
+                //modificar selectedDate en la activity (variable global)
                 val pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy")
                 MainActivity().selectedDate = LocalDate.parse(formattedDate, pattern)
-                //Log.i("PATATA", "openDatePickerDialog- SELECTED DATE: " +  MainActivity().selectedDate) //Sun Apr 21 11:21:30 GMT+02:00 2024
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH),
         )
 
-        // Mostrar el DatePickerDialog
         datePickerDialog.show()
     }
 

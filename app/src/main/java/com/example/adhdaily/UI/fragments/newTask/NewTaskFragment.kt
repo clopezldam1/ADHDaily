@@ -1,7 +1,7 @@
 package com.example.adhdaily.UI.fragments.newTask
 
 import android.app.DatePickerDialog
-import android.content.res.Configuration
+import android.app.TimePickerDialog
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -28,7 +28,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
@@ -56,7 +55,7 @@ class NewTaskFragment : Fragment() {
     var titulo: String = ""
     var descripcion: String? = null
     var startDate: LocalDate = MainActivity().selectedDate
-    var startTime: String? = null
+    var startTime: LocalTime? = null
     var endDate: String? = null
     var endTime: String? = null
     var completed: Boolean = false
@@ -99,7 +98,7 @@ class NewTaskFragment : Fragment() {
 
         txtStartTime = binding.txtStartTime
         txtStartTime.setOnClickListener {
-            openHourPickerDialog()
+            openHourPickerDialogStartTime()
         }
 
         checkAllDay = binding.checkAllDay
@@ -121,7 +120,7 @@ class NewTaskFragment : Fragment() {
             //Title is a required field for newTask, can't create if empty
             if(!txtTitle.text.isNullOrBlank()) {
                 //startTime is required field when checkAllDay is NOT checked
-                if(!checkAllDay.isChecked && txtDesc.text.isEmpty()){
+                if(!checkAllDay.isChecked && txtStartTime.text.isNullOrBlank()){
                     Toast.makeText(requireContext().applicationContext, R.string.toast_startTime, Toast.LENGTH_SHORT).show()
                 } else {
                     createNewTask()
@@ -189,7 +188,7 @@ class NewTaskFragment : Fragment() {
 
             val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
             try {
-                newTask = Task(newtTaskID, titulo, descripcion, startDate.toString(), startTime, endDate ,endTime, completed, colorTagId)
+                newTask = Task(newtTaskID, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
                 localDB.taskDao().insert(newTask)
             }catch (ex:Exception){
                 Log.i("CATCH", "addTrialTask: " + ex.message)
@@ -245,10 +244,33 @@ class NewTaskFragment : Fragment() {
     }
 
     /**
-     * Abre el diálogo que establece el startTime o el endTime de la nueva tarea
+     * Abre el diálogo que establece el startTime de la nueva tarea
      */
-    private fun openHourPickerDialog() {
+    private fun openHourPickerDialogStartTime() {
         //TODO: openHourPickerDialog
+
+        // Obtener la hora actual del sistema
+        val cal = Calendar.getInstance()
+        val hour = cal.get(Calendar.HOUR_OF_DAY)
+        val minute = cal.get(Calendar.MINUTE)
+
+        // Crear un TimePickerDialog para seleccionar la hora
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            R.style.CustomTimePickerDialogTheme,
+            TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                // Actualizar el TextView con la hora seleccionada
+                startTime = LocalTime.parse(String.format("%02d:%02d", selectedHour, selectedMinute))
+                txtStartTime.text = startTime.toString()
+            },
+            hour,
+            minute,
+            true // Indica si el diálogo permite elegir la hora en formato 24 horas
+        )
+
+        // Mostrar el diálogo
+        timePickerDialog.show()
+
     }
 
     /**
@@ -258,6 +280,7 @@ class NewTaskFragment : Fragment() {
         txtDesc.setText("")
         txtTitle.setText("")
         txtStartDate.setText((activity as MainActivity).selectedDate.format(MainActivity().dateTimeFormatter).toString())
+        txtStartTime.text = null
         imgvwColorTagIcon.setColorFilter(Color.parseColor("#A5A7AF")) //gray2
         txtColorTagName.setText(R.string.lbl_colorTagNone)
         checkAllDay.isChecked = true

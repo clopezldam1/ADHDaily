@@ -64,13 +64,12 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
             txtTitle.text = task.Title
 
             //binding y visibility del text de hora de inicio
-            if (task.StartTime != null) {
+            if (task.StartTime.equals("null")) {
+                txtTimeStart.visibility = View.GONE
+            } else {
                 txtTimeStart.text = "[${task.StartTime}]"
                 txtTimeStart.visibility = View.VISIBLE
-                txtTitle.filters =
-                    arrayOf(InputFilter.LengthFilter(25)) //maxChars = 25 cuando se muestra la hora de inicio
-            } else {
-                txtTimeStart.visibility = View.GONE
+                txtTitle.filters = arrayOf(InputFilter.LengthFilter(25)) //maxChars = 25 cuando se muestra la hora de inicio
             }
 
             //listener y binding del check
@@ -106,7 +105,7 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
                 openTaskDetails()
             }
 
-            //TODO: hacer que al mantener pulsado, puedas reordenar recyclerview
+            //TODO: hacer que al mantener pulsado, puedas reordenar recyclerview --> future update
 
         }
 

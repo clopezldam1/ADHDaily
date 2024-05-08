@@ -13,6 +13,20 @@
         <item name="android:datePickerDialogTheme">@style/Theme.ADHDaily</item>
     </style>
 
+    <style name="CustomTimePickerDialogTheme" parent="Theme.AppCompat.Dialog.MinWidth">
+        <item name="android:windowBackground">?attr/colorSecondaryVariant</item>
+        <item name="android:backgroundTint">?attr/colorSecondaryVariant</item>
+        <item name="android:textColorPrimary">?attr/colorOnSecondary</item>
+        <item name="colorAccent">?attr/colorPrimaryVariant</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="android:colorControlActivated">?attr/colorPrimary</item>
+        <item name="android:colorForeground">?attr/colorPrimary</item>
+        <item name="android:colorBackground">?attr/colorPrimary</item>
+        <item name="android:foregroundTint">?attr/colorPrimary</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:timePickerDialogTheme">@style/Theme.ADHDaily</item>
+    </style>
+
     <style name="rippleEffectTextViewNoBg1" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/click_ripple_effect_nobg_1</item>
     </style>

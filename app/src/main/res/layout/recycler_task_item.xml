@@ -35,7 +35,8 @@
         android:text="[03:00am]"
         android:textAlignment="center"
         android:textSize="14dp"
-        tools:ignore="TextSizeCheck" />
+        tools:ignore="TextSizeCheck"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/txt_titleTask"
