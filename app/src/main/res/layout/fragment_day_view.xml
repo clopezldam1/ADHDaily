@@ -42,8 +42,7 @@
             android:layout_marginStart="10dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/click_ripple_effect_nobg_3">
+            android:focusable="true">
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,8 +92,7 @@
             android:layout_marginEnd="10dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/click_ripple_effect_nobg_3">
+            android:focusable="true">
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
