@@ -4,13 +4,16 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.icu.util.Calendar
+import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
+import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.databinding.DialogSelectDateBinding
 import com.example.adhdaily.utils.DateTimePickerDialogs
 import java.time.LocalDate
@@ -51,15 +54,13 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
         }
     }
 
+    /**
+     * Cuando el diálogo se cierra, la activity desde la que se ha abierto
+     * te navega a la fecha seleccionada en la vista de DayView
+     */
     private fun goToDate() {
         //cerrar dialog
         this.dismiss()
-
-        //TODO: te lleva al DayView de la fecha seleccionada
-        MainActivity().selectedDate = LocalDate.parse(txtSelectDate.text, MainActivity().dateTimeFormatter)
-        //MainActivity().navController.navigate(R.id.navigation_dayView)
-
-        Toast.makeText(context, "gotoDate", Toast.LENGTH_SHORT).show()
     }
 
     private fun openDatePickerDialog() {
@@ -90,6 +91,5 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
 
         datePickerDialog.show()
     }
-
 
 }

@@ -180,10 +180,17 @@ class DayViewFragment : Fragment() {
         loadDayData()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        selectedDate = (activity as MainActivity).selectedDate
+        loadDayData()
+    }
+
     /**
      * Cuando se cambia de día, se modifica el header y se vuelve a recargar el recycler
      */
-    private fun loadDayData(){
+    fun loadDayData(){
         loadRecyclerDayView()
         setSelectedDateOnHeader()
     }
@@ -191,7 +198,7 @@ class DayViewFragment : Fragment() {
     /**
      * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
-    fun loadRecyclerDayView() {
+    private fun loadRecyclerDayView() {
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
         // Obtener la lista de tareas en un hilo de fondo

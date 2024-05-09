@@ -12,12 +12,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,6 +27,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
+import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
@@ -77,11 +80,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         //inicializar y gestionar eventos boton selectDate Toolbar
+        //para abrir y navegar desde el dialog
         btnSelectDate = binding.btnSelectDate
-        if (::btnSelectDate.isInitialized) {
-            btnSelectDate.setOnClickListener {
-                openSelectDateDialog()
-            }
+        btnSelectDate.setOnClickListener {
+            openSelectDateDialog()
         }
 
         //inicializar y gestionar eventos boton gotoSettings Toolbar
@@ -96,8 +98,14 @@ class MainActivity : AppCompatActivity() {
      * Abre el cuadro de diálogo que te pide seleccionar una fecha y te lleva a ella
      */
     fun openSelectDateDialog(){
-        val dialogFragment = SelectDateDialog(this)
-        dialogFragment.show()
+        val dialog = SelectDateDialog(this)
+        dialog.show()
+
+        dialog.setOnDismissListener {
+            selectedDate = LocalDate.parse(dialog.txtSelectDate.text, dateTimeFormatter)
+            navController.navigate(R.id.navigation_dayView)
+        }
+
     }
 
     /**
