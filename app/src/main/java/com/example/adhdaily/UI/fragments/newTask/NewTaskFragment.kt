@@ -250,7 +250,7 @@ class NewTaskFragment : Fragment() {
             },
             hour,
             minute,
-            MainActivity().time12hFormat
+            MainActivity().time24hFormat
         )
 
         timePickerDialog.show()

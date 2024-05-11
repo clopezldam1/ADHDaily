@@ -16,13 +16,13 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
-import com.example.adhdaily.databinding.DialogTaskDetailsBinding
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -218,7 +218,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long) : Dialog(con
             },
             hour,
             minute,
-            MainActivity().time12hFormat
+            MainActivity().time24hFormat
         )
 
         timePickerDialog.show()
@@ -263,16 +263,18 @@ class TaskDetailsDialog(context: Context, private val taskId: Long) : Dialog(con
     /**
      * Hace la consulta de la tarea para poder inicializar las variables y los campos
      */
-    private fun getSelectedTask() {
+    private fun getSelectedTask(callback: (Task?) -> Unit) {
         val localDB = LocalDatabase.getInstance(this.context)
         //abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 //consultar tarea
                 task = localDB.taskDao().selectTaskById(taskId)
+                callback(task)
                 Log.i("details", "loadTaskDetails: TASK: " + task.toString())
             } catch (ex: Exception) {
                 Log.i("CATCH", "addTrialTask: " + ex.message)
+                callback(null)
             }
 
         }
@@ -282,33 +284,39 @@ class TaskDetailsDialog(context: Context, private val taskId: Long) : Dialog(con
      * Cargar los detalles originales de la tarea para poder visualizar y editarlos
      */
     private fun loadTaskDetails() {
-        getSelectedTask()
+        //llamamos a getSelectedTask y no hacemos nada hasta que no termine de realizar la consulta y meta el valor en la variable global
+        getSelectedTask { task ->
+            task?.let {
+                //almacenar datos de la tarea en variables globales
+                titulo = task.Title
+                descripcion = task.Desc
+                startDate = LocalDate.parse(task.StartDate)
+                if (startTime != null) {
+                    startTime = LocalTime.parse(task.StartTime)
+                }
+                endDate = task.EndDate
+                endTime = task.EndTime
+                completed = task.Completed
+                colorTagId = task.ColorTag_FK
 
-        //almacenar datos de la tarea en variables globales
-        titulo = task.Title
-        descripcion = task.Desc
-        startDate = LocalDate.parse(task.StartDate)
-        if(startTime != null) {
-            startTime = LocalTime.parse(task.StartTime)
-        }
-        endDate = task.EndDate
-        endTime = task.EndTime
-        completed = task.Completed
-        colorTagId = task.ColorTag_FK
-        Log.i("details", "loadTaskDetails: txt_title: " + txtTitle.text)
-        Log.i("details", "loadTaskDetails: title: " + task.Title)
+                Log.i("details", "loadTaskDetails: task: " + task.toString())
+                Log.i("details", "loadTaskDetails: txt_title: " + txtTitle.text)
+                Log.i("details", "loadTaskDetails: title: " + task.Title)
 
-        //rellenar form con datos de la tarea
-        txtTitle.text = titulo
-        txtDesc.text = descripcion
-        txtStartDate.text = startDate.toString()
-        txtStartTime.text = startTime.toString()
-        if (startTime == null){
-            checkAllDay.isChecked = true
-        } else {
-            checkAllDay.isChecked = false
+                //rellenar form con datos de la tarea
+                txtTitle.text = titulo
+                txtDesc.text = descripcion
+                txtStartDate.text = startDate.toString()
+                txtStartTime.text = startTime.toString()
+                if (startTime == null) {
+                    checkAllDay.isChecked = true
+                } else {
+                    checkAllDay.isChecked = false
+                }
+                setTaskColorTag()
+
+            }
         }
-        setTaskColorTag()
     }
 
 }

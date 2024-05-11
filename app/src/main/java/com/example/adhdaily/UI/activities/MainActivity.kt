@@ -5,21 +5,16 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,7 +22,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
-import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
@@ -50,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     val dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormatPattern)
     val today = LocalDate.now().format(dateTimeFormatter)
     var selectedDate: LocalDate = LocalDate.parse(today, dateTimeFormatter) //por defecto, al abrir la app está seleccionada la fecha de hoy
-    var time12hFormat: Boolean = false //by default, times are in 24h format
+    var time24hFormat: Boolean = true //by default, times are in 24h format
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
