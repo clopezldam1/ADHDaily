@@ -26,7 +26,12 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 
-class TaskDetailsDialog(context: Context, private val taskId: Long) : Dialog(context, R.style.CustomDialogTheme1) {
+class TaskDetailsDialog(context: Context, private val taskId: Long, private val listener: DialogCloseListener) : Dialog(context, R.style.CustomDialogTheme1) {
+
+    //Listener para recargar recycler dayView despues de cerrar este dialog
+    interface DialogCloseListener {
+        fun onDialogClosed()
+    }
 
     //COMPONENTES DEL FRAGMENT:
     private var layoutSelectColor: LinearLayout
@@ -143,6 +148,12 @@ class TaskDetailsDialog(context: Context, private val taskId: Long) : Dialog(con
      */
     private fun closeDialog() {
         this.dismiss()
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        // Llama al método onDialogClosed del listener cuando se cierra el diálogo
+        listener.onDialogClosed()
     }
 
     /**

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.ConfirmDeleteTaskDialog
 import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
+import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
@@ -21,9 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapter<TaskListDayRecycler.ViewHolder>() {
-
-
+class TaskListDayRecycler(private val taskList: List<Task>, private val dayViewFragment: DayViewFragment) : RecyclerView.Adapter<TaskListDayRecycler.ViewHolder>() {
 
     /**
      * Inflamos la vista asociada al viewHolder (de cada item)
@@ -33,7 +32,7 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.recycler_task_item, viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, dayViewFragment)
     }
 
     /**
@@ -54,7 +53,7 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
      * Crear el viewHolder, donde asociamos los datos
      * del objeto a los elementos de la vista
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val dayViewFragment: DayViewFragment) : RecyclerView.ViewHolder(view), TaskDetailsDialog.DialogCloseListener {
         private val checkCompleted: CheckBox = view.findViewById(R.id.checkbox_completeTask)
         private val txtTimeStart: TextView = view.findViewById(R.id.txt_timeStartTask)
         private val txtTitle: TextView = view.findViewById(R.id.txt_titleTask)
@@ -147,12 +146,16 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
          * Ver los detalles de una tarea al hacer click en ella
          */
         fun openTaskDetails(taskId: Long){
-            val dialog = TaskDetailsDialog(context,taskId)
+            val dialog = TaskDetailsDialog(context,taskId, this)
             dialog.show()
+        }
 
-            dialog.setOnDismissListener {
-                //Todo: when taskDetails dialog closes, must always reload recycler to show changes
-            }
+        /**
+         * Método del listener de cerrar el diálogo de taskDetails
+         * para recargar el recycler después de hacer cualquier tipo de modificaciones
+         */
+        override fun onDialogClosed() {
+            dayViewFragment.loadDayData()
         }
     }
 

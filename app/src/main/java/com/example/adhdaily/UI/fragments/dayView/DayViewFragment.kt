@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
+import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
 import com.example.adhdaily.UI.recyclers.TaskListDayRecycler
 import com.example.adhdaily.databinding.FragmentDayViewBinding
 import com.example.adhdaily.model.database.LocalDatabase
@@ -37,7 +38,7 @@ import java.util.Date
 import java.util.Locale
 
 
-class DayViewFragment : Fragment() {
+class DayViewFragment : Fragment(){
 
     private var _binding: FragmentDayViewBinding? = null
 
@@ -70,10 +71,18 @@ class DayViewFragment : Fragment() {
         btnNextDay.setOnClickListener {
             gotoNextDay()
         }
+        btnNextDayTouchTarget = binding.touchTargetImgbtnGotoNextDay
+        btnNextDayTouchTarget.setOnClickListener {
+            btnNextDay.callOnClick()
+        }
 
         btnPreviousDay = binding.imgbtnGotoPreviousDay
         btnPreviousDay.setOnClickListener{
             gotoPreviousDay()
+        }
+        btnPreviousDayTouchTarget = binding.touchTargetImgbtnGotoPreviousDay
+        btnPreviousDayTouchTarget.setOnClickListener {
+            btnPreviousDay.callOnClick()
         }
 
         txtDateHeaderDayView = binding.txtDateHeaderDayView
@@ -81,19 +90,9 @@ class DayViewFragment : Fragment() {
             openSelectDate()
         }
 
-        // Obtén la referencia del RecyclerView desde el layout
+        //inicializar recycler en layout
         recyclerTaskListDayView = binding.recyclerTaskListDayView
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
-
-        btnPreviousDayTouchTarget = binding.touchTargetImgbtnGotoPreviousDay
-        btnPreviousDayTouchTarget.setOnClickListener {
-            btnPreviousDay.callOnClick()
-        }
-
-        btnNextDayTouchTarget = binding.touchTargetImgbtnGotoNextDay
-        btnNextDayTouchTarget.setOnClickListener {
-            btnNextDay.callOnClick()
-        }
 
         //TODO: hacer que al slide hacia la derecha o la izquierda, te navege por los dias (aka llamando a gotoNextDay o gotoPreviousDay)
         /*
@@ -136,7 +135,9 @@ class DayViewFragment : Fragment() {
         txtDateHeaderDayView.text = formattedDate
     }
 
-    //Método para cuando se ha creado la vista, poner aquí spinners de carga
+    /**
+     * Cuando ya se ha creado la vista, cargamos el recycler
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -179,6 +180,10 @@ class DayViewFragment : Fragment() {
         loadDayData()
     }
 
+    /**
+     * Siempre que se vuelva a este fragmento, actualizar la fecha seleccionada
+     * y volver a cargar el recycler en relación a ésta
+     */
     override fun onResume() {
         super.onResume()
 
@@ -199,18 +204,22 @@ class DayViewFragment : Fragment() {
      */
     private fun loadRecyclerDayView() {
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
+        val dayViewFragment: DayViewFragment = this
 
         // Obtener la lista de tareas en un hilo de fondo
         lifecycleScope.launch {
             taskList = getTaskListDay()
             if (!taskList.isEmpty()) {
-                recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList)
+                recyclerTaskListDayView.adapter = TaskListDayRecycler(taskList, dayViewFragment)
             } else {
                 recyclerTaskListDayView.adapter = null
             }
         }
     }
 
+    /**
+     * Realizar consulta para obtener la lista de tareas del día (ejecutar en hilo a parte)
+     */
     private suspend fun getTaskListDay(): List<Task> {
         return withContext(Dispatchers.IO) {
             val localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
