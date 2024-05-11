@@ -26,7 +26,8 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 
-class TaskDetailsDialog(context: Context, private val taskId: Long, private val listener: DialogCloseListener) : Dialog(context, R.style.CustomDialogTheme1) {
+class TaskDetailsDialog(context: Context, private val taskId: Long, private val listener: DialogCloseListener?)
+    : Dialog(context, R.style.CustomDialogTheme1), ConfirmDeleteTaskDialog.DialogCloseListener {
 
     //Listener para recargar recycler dayView despues de cerrar este dialog
     interface DialogCloseListener {
@@ -60,7 +61,8 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
     var completed: Boolean = false
     var colorTagId: Long = 1
 
-    lateinit var task: Task //tarea a visualizar o editar
+    var task: Task //tarea a visualizar o editar
+
 
     init {
         //Darle el layout al dialog
@@ -150,10 +152,21 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
         this.dismiss()
     }
 
+    /**
+     * Llama al método del listener cuando se cierra el dialog
+     */
     override fun dismiss() {
         super.dismiss()
-        // Llama al método onDialogClosed del listener cuando se cierra el diálogo
-        listener.onDialogClosed()
+        listener!!.onDialogClosed()
+    }
+
+    /**
+     * Cuando se cierra el dialogo de confirmDeleteTask, este también se cierra
+     */
+    override fun onDialogClosed(confirmDelete: Boolean) {
+        if(confirmDelete){
+            closeDialog()
+        }
     }
 
     /**
@@ -203,8 +216,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH),
         )
-
-        // Mostrar el DatePickerDialog
         datePickerDialog.show()
     }
 
@@ -231,7 +242,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
             minute,
             MainActivity().time24hFormat
         )
-
         timePickerDialog.show()
     }
 
@@ -250,7 +260,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                 Log.e("CATCH", "editTask: " + ex.message)
             }
         }
-
         Toast.makeText(context.applicationContext, R.string.toast_taskEditedSuccess, Toast.LENGTH_SHORT).show()
     }
 
@@ -260,7 +269,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
      */
     private fun deleteTask() {
         task = Task(taskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
-        val dialog = ConfirmDeleteTaskDialog(context,task)
+        val dialog = ConfirmDeleteTaskDialog(context,task,this)
         dialog.show()
 
         dialog.setOnDismissListener {

@@ -142,7 +142,7 @@
                         android:layout_marginHorizontal="20dp"
                         android:background="@drawable/rounded_corner"
                         android:clickable="true"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:padding="8dp"
                         android:textAlignment="textStart"
                         android:textColor="?attr/colorOnSecondary"

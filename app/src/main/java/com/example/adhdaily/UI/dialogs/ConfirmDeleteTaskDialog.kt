@@ -13,12 +13,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class ConfirmDeleteTaskDialog(context: Context, private val task: Task) : Dialog(context, R.style.CustomDialogTheme1) {
+class ConfirmDeleteTaskDialog(context: Context, private val task: Task, private val listener: DialogCloseListener) : Dialog(context, R.style.CustomDialogTheme1) {
 
-    val confirmDelete: Boolean = false
+    //Listener para cerrar el taskDetails dialog cuando este se cierre
+    interface DialogCloseListener {
+        fun onDialogClosed(confirmDelete: Boolean)
+    }
+
+    var confirmDelete: Boolean = false
 
     var btnConfirmDelete: Button
     var btnCancel: Button
+
     init{
         setContentView(R.layout.dialog_confirm_delete_task)
 
@@ -40,6 +46,12 @@ class ConfirmDeleteTaskDialog(context: Context, private val task: Task) : Dialog
         this.dismiss()
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        // Llama al método onDialogClosed del listener cuando se cierra el diálogo
+        listener.onDialogClosed(confirmDelete)
+    }
+
     /***
      * Si se le da a Confirmar, tarea se borra de base de datos y diálogo se cierra
      */
@@ -49,10 +61,12 @@ class ConfirmDeleteTaskDialog(context: Context, private val task: Task) : Dialog
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 localDB.taskDao().delete(task)
+
             } catch (ex:Exception) {
                 Log.e("CATCH", "deleteTask: " + ex.message)
             }
         }
+        confirmDelete = true
         this.dismiss()
         Toast.makeText(context.applicationContext, R.string.toast_taskDeletedSuccess, Toast.LENGTH_SHORT).show()
     }
