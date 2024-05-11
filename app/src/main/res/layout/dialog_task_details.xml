@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UI.fragments.newTask.NewTaskFragment"
+    android:layout_width="match_parent"
+    android:layout_height="550dp"
+    android:paddingBottom="20dp"
+    android:theme="@style/Theme.ADHDaily"
+    android:backgroundTint="?attr/colorSecondaryVariant">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- container task options (at the top) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="end"
+            android:layout_marginTop="5dp">
+
+            <!-- botón go back -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/touchTarget_imgbtn_goBack"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="100dp"
+                android:outlineSpotShadowColor="@color/transparent"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:backgroundTint="@color/transparent">
+                <ImageButton
+                    android:id="@+id/btn_goBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/click_ripple_effect_yesbg_1"
+                    android:padding="7dp"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:tint="?attr/colorPrimaryVariant"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- View title -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorSecondary"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="50dp"/>
+
+            <!-- botón delete task -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/touchTarget_imgbtn_deleteTask"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="100dp"
+                android:outlineSpotShadowColor="@color/transparent"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:backgroundTint="@color/transparent"
+                android:layout_marginEnd="10dp">
+                <ImageButton
+                    android:id="@+id/btn_deleteTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/click_ripple_effect_yesbg_1"
+                    android:padding="13dp"
+
+                    android:src="@drawable/ic_delete_task_lines"
+                    android:scaleType="fitCenter"
+                    app:tint="?attr/colorPrimaryVariant"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- botón confirm edit task -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/touchTarget_imgbtn_editTask"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="100dp"
+                android:outlineSpotShadowColor="@color/transparent"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:backgroundTint="@color/transparent">
+                <ImageButton
+                    android:id="@+id/btn_editTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/click_ripple_effect_yesbg_1"
+                    android:padding="13dp"
+                    android:src="@drawable/ic_save_edit_task_lines_2"
+                    android:scaleType="centerInside"
+                    app:tint="?attr/colorPrimaryVariant"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <!-- container scrollable content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Contenedor config titulo-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp">
+                <!-- container Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="3"
+                    android:paddingVertical="10dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_inputTaskTitle"
+                        android:textSize="18dp"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <EditText
+                        android:id="@+id/txt_title_taskDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/rounded_corner"
+                        android:clickable="true"
+                        android:inputType="text"
+                        android:padding="8dp"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15dp"
+                        android:nestedScrollingEnabled="true"
+                        tools:ignore="TextSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- separador-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.5dp"
+                android:background="?attr/colorSecondary"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- Contenedor config fecha -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp">
+
+                <!-- Contenedor row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <!-- container Date -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="5dp"
+                        android:weightSum="3"
+                        android:paddingVertical="10dp"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lbl_inputTaskDate"
+                            android:textSize="18dp"
+                            android:layout_gravity="start|center"
+                            android:paddingHorizontal="15dp"
+                            android:layout_weight="0.8"/>
+                        <TextView
+                            android:id="@+id/txt_startDate_taskDetails"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.2"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/rounded_corner"
+                            android:inputType="date"
+                            android:padding="8dp"
+                            android:hint="-- / -- / ----"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="15dp"
+                            tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
+                            android:clickable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <!-- Contenedor row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+                    <!-- container Time -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1.70"
+                        android:paddingVertical="10dp"
+                        android:weightSum="2">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lbl_inputTaskTime"
+                            android:textSize="18dp"
+                            android:layout_gravity="start|center"
+                            android:paddingHorizontal="15dp"
+                            android:layout_weight="0.94"/>
+                        <TextView
+                            android:id="@+id/txt_startTime_taskDetails"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/rounded_corner"
+                            android:inputType="date"
+                            android:padding="8dp"
+                            android:hint=" -- : --"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="15dp"
+                            tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
+                            android:enabled="false"
+                            android:alpha="0.3"/>
+                    </LinearLayout>
+
+                    <!-- container All day -->
+                    <CheckBox
+                        android:id="@+id/checkAllDay_taskDetails"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="15dp"
+                        android:layout_weight="1.25"
+                        android:paddingVertical="10dp"
+                        android:gravity="center"
+                        android:text="@string/check_AllDay"
+                        android:checked="true"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:autoSizeTextType="uniform"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- separador-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.5dp"
+                android:background="?attr/colorSecondary"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- Contenedor config descripcion -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp">
+                <!-- container Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="3"
+                    android:paddingVertical="10dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_inputTaskDesc"
+                        android:textSize="18dp"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <EditText
+                        android:id="@+id/txt_desc_taskDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/rounded_corner"
+                        android:clickable="true"
+                        android:inputType="textMultiLine"
+                        android:lineHeight="20dp"
+                        android:minHeight="60dp"
+                        android:padding="8dp"
+                        android:singleLine="false"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15dp"
+                        tools:ignore="TextSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- separador-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.5dp"
+                android:background="?attr/colorSecondary"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- Contenedor config color tag -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="5dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_inputTaskColorTag"
+                    android:textSize="18dp"
+                    android:layout_gravity="start|center"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <!-- Contenedor cambiar color tag -->
+                <LinearLayout
+                    android:id="@+id/layout_openColorTagDialog_taskDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:background="@drawable/click_ripple_effect_yesbg_1">
+                    <ImageView
+                        android:id="@+id/imgvw_colorTagIcon_taskDetails"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/circle_color_tag"
+                        app:tint="@color/gray2"/>
+                    <TextView
+                        android:id="@+id/txt_colorTagName_taskDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:text="@string/txt_none"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- separador-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.5dp"
+                android:background="?attr/colorSecondary"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- Contenedor config reminders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="5dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_inputTaskReminders"
+                    android:textSize="18dp"
+                    android:layout_gravity="start|center"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <!-- Contenedor recycler reminders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_remindersInTask_taskDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Contenedor add reminder -->
+                <LinearLayout
+                    android:id="@+id/btn_addReminder_taskDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:orientation="horizontal"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/click_ripple_effect_yesbg_1">
+                    <Button
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="+"
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:alpha="0.3"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:text="@string/lbl_inputTaskAddReminder"
+                        android:textSize="16dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Contenedor config repeat -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="5dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_inputTaskRepeat"
+                    android:textSize="18dp"
+                    android:layout_gravity="start|center"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <!-- Contenedor cambiar repeat option -->
+                <LinearLayout
+                    android:id="@+id/btn_openRepeatTaskOpsDialog_taskDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:background="@drawable/click_ripple_effect_yesbg_1">
+                    <Button
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="+"
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:alpha="0.3"
+                        android:visibility="visible"/>
+                    <TextView
+                        android:id="@+id/txt_repeatSelectedText_taskDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:paddingHorizontal="15dp"
+                        android:text="@string/txt_doNotRepeat"
+                        android:textSize="16dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
+
+
+
+

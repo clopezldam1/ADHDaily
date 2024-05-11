@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
+import com.example.adhdaily.UI.dialogs.ConfirmDeleteTaskDialog
+import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
@@ -114,8 +116,8 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
             }
 
             //Onclick del contenedor para ampliar detalles de tarea
-            taskItemContainerListDayView.setOnClickListener {
-                openTaskDetails()
+            txtTitle.setOnClickListener {
+                openTaskDetails(task.TaskId)
             }
 
             //TODO: hacer que al mantener pulsado, puedas reordenar recyclerview --> future update
@@ -126,7 +128,6 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
          * Marcar tarea como completada
          */
         fun markCompleted(){
-            Log.i("aux", "markCompleted: ")
             txtTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
             txtTimeStart.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //tachamos texto
             taskItemContainerListDayView.alpha = 0.4f //le bajamos la opacidad al 40% al contenedor entero
@@ -145,8 +146,13 @@ class TaskListDayRecycler(private val taskList: List<Task>) : RecyclerView.Adapt
         /**
          * Ver los detalles de una tarea al hacer click en ella
          */
-        fun openTaskDetails(){
-            //TODO: openTaskDetails()
+        fun openTaskDetails(taskId: Long){
+            val dialog = TaskDetailsDialog(context,taskId)
+            dialog.show()
+
+            dialog.setOnDismissListener {
+                //Todo: when taskDetails dialog closes, must always reload recycler to show changes
+            }
         }
     }
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/colorSecondaryVariant"
+    tools:context=".UI.dialogs.ConfirmDeleteTaskDialog"
+    android:layout_gravity="center">
+
+    <!-- Contenedor texto y campo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_margin="18dp">
+
+        <!-- Dialog title -->
+        <TextView
+            android:id="@+id/confirmDeleteTaskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:text="@string/txt_confirmDeleteTaskTitle"
+            android:textColor="?attr/colorOnSecondary"
+            android:textAlignment="textStart"
+            android:textSize="20dp"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Dialog text -->
+        <TextView
+            android:id="@+id/confirmDeleteTaskText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/txt_confirmDeleteTaskText"
+            android:textAlignment="textStart"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="15dp"
+            tools:ignore="TextSizeCheck" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <!-- boton cancelar -->
+            <Button
+                android:id="@+id/btn_cancelDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:backgroundTint="?attr/colorSecondaryVariant"
+                android:textColor="?attr/colorOnSecondary"
+                android:drawableTint="?attr/colorOnSecondary"
+                android:padding="7dp"
+                android:text="@string/btn_cancelDeleteTask"
+                tools:ignore="TextContrastCheck"
+                android:textAllCaps="false"
+                android:layout_marginRight="10dp"/>
+
+            <!-- boton confirmar -->
+            <Button
+                android:id="@+id/btn_confirmDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:backgroundTint="?attr/colorSecondary"
+                android:textColor="?attr/colorOnPrimary"
+                android:drawableTint="?attr/colorOnSecondary"
+                android:padding="7dp"
+                android:text="@string/btn_confirmDeleteTask"
+                tools:ignore="TextContrastCheck"
+                android:textAllCaps="false"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

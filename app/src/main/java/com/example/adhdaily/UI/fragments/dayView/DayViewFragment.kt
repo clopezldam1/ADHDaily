@@ -85,7 +85,6 @@ class DayViewFragment : Fragment() {
         recyclerTaskListDayView = binding.recyclerTaskListDayView
         recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
 
-
         btnPreviousDayTouchTarget = binding.touchTargetImgbtnGotoPreviousDay
         btnPreviousDayTouchTarget.setOnClickListener {
             btnPreviousDay.callOnClick()

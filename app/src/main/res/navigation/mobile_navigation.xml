@@ -25,4 +25,5 @@
         android:name="com.example.adhdaily.UI.fragments.newTask.NewTaskFragment"
         android:label="@string/title_newTask"
         tools:layout="@layout/fragment_new_task" />
+
 </navigation>

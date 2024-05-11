@@ -32,7 +32,6 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
     init {
         //Darle el layout al dialog
         setContentView(R.layout.dialog_select_date)
-        //navController = MainActivity().navController
 
         //Configurar binding elementos dialog
         txtSelectDate = findViewById<TextView>(R.id.txt_inputSelectedDate)

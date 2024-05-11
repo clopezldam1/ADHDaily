@@ -8,14 +8,11 @@
     android:layout_height="50dp"
     android:orientation="horizontal"
     android:weightSum="7"
-    tools:context=".UI.fragments.taskItem.TaskItemFragment"
     android:layout_marginHorizontal="15dp"
     android:layout_marginVertical="7dp"
     app:contentPadding="10dp"
     android:background="@drawable/click_ripple_effect_nobg_2"
-    android:alpha="1"
-    android:clickable="true"
-    android:focusable="true">
+    android:alpha="1">
 
     <CheckBox
         android:id="@+id/checkbox_completeTask"
@@ -47,5 +44,7 @@
         android:text="Feed the cat and eat a lot of fruit and"
         android:textSize="16dp"
         android:paddingHorizontal="5dp"
-        android:inputType="text" />
+        android:inputType="text"
+        android:clickable="true"
+        android:focusable="true"/>
 </LinearLayout>

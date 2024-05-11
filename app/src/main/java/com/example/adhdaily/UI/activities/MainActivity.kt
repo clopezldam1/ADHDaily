@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     val dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormatPattern)
     val today = LocalDate.now().format(dateTimeFormatter)
     var selectedDate: LocalDate = LocalDate.parse(today, dateTimeFormatter) //por defecto, al abrir la app está seleccionada la fecha de hoy
-
+    var time12hFormat: Boolean = false //by default, times are in 24h format
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
