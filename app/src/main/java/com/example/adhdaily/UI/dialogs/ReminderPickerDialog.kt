@@ -81,10 +81,10 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         if (selectedReminderId != null) {
             //editar reminder existente
             updateReminder()
-
         } else {
             //crear nuevo reminder
             createReminder()
+            //TODO: PARA AÑADIR REMINDER CUANDO LA TAREA AÚN NO SE HA CREADO -> la fk falla porque intentas referenciarla cuando aún no existe la tareea
         }
         this.dismiss() //cerrar después de guardar
     }
@@ -158,6 +158,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         //abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
             try {
+                Log.i("reminder", "createReminder: taskFK: " + taskFk)
                 localDB.reminderDao().insertReminderIntoTask(reminderText, reminderDateTime.toString(), reminderTimeValue, reminderTimeUnitId, taskFk)
             } catch (ex: Exception) {
                 Log.i("CATCH", "createReminder: " + ex.message)

@@ -359,7 +359,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
      * el recycler de recordatorios.
      */
     private fun openReminderPickerDialog(selectedReminderId: Long?){
-        Log.i("reminder", "openReminderPickerDialog: ENTRADO EN OPEN REMINDER PICKER")
         val reminderPickerDialog = ReminderPickerDialog(context, selectedReminderId, task)
         reminderPickerDialog.show()
 

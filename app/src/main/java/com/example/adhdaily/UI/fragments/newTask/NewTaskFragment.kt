@@ -18,15 +18,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.UI.dialogs.ColorSelectDialog
+import com.example.adhdaily.UI.dialogs.ReminderPickerDialog
+import com.example.adhdaily.UI.recyclers.RemindersTaskRecycler
 import com.example.adhdaily.databinding.FragmentNewTaskBinding
 import com.example.adhdaily.model.database.LocalDatabase
+import com.example.adhdaily.model.entity.Reminder
 import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -39,6 +45,7 @@ class NewTaskFragment : Fragment() {
     //COMPONENTES DEL FRAGMENT:
     private lateinit var layoutSelectColor: LinearLayout
     private lateinit var btnCreateTask: Button
+    private lateinit var btnAddReminder: LinearLayout
 
     lateinit var imgvwColorTagIcon: ImageView
     lateinit var txtColorTagName: TextView
@@ -47,8 +54,10 @@ class NewTaskFragment : Fragment() {
     lateinit var checkAllDay: CheckBox
     lateinit var txtDesc: TextView
     lateinit var txtTitle: TextView
+    lateinit var recyclerReminders: RecyclerView
 
     //VARIABLES DEL FRAGMENT:
+    var newTaskId: Long = 0
     var titulo: String = ""
     var descripcion: String? = null
     var startDate: LocalDate = MainActivity().selectedDate
@@ -57,9 +66,9 @@ class NewTaskFragment : Fragment() {
     var endTime: String? = null
     var completed: Boolean = false
     var colorTagId: Long = 1
+    var reminderList: List<Reminder> = emptyList()
 
     lateinit var newTask: Task //la nueva tarea a crear
-
 
     // This property is only valid between onCreateView and onDestroyView
     private val binding get() = _binding!!
@@ -119,6 +128,15 @@ class NewTaskFragment : Fragment() {
             }
         }
 
+        recyclerReminders = binding.recyclerRemindersInTask
+        recyclerReminders.layoutManager = LinearLayoutManager(context)
+
+        btnAddReminder = binding.btnAddReminder
+        btnAddReminder.setOnClickListener{
+            //openReminderPickerDialog(null)
+        }
+
+
         return root
     }
 
@@ -128,9 +146,7 @@ class NewTaskFragment : Fragment() {
 
         //deshabilitar el boton selectDate del toolbar cuando se cierra este fragment
         /*TODO: disable the selectDate button from toolbar.
-        //This code rn explodes bc its not able to inflate the mainActivity properly,
-        //u gotta find a way of getting the button that actually grabs the new instance of the
-        //button each time the activity is recreated
+        //This code rn explodes bc its not able to inflate the mainActivity properly, u gotta find a way of getting the button that actually grabs the new instance of the button each time the activity is recreated
 
         (activity as MainActivity).btnSelectDate.isEnabled = false
         (activity as MainActivity).btnSelectDate.alpha = 0.5f
@@ -143,9 +159,7 @@ class NewTaskFragment : Fragment() {
 
         //volver a habilitar el boton selectDate del toolbar cuando se cierra este fragment
         /*TODO: disable the selectDate button from toolbar.
-        //This code rn explodes bc its not able to inflate the mainActivity properly,
-        //u gotta find a way of getting the button that actually grabs the new instance of the
-        //button each time the activity is recreated
+        //This code rn explodes bc its not able to inflate the mainActivity properly, u gotta find a way of getting the button that actually grabs the new instance of the button each time the activity is recreated
 
         (activity as MainActivity).btnSelectDate.isEnabled = true
         (activity as MainActivity).btnSelectDate.alpha = 1f
@@ -161,6 +175,14 @@ class NewTaskFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         cleanForm()
+        getNewTaskId()
+    }
+
+    private fun getNewTaskId() {
+        val localDB = LocalDatabase.getInstance(this.requireContext())
+        GlobalScope.launch(Dispatchers.IO) {
+            newTaskId = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
+        }
     }
 
     private fun createNewTask(){
@@ -170,10 +192,8 @@ class NewTaskFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             titulo = txtTitle.text.toString()
             descripcion = txtDesc.text.toString()
-
-            val newtTaskID = localDB.taskDao().selectLastTaskId() + 1 //consultar last ID +1
             try {
-                newTask = Task(newtTaskID, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
+                newTask = Task(newTaskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
                 localDB.taskDao().insert(newTask)
             }catch (ex:Exception){
                 Log.e("CATCH", "createNewTask: " + ex.message)
@@ -256,6 +276,55 @@ class NewTaskFragment : Fragment() {
         timePickerDialog.show()
     }
 
+    /*//TODO: FUNCIONALIDAD DE CREAR RECORDATORIOS A LA VEZ QUE CREAS LA TAREA DEJADA PARA UPDATE FUTURA
+    /**
+     * Al darle al botón de añadir recordatorio, abrir el diálogo para
+     * seleccionar un recordatorio y, cuando ese diálogo se cierre, recargar
+     * el recycler de recordatorios.
+     */
+    private fun openReminderPickerDialog(selectedReminderId: Long?){
+        //inicializamos la nueva tarea con datos provisionales (para poder meterle recordatorios)
+        getNewTaskId()
+        newTask = Task(newTaskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
+        Log.i("reminder", "openReminderPickerDialog: " + newTaskId)
+        Log.i("reminder", "openReminderPickerDialog: " + newTask.TaskId)
+        val reminderPickerDialog = ReminderPickerDialog(requireContext(),null, newTask)
+        reminderPickerDialog.show()
+
+        reminderPickerDialog.setOnDismissListener {
+            loadRecyclerReminders()
+        }
+
+    }
+
+    /**
+     * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
+     */
+    private fun loadRecyclerReminders() {
+        // Obtener la lista de tareas en un hilo de fondo
+        GlobalScope.launch(Dispatchers.IO) {
+            reminderList = getReminderListTask()
+            withContext(Dispatchers.Main) {
+                if (!reminderList.isEmpty()) {
+                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList)
+                } else {
+                    recyclerReminders.adapter = null
+                }
+            }
+        }
+    }
+
+    /**
+     * Realizar consulta para obtener la lista de recordatorios de la tarea (ejecutar en hilo a parte)
+     */
+    private suspend fun getReminderListTask(): List<Reminder> {
+        return withContext(Dispatchers.IO) {
+            val localDatabase: LocalDatabase = LocalDatabase.getInstance(requireContext())
+            localDatabase.reminderDao().selectRemindersOnTask(newTaskId)
+        }
+    }
+     */
+
     /**
      * Vuelve a poner el formulario en blanco
      */
@@ -269,43 +338,4 @@ class NewTaskFragment : Fragment() {
         checkAllDay.isChecked = true
     }
 
-
-
-
-
-    /**
-     * Abre el diálogo que establece el endDate de la nueva tarea
-     *
-     * [FOR FUTURE UPDATE]
-     */
-    private fun openDatePickerDialogEndDate() {
-        // Obtener la fecha actual para preseleccionarla en el DatePicker
-        val calendar = Calendar.getInstance()
-
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            R.style.CustomDatePickerDialogTheme,
-            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
-
-                // Formatear la fecha seleccionada al formato deseado
-                val formattedDate = (activity as MainActivity).simpleDateFormat.format(selectedDate.time)
-
-                // Establecer la fecha formateada en el EditText
-                endDate = formattedDate
-                //txtEndDate.setText(formattedDate)
-
-                //Modificamos selectedDate en la activity (variable global)
-                MainActivity().selectedDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
-                //Log.i("PATATA", "openDatePickerDialog- SELECTED DATE: " +  MainActivity().selectedDate) //Sun Apr 21 11:21:30 GMT+02:00 2024
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH),
-        )
-
-        // Mostrar el DatePickerDialog
-        datePickerDialog.show()
-    }
 }
