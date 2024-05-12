@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
+import android.widget.Toast
 import com.example.adhdaily.R
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Reminder
@@ -164,6 +165,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
                 Log.i("CATCH", "createReminder: " + ex.message)
             }
         }
+        Toast.makeText(context.applicationContext, R.string.toast_reminderCreatedSuccess, Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -176,6 +178,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
             try {
                 val reminder = Reminder(selectedReminderId!!, reminderText, reminderDateTime.toString(), reminderTimeValue, reminderTimeUnitId, taskFk)
                 localDB.reminderDao().update(reminder)
+                Toast.makeText(context.applicationContext, R.string.toast_reminderEditedSuccess, Toast.LENGTH_SHORT).show()
             } catch (ex: Exception) {
                 Log.i("CATCH", "updateReminder: " + ex.message)
             }

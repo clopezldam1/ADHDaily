@@ -7,11 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
+import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
+import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Reminder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class RemindersTaskRecycler(private val reminderList: List<Reminder>) : RecyclerView.Adapter<RemindersTaskRecycler.ViewHolder>() {
+class RemindersTaskRecycler(private val reminderList: List<Reminder>, private val taskDetailsDialog: TaskDetailsDialog)
+    : RecyclerView.Adapter<RemindersTaskRecycler.ViewHolder>() {
+
     /**
      * Inflamos la vista asociada al viewHolder (de cada item)
      */
@@ -20,7 +29,7 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>) : Recycler
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.recycler_reminder_item, viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, taskDetailsDialog)
     }
 
     /**
@@ -41,17 +50,29 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>) : Recycler
      * Crear el viewHolder, donde asociamos los datos
      * del objeto a los elementos de la vista
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val taskDetailsDialog: TaskDetailsDialog) : RecyclerView.ViewHolder(view){
         private val txtReminderText: TextView = view.findViewById(R.id.txt_recordatorio)
         private val btnDeleteReminder: ImageButton = view.findViewById(R.id.btn_deleteReminder)
+        private val btnOpenEditReminder: CardView = view.findViewById(R.id.touchTarget_editReminder)
         private lateinit var context : Context
 
         fun bind(reminder: Reminder) {
             context = this.itemView.context
+
             txtReminderText.text = reminder.Text
             btnDeleteReminder.setOnClickListener{
-                deleteReminder(reminder.ReminderId)
+                deleteReminder(reminder)
             }
+            btnOpenEditReminder.setOnClickListener{
+                OpenEditReminder()
+            }
+        }
+
+        /**
+         * Abrir reminderPicker para poder editarlo
+         */
+        private fun OpenEditReminder() {
+            //TODO: OpenEditReminder()
         }
 
         /**
@@ -59,10 +80,27 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>) : Recycler
          * después recargar el recycler de recordatorios en los detalles de la tarea
          * para mostar las modificaciones
          */
-        private fun deleteReminder(reminderId: Long) {
-            //TODO: deleteReminder()
-            Log.i("reminder", "deleteReminder: id: " + reminderId)
+        private fun deleteReminder(reminder: Reminder) {
+            val localDB = LocalDatabase.getInstance(this.context)
+            //abrimos hilo para operar en base de datos
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    Log.i("reminder", "deleteReminder: id: " + reminder.ReminderId)
+                    localDB.reminderDao().delete(reminder)
+                } catch (ex: Exception) {
+                    Log.i("CATCH", "deleteReminder: " + ex.message)
+                }
+            }
+            Toast.makeText(context.applicationContext, R.string.toast_reminderDeletedSuccess, Toast.LENGTH_SHORT).show()
+            onReminderDeletedOrEdited()
         }
+
+        /**
+         * Al borrar o editar un reminder, recargamos el recycler de taskDetails
+         */
+         fun onReminderDeletedOrEdited() {
+            taskDetailsDialog.loadRecyclerReminders()
+         }
 
     }
 

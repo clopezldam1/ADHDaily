@@ -31,7 +31,7 @@
     <string name="toast_taskCreatedSuccess">Tarea creada con éxito</string>
     <string name="txt_taskDetailsTitle">Tarea</string>
     <string name="title_taskDetails">Detalles de la tarea</string>
-    <string name="toast_taskEditedSuccess">Tarea actualizada correctamente</string>
+    <string name="toast_taskEditedSuccess">Tarea actualizada</string>
     <string name="toast_taskDeletedSuccess">Tarea eliminada</string>
     <string name="btn_confirmDeleteTask">Confirmar</string>
     <string name="btn_cancelDeleteTask">Cancelar</string>
@@ -44,4 +44,7 @@
     <string name="timeUnitValue_day">día/s</string>
     <string name="timeUnitValue_week">semana/s</string>
     <string name="timeUnitValue_month">mes/es</string>
+    <string name="toast_reminderDeletedSuccess">Recordatorio eliminado</string>
+    <string name="toast_reminderCreatedSuccess">Recordatorio creado</string>
+    <string name="toast_reminderEditedSuccess">Recordatorio actualizado</string>
 </resources>

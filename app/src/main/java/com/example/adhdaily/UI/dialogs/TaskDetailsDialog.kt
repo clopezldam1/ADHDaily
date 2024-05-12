@@ -341,10 +341,10 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                 txtTitle.text = titulo
                 txtDesc.text = descripcion
                 txtStartDate.text = startDate.toString()
-                txtStartTime.text = startTime.toString()
                 if (startTime == null) {
                     checkAllDay.isChecked = true
                 } else {
+                    txtStartTime.text = startTime.toString()
                     checkAllDay.isChecked = false
                 }
                 setTaskColorTag()
@@ -365,19 +365,19 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
         reminderPickerDialog.setOnDismissListener {
             loadRecyclerReminders()
         }
-
     }
 
     /**
      * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
-    private fun loadRecyclerReminders() {
-        // Obtener la lista de tareas en un hilo de fondo
+     fun loadRecyclerReminders() {
+         val taskDetailsDialog: TaskDetailsDialog = this
+
         GlobalScope.launch(Dispatchers.IO) {
             reminderList = getReminderListTask()
             withContext(Dispatchers.Main) {
                 if (!reminderList.isEmpty()) {
-                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList)
+                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList, taskDetailsDialog)
                 } else {
                     recyclerReminders.adapter = null
                 }
