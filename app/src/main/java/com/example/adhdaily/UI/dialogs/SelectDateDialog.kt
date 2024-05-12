@@ -80,7 +80,7 @@ class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTh
                 txtSelectDate.setText(formattedDate)
 
                 //modificar selectedDate en la activity (variable global)
-                val pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                val pattern = MainActivity().dateTimeFormatter
                 MainActivity().selectedDate = LocalDate.parse(formattedDate, pattern)
             },
             calendar.get(Calendar.YEAR),

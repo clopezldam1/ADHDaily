@@ -340,7 +340,8 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                 //rellenar form con datos de la tarea
                 txtTitle.text = titulo
                 txtDesc.text = descripcion
-                txtStartDate.text = startDate.toString()
+                //TODO: formatear esta fehca de inicio pls
+                txtStartDate.text = startDate.toString() //format(MainActivity().dateTimeFormatter)
                 if (startTime == null) {
                     checkAllDay.isChecked = true
                 } else {
@@ -377,7 +378,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
             reminderList = getReminderListTask()
             withContext(Dispatchers.Main) {
                 if (!reminderList.isEmpty()) {
-                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList, taskDetailsDialog)
+                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList, taskDetailsDialog, task)
                 } else {
                     recyclerReminders.adapter = null
                 }

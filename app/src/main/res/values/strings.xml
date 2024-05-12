@@ -38,7 +38,7 @@
     <string name="txt_confirmDeleteTaskTitle">Eliminar tarea</string>
     <string name="txt_confirmDeleteTaskText">¿Seguro que desea eliminar esta tarea? Esta acción no se podrá deshacer.</string>
     <string name="txt_createReminderHint">Recordarme....</string>
-    <string name="txt_reminderFormBefore">antes.</string>
+    <string name="txt_reminderFormBefore">antes</string>
     <string name="timeUnitValue_min">minuto/s</string>
     <string name="timeUnitValue_hour">hora/s</string>
     <string name="timeUnitValue_day">día/s</string>

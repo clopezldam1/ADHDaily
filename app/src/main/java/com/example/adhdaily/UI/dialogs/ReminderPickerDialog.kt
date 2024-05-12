@@ -17,6 +17,7 @@ import com.example.adhdaily.utils.ReminderHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
 class ReminderPickerDialog(context: Context, private val selectedReminderId : Long?, selectedTask: Task) : Dialog(context, R.style.CustomDialogTheme1){
@@ -79,6 +80,8 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
      */
     private fun saveReminder() {
         buildReminderText()
+        reminderTimeValue = txtTimeValue.text.toString().toLong()
+        reminderTimeUnitId = spinnerTimeUnitSelector.selectedItemId
         if (selectedReminderId != null) {
             //editar reminder existente
             updateReminder()
@@ -118,15 +121,20 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
      * cuando vas a EDITAR un recordatorio
      */
     private fun loadReminderDetails() {
+        Log.i("reminder", "loadReminderDetails: 1")
         //llamamos a getSelectedTask y no hacemos nada hasta que no termine de realizar la consulta y meta el valor en la variable global
         getSelectedReminder { reminder ->
             reminder?.let {
+                Log.i("reminder", "loadReminderDetails: 2")
                 //almacenar datos del reminder en variables globales
                 reminderText = reminder.Text
                 reminderDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
                 reminderTimeValue = reminder.TimeValue
                 reminderTimeUnitId = reminder.TimeUnitId
                 taskFk = reminder.TaskId_FK
+
+                Log.i("reminder", "loadReminderDetails: reminder.TimeValue:" + reminder.TimeValue)
+                Log.i("reminder", "loadReminderDetails: reminderTimeValue:" + reminderTimeValue)
 
                 //rellenar form con datos del recordatorio
                 txtTimeValue.setText(reminderTimeValue.toString())
@@ -143,10 +151,12 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         //abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val reminder = localDB.reminderDao().selectReminderById(reminderId)
+                val reminder = localDB.reminderDao().selectReminderById(selectedReminderId!!)
+                Log.i("reminder", "getSelectedReminder:  CONSULTA" +  reminder.ReminderId)
                 callback(reminder)
             } catch (ex: Exception) {
-                Log.i("CATCH", "getSelectedReminder: " + ex.message)
+                Log.e("CATCH", "getSelectedReminder: " + ex.message)
+                callback(null)
             }
         }
     }
@@ -156,7 +166,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
      */
     private fun createReminder() {
         val localDB = LocalDatabase.getInstance(this.context)
-        //abrimos hilo para operar en base de datos
+
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 Log.i("reminder", "createReminder: taskFK: " + taskFk)
@@ -173,7 +183,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
      */
     private fun updateReminder() {
         val localDB = LocalDatabase.getInstance(this.context)
-        //abrimos hilo para operar en base de datos
+
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val reminder = Reminder(selectedReminderId!!, reminderText, reminderDateTime.toString(), reminderTimeValue, reminderTimeUnitId, taskFk)
