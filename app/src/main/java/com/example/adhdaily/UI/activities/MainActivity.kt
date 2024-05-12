@@ -25,6 +25,7 @@ import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -45,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     val today = LocalDate.now().format(dateTimeFormatter)
     var selectedDate: LocalDate = LocalDate.parse(today, dateTimeFormatter) //por defecto, al abrir la app está seleccionada la fecha de hoy
     var time24hFormat: Boolean = true //by default, times are in 24h format
+
+    val defaultStartTimeOfTask: LocalTime = LocalTime.MIDNIGHT //si una tarea no tiene hora de inicio, se entenderá como que empieza a las 00:00 (recordatorios se settean según esto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

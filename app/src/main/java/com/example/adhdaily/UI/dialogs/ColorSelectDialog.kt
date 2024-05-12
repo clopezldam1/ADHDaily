@@ -22,7 +22,13 @@ class ColorSelectDialog(context: Context, private val newTaskFragment: NewTaskFr
         //Configurar binding elementos dialog
         btnSelectColor = findViewById<Button>(R.id.btn_selectColor)
         btnSelectColor.setOnClickListener {
-            selectColorTagForNewTask()
+            if(taskDetailsDialog == null) {
+                //PARA CREATE TASK
+                selectColorTagForNewTask()
+            }else {
+                //PARA EDIT TASK
+                selectColorTagForEditTask()
+            }
         }
 
         radioGroupColores =  findViewById<RadioGroup>(R.id.radioGroup)

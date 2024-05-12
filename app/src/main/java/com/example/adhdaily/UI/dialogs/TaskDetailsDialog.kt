@@ -14,9 +14,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
+import com.example.adhdaily.UI.recyclers.RemindersTaskRecycler
 import com.example.adhdaily.model.database.LocalDatabase
+import com.example.adhdaily.model.entity.Reminder
 import com.example.adhdaily.model.entity.Task
 import com.example.adhdaily.utils.ColorTagHelper
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +46,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
     private var touchTargetBtnGoBack: CardView
     private var touchTargetBtnDeleteTask: CardView
     private var touchTargetBtnEditTask: CardView
+    private var btnAddReminder: LinearLayout
 
     var imgvwColorTagIcon: ImageView
     var txtColorTagName: TextView
@@ -50,8 +55,9 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
     var checkAllDay: CheckBox
     var txtDesc: TextView
     var txtTitle: TextView
+    var recyclerReminders: RecyclerView
 
-    //VARIABLES DEL FRAGMENT:
+    //VARIABLES DEL DIALOG:
     var titulo: String = ""
     var descripcion: String? = null
     var startDate: LocalDate = MainActivity().selectedDate
@@ -60,6 +66,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
     var endTime: String? = null
     var completed: Boolean = false
     var colorTagId: Long = 1
+    var reminderList: List<Reminder> = emptyList()
 
     var task: Task //tarea a visualizar o editar
 
@@ -141,6 +148,14 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
             btnGoBack.callOnClick()
         }
 
+        recyclerReminders = findViewById(R.id.recycler_remindersInTask_taskDetails)
+        recyclerReminders.layoutManager = LinearLayoutManager(context)
+
+        btnAddReminder = findViewById(R.id.btn_addReminder_taskDetails)
+        btnAddReminder.setOnClickListener{
+            openReminderPickerDialog(null)
+        }
+
         //Rellenar formulario con datos de la tarea
         loadTaskDetails()
     }
@@ -210,7 +225,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
 
                 //Modificamos selectedDate en la activity (variable global)
                 MainActivity().selectedDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
-                //Log.i("PATATA", "openDatePickerDialog- SELECTED DATE: " +  MainActivity().selectedDate) //Sun Apr 21 11:21:30 GMT+02:00 2024
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -223,11 +237,17 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
      * Abre el diálogo que establece el startTime de la tarea a editar
      */
     private fun openHourPickerDialogStartTime() {
-
-        //TODO: Obtener la hora ESTABLECIDA ORIGNALMENTE EN LA TAREA para preseleccionarla
-        val cal = Calendar.getInstance()
-        val hour = cal.get(Calendar.HOUR_OF_DAY)
-        val minute = cal.get(Calendar.MINUTE)
+        //Obtener la hora ESTABLECIDA ORIGNALMENTE EN LA TAREA para preseleccionarla
+        var hour = 0
+        var minute = 0
+        if(startTime == null){
+            val cal = Calendar.getInstance()
+            hour = cal.get(Calendar.HOUR_OF_DAY)
+            minute = cal.get(Calendar.MINUTE)
+        }else{
+            hour = startTime!!.hour
+            minute = startTime!!.minute
+        }
 
         //crea TimePickerDialog para seleccionar la hora
         val timePickerDialog = TimePickerDialog(
@@ -291,12 +311,10 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                 //consultar tarea
                 task = localDB.taskDao().selectTaskById(taskId)
                 callback(task)
-                Log.i("details", "loadTaskDetails: TASK: " + task.toString())
             } catch (ex: Exception) {
                 Log.i("CATCH", "addTrialTask: " + ex.message)
                 callback(null)
             }
-
         }
     }
 
@@ -319,10 +337,6 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                 completed = task.Completed
                 colorTagId = task.ColorTag_FK
 
-                Log.i("details", "loadTaskDetails: task: " + task.toString())
-                Log.i("details", "loadTaskDetails: txt_title: " + txtTitle.text)
-                Log.i("details", "loadTaskDetails: title: " + task.Title)
-
                 //rellenar form con datos de la tarea
                 txtTitle.text = titulo
                 txtDesc.text = descripcion
@@ -334,8 +348,51 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
                     checkAllDay.isChecked = false
                 }
                 setTaskColorTag()
-
+                loadRecyclerReminders()
             }
+        }
+    }
+
+    /**
+     * Al darle al botón de añadir recordatorio, abrir el diálogo para
+     * seleccionar un recordatorio y, cuando ese diálogo se cierre, recargar
+     * el recycler de recordatorios.
+     */
+    private fun openReminderPickerDialog(selectedReminderId: Long?){
+        Log.i("reminder", "openReminderPickerDialog: ENTRADO EN OPEN REMINDER PICKER")
+        val reminderPickerDialog = ReminderPickerDialog(context, selectedReminderId, task)
+        reminderPickerDialog.show()
+
+        reminderPickerDialog.setOnDismissListener {
+            loadRecyclerReminders()
+        }
+
+    }
+
+    /**
+     * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
+     */
+    private fun loadRecyclerReminders() {
+        // Obtener la lista de tareas en un hilo de fondo
+        GlobalScope.launch(Dispatchers.IO) {
+            reminderList = getReminderListTask()
+            withContext(Dispatchers.Main) {
+                if (!reminderList.isEmpty()) {
+                    recyclerReminders.adapter = RemindersTaskRecycler(reminderList)
+                } else {
+                    recyclerReminders.adapter = null
+                }
+            }
+        }
+    }
+
+    /**
+     * Realizar consulta para obtener la lista de recordatorios de la tarea (ejecutar en hilo a parte)
+     */
+    private suspend fun getReminderListTask(): List<Reminder> {
+        return withContext(Dispatchers.IO) {
+            val localDatabase: LocalDatabase = LocalDatabase.getInstance(context)
+            localDatabase.reminderDao().selectRemindersOnTask(taskId)
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.adhdaily.UI.activities.AppSettingsActivity
 import com.example.adhdaily.model.DAO.ColorTagsTaskDAO
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 @Database(entities = [Task::class, Settings::class, Reminder::class, NotificationSettings::class, ColorTagsTask::class],
-        version = 6)
+        version = 8)
 
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDAO
@@ -40,6 +41,19 @@ abstract class LocalDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: LocalDatabase? = null
 
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Reminder RENAME COLUMN Title TO Text")
+            }
+        }
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Reminder RENAME COLUMN DateTime TO DateTimeReminder")
+                database.execSQL("ALTER TABLE Reminder ADD COLUMN TimeValue INTEGER")
+                database.execSQL("ALTER TABLE Reminder ADD COLUMN TimeUnitId INTEGER")
+            }
+        }
+
         fun getInstance(context: Context): LocalDatabase {
             return INSTANCE ?: synchronized(this) {
                 val databaseFile = context.getDatabasePath(DB_ADHDAILY)
@@ -48,7 +62,9 @@ abstract class LocalDatabase : RoomDatabase() {
                         context.applicationContext,
                         LocalDatabase::class.java,
                         DB_ADHDAILY
-                    ).build()
+                    )
+                    //.addMigrations(MIGRATION_7_8)
+                    .build()
                 } else {
                     // La base de datos no existe, crearla
                     INSTANCE = Room.databaseBuilder(

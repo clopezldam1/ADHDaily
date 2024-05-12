@@ -16,8 +16,10 @@ import java.time.LocalDateTime
 data class Reminder (
     @PrimaryKey(autoGenerate = true) var ReminderId: Long,
 
-    @ColumnInfo(name = "Title") var Text: String?,
-    @ColumnInfo(name = "DateTime") var DateTime: String,
+    @ColumnInfo(name = "Text") var Text: String,
+    @ColumnInfo(name = "DateTimeReminder") var DateTimeReminder: String,
+    @ColumnInfo(name = "TimeValue") var TimeValue: Long,
+    @ColumnInfo(name = "TimeUnitId") var TimeUnitId: Long, //id de la lista del spinner de reminderPicker
 
     @ColumnInfo(name = "TaskId_FK") var TaskId_FK: Long
 )

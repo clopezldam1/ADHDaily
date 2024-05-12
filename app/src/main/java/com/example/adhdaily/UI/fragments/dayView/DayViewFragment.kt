@@ -11,8 +11,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -203,7 +201,7 @@ class DayViewFragment : Fragment(){
      * Método que realiza la carga del RecyclerView (consulta en un hilo a parte)
      */
     private fun loadRecyclerDayView() {
-        recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
+        //recyclerTaskListDayView.layoutManager = LinearLayoutManager(requireContext())
         val dayViewFragment: DayViewFragment = this
 
         // Obtener la lista de tareas en un hilo de fondo

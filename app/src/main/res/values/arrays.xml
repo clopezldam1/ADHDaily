@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_unit_values_reminders">
+        <item>@string/timeUnitValue_min</item>
+        <item>@string/timeUnitValue_hour</item>
+        <item>@string/timeUnitValue_day</item>
+        <item>@string/timeUnitValue_week</item>
+        <item>@string/timeUnitValue_month</item>
+    </string-array>
+</resources>
