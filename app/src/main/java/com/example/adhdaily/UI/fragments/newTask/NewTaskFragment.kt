@@ -66,7 +66,6 @@ class NewTaskFragment : Fragment() {
     var endTime: String? = null
     var completed: Boolean = false
     var colorTagId: Long = 1
-    var reminderList: List<Reminder> = emptyList()
 
     lateinit var newTask: Task //la nueva tarea a crear
 
@@ -78,7 +77,6 @@ class NewTaskFragment : Fragment() {
         //INFLAR VISTA:
         _binding = FragmentNewTaskBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        navController = (activity as MainActivity).navController
 
         //INICIALIZAR COMPONENTES DE LA VISTA:
         layoutSelectColor = binding.layoutOpenColorTagDialog
@@ -144,6 +142,7 @@ class NewTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         //deshabilitar el boton selectDate del toolbar cuando se cierra este fragment
         /*TODO: disable the selectDate button from toolbar.
         //This code rn explodes bc its not able to inflate the mainActivity properly, u gotta find a way of getting the button that actually grabs the new instance of the button each time the activity is recreated
@@ -192,6 +191,7 @@ class NewTaskFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             titulo = txtTitle.text.toString()
             descripcion = txtDesc.text.toString()
+            //val startDate = txtStartDate.text.toString()
             try {
                 newTask = Task(newTaskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
                 localDB.taskDao().insert(newTask)
@@ -205,6 +205,7 @@ class NewTaskFragment : Fragment() {
 
         Toast.makeText(requireContext().applicationContext, R.string.toast_taskCreatedSuccess, Toast.LENGTH_SHORT).show()
 
+        navController = (activity as MainActivity).navController
         //TODO: redirigir a algún lado después de crear esa tarea, no se a donde lol igual al month view?
         navController.navigate(R.id.navigation_dayView) //cambiar a month view cuando esté hecho
     }
@@ -231,14 +232,10 @@ class NewTaskFragment : Fragment() {
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
 
-                // Formatear la fecha seleccionada al formato deseado
                 val formattedDate = (activity as MainActivity).simpleDateFormat.format(selectedDate.time)
-
-                // Establecer la fecha formateada en el EditText
                 startDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
                 txtStartDate.setText(formattedDate)
 
-                //Modificamos selectedDate en la activity (variable global)
                 MainActivity().selectedDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
             },
             calendar.get(Calendar.YEAR),
@@ -253,7 +250,6 @@ class NewTaskFragment : Fragment() {
      * Abre el diálogo que establece el startTime de la nueva tarea
      */
     private fun openHourPickerDialogStartTime() {
-
         // Obtener la hora actual del sistema para preseleccionarla
         val cal = Calendar.getInstance()
         val hour = cal.get(Calendar.HOUR_OF_DAY)
@@ -264,7 +260,6 @@ class NewTaskFragment : Fragment() {
             requireContext(),
             R.style.CustomTimePickerDialogTheme,
             TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-                // Actualizar el TextView con la hora seleccionada
                 startTime = LocalTime.parse(String.format("%02d:%02d", selectedHour, selectedMinute))
                 txtStartTime.text = startTime.toString()
             },
@@ -272,7 +267,6 @@ class NewTaskFragment : Fragment() {
             minute,
             MainActivity().time24hFormat
         )
-
         timePickerDialog.show()
     }
 
