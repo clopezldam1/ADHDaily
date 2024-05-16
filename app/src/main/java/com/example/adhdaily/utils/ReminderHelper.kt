@@ -20,25 +20,6 @@ import kotlin.time.TimedValue
 class ReminderHelper(private val context: Context) {
 
     /**
-     * Obtiene el texto correspondiente a un timeUnitId (según su posición en el array)
-     *
-     * 0=min,1=hour,2=day,3=week,4=month
-     */
-    fun getTimeUnitById(timeUnitId: Long): String{
-        val timeUnitValuesArray = context.resources.getStringArray(R.array.time_unit_values_reminders)
-        return timeUnitValuesArray[timeUnitId.toInt()]
-    }
-
-    /**
-     * Obtiene el array de timeUnits para cargarlo en el selector
-     *
-     * 0=min,1=hour,2=day,3=week,4=month
-     */
-    fun getTimeUnitArray(): Array<String> {
-        return context.resources.getStringArray(R.array.time_unit_values_reminders)
-    }
-
-    /**
      * Obtenemos el LocalDateTime del inicio de la tarea,
      * restamos el tiempo del recordatorio para obtener
      * el LocalDateTime del recordatorio y lo actualizamos
@@ -51,7 +32,6 @@ class ReminderHelper(private val context: Context) {
             startTimeTask = MainActivity().defaultStartTimeOfTask //default startTime of tasks
         }
         val startDateTimeTask = LocalDateTime.of(startDateTask, startTimeTask)
-        Log.i("reminder", "setReminderDateTime: START TASK:  " + startDateTimeTask)
 
         val reminderDateTime: LocalDateTime = when (timeUnitId) {
             0L -> startDateTimeTask.minusMinutes(timeValue)
@@ -62,27 +42,23 @@ class ReminderHelper(private val context: Context) {
             else -> startDateTimeTask //si no se puede calcular su hora, se le pone la de inicio de la tarea
         }
 
-        Log.i("reminder", "setReminderDateTime: timeUnit: " + timeUnitId)
-        Log.i("reminder", "setReminderDateTime: timeValue: " + timeValue)
-        Log.i("reminder", "setReminderDateTime: REMINDER: " + reminderDateTime)
-        /*
-        val localDB = LocalDatabase.getInstance(this.context)
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                Log.i("reminder", "setReminderDateTime: UPDATE " + reminderDateTime)
-                localDB.reminderDao().updateDateTimeReminder(reminderId, reminderDateTime.toString())
-            }catch (ex:Exception){
-                Log.e("CATCH", "setReminderDateTime: " + ex.message)
-            }
-        }
-         */
-
-
-        val notificationHelper = NotificationHelper(context)
-        notificationHelper.setReminderNotification(reminderDateTime)
-
         return reminderDateTime
     }
 
+    /**
+     * Crear notificación al crear un recordatorio
+     */
+    fun createReminderNotif( selectedTask: Task, reminderId: Long, reminderDateTime: LocalDateTime,){
+        val notificationHelper = NotificationHelper(context)
+        notificationHelper.scheduleNotification(selectedTask, reminderId, reminderDateTime)
+    }
+
+    /**
+     * Actualizar notificacion al actualizar recordatorio
+     */
+    fun updateReminderNotif( selectedTask: Task, reminderId: Long, oldReminderDateTime: LocalDateTime, newReminderDateTime: LocalDateTime){
+        val notificationHelper = NotificationHelper(context)
+        notificationHelper.updateNotification(selectedTask, reminderId, oldReminderDateTime, newReminderDateTime)
+    }
 
 }

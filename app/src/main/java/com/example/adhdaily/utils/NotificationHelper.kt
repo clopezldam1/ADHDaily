@@ -1,6 +1,5 @@
 package com.example.adhdaily.utils
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.Notification
@@ -13,15 +12,67 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
+import com.example.adhdaily.model.entity.Task
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.ZoneOffset
 
 class NotificationHelper(private val context: Context): MainActivity() {
+
+    fun updateNotification(task: Task, reminderId: Long, oldRemDateTime: LocalDateTime, newRemDateTime: LocalDateTime) {
+        // Cancelar la notificación existente
+        cancelNotification(task, reminderId, oldRemDateTime)
+
+        // Programar una nueva notificación con la hora actualizada
+        scheduleNotification(task, reminderId, newRemDateTime)
+    }
+
+    @SuppressLint("ScheduleExactAlarm")
+    fun scheduleNotification(task: Task, reminderId: Long, remDateTime: LocalDateTime) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, NotificationReceiver::class.java).apply {
+            putExtra("taskTitle", task.Title)
+            putExtra("taskStartTime", task.StartTime)
+            putExtra("taskIconResId", task.ColorTag_FK) // Si tienes un ID de recurso para el icono
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val triggerTimeMillis = remDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                triggerTimeMillis,
+                pendingIntent
+            )
+        } else {
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                triggerTimeMillis,
+                pendingIntent
+            )
+        }
+    }
+
+    fun cancelNotification(task: Task, reminderId: Long, oldRemDateTime: LocalDateTime) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, NotificationReceiver::class.java).apply {
+            putExtra("title", task.Title)
+            putExtra("desc", task.Desc)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, reminderId.toInt(), intent,  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        // Cancelar la alarma existente
+        alarmManager.cancel(pendingIntent)
+
+        // Eliminar cualquier instancia pendiente del PendingIntent
+        pendingIntent.cancel()
+    }
+
+    /*
     fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -63,15 +114,17 @@ class NotificationHelper(private val context: Context): MainActivity() {
 
         return builder.build()
     }
+    */
 
+    /*
     @SuppressLint("ScheduleExactAlarm")
     fun scheduleNotification(context: Context, notificationTime: Long, notificationId: Int) {
         Log.i("notif", "scheduleNotification: notificationTime" + notificationTime)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, NotifReminderReceiver::class.java)
+        val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra("ADHDailyReminders", notificationId) // Puedes pasar información adicional si es necesario
         val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent)
     }
-
+     */
 }

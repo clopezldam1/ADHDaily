@@ -84,17 +84,17 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
      */
     private fun saveReminder() {
         buildReminderText()
-
-        //timeValue = txtTimeValue.text.toString().toLong()
-        //timeUnitId = spinnerTimeUnitSelector.selectedItemId
+        val oldReminderDateTime = remDateTime
         buildReminderDateTime()
 
         if (selectedReminderId != null) {
             //editar reminder existente
             updateReminder()
+            updateNotification(oldReminderDateTime)
         } else {
             //crear nuevo reminder
             createReminder()
+            createNotification()
         }
 
         this.dismiss() //cerrar después de guardar
@@ -213,14 +213,13 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         }
     }
 
-    /**
-     * Obtiene el texto de un TimeValueText
-     * a partir de un TimeValueId
-     */
-    private fun getTimeUnitText(timeValueId: Long): String{
+    private fun createNotification(){
         val reminderHelper = ReminderHelper(context)
-        return reminderHelper.getTimeUnitById(timeValueId)
+       reminderHelper.createReminderNotif(selectedTask,remId,remDateTime)
     }
 
-
+    private fun updateNotification(oldReminderDateTime: LocalDateTime){
+        val reminderHelper = ReminderHelper(context)
+        reminderHelper.updateReminderNotif(selectedTask, remId, oldReminderDateTime, remDateTime)
+    }
 }

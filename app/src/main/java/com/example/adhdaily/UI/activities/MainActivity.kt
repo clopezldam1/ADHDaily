@@ -138,9 +138,6 @@ open class MainActivity : AppCompatActivity() {
      * Crear canal para notificiones para recordatorios
      */
     private fun createNotificationChannel() {
-        //val notificationHelper = NotificationHelper(this)
-        //notificationHelper.createNotificationChannel()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val name = this.resources.getString(R.string.notifChannelNameReminders)
