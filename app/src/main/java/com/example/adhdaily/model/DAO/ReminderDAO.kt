@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.adhdaily.model.entity.Reminder
 import com.example.adhdaily.model.entity.Task
+import java.time.LocalDateTime
 
 @Dao
 interface ReminderDAO {
@@ -30,6 +31,10 @@ interface ReminderDAO {
 
     @Update
     fun update(reminder: Reminder)
+
+    @Query("UPDATE Reminder SET DateTimeReminder = :dateTimeReminder WHERE ReminderId = :reminderId;")
+    fun updateDateTimeReminder( reminderId: Long, dateTimeReminder: String)
+    //UPDATE Reminder SET DateTimeReminder = '2024-06-12T17:16:37.497120' WHERE ReminderId = 15;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(reminder: Reminder)

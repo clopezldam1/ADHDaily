@@ -47,4 +47,6 @@
     <string name="toast_reminderDeletedSuccess">Recordatorio eliminado</string>
     <string name="toast_reminderCreatedSuccess">Recordatorio creado</string>
     <string name="toast_reminderEditedSuccess">Recordatorio actualizado</string>
+    <string name="notifChannelNameReminders">ADHDailyRemainders</string>
+    <string name="notifChannelDescReminders">Recordatorio</string>
 </resources>

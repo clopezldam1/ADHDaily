@@ -5,12 +5,16 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -158,6 +162,7 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
 
         //Rellenar formulario con datos de la tarea
         loadTaskDetails()
+
     }
 
     /**
@@ -268,10 +273,11 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
     private fun editTask(){
         val localDB = LocalDatabase.getInstance(this.context)
 
-        //abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
             titulo = txtTitle.text.toString()
             descripcion = txtDesc.text.toString()
+
+            //TODO: actualizar dateTime de todos los recordatorios de esa task
 
             try {
                 task = Task(taskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
@@ -310,9 +316,10 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
             try {
                 //consultar tarea
                 task = localDB.taskDao().selectTaskById(taskId)
+                Log.i("detail", "getSelectedTask: " + task.toString())
                 callback(task)
             } catch (ex: Exception) {
-                Log.i("CATCH", "addTrialTask: " + ex.message)
+                Log.i("CATCH", "getSelectedTask: " + ex.message)
                 callback(null)
             }
         }
@@ -325,32 +332,46 @@ class TaskDetailsDialog(context: Context, private val taskId: Long, private val 
         //llamamos a getSelectedTask y no hacemos nada hasta que no termine de realizar la consulta y meta el valor en la variable global
         getSelectedTask { task ->
             task?.let {
+                Log.i("detail", "loadTaskDetails: " + task.toString())
+
                 //almacenar datos de la tarea en variables globales
                 titulo = task.Title
                 descripcion = task.Desc
                 startDate = LocalDate.parse(task.StartDate)
-                if (startTime != null) {
+                if (task.StartTime != "null") {
                     startTime = LocalTime.parse(task.StartTime)
                 }
                 endDate = task.EndDate
                 endTime = task.EndTime
                 completed = task.Completed
                 colorTagId = task.ColorTag_FK
-
-                //rellenar form con datos de la tarea
-                txtTitle.text = titulo
-                txtDesc.text = descripcion
-                //TODO: formatear esta fehca de inicio pls
-                txtStartDate.text = startDate.toString() //format(MainActivity().dateTimeFormatter)
-                if (startTime == null) {
-                    checkAllDay.isChecked = true
-                } else {
-                    txtStartTime.text = startTime.toString()
-                    checkAllDay.isChecked = false
-                }
-                setTaskColorTag()
-                loadRecyclerReminders()
             }
+
+            val handler = Handler(Looper.getMainLooper())
+            handler.post {
+                try {
+                    //rellenar form con datos de la tarea
+                    txtTitle.text = titulo
+                    txtDesc.text = descripcion
+                    txtStartDate.text = startDate.toString()
+                    Log.i("detail", "loadTaskDetails: titulo " + txtStartDate.text)
+
+                    if (task?.StartTime == "null") {
+                        checkAllDay.isChecked = true
+                        txtStartTime.isEnabled = false
+                    } else {
+                        txtStartTime.text = startTime.toString()
+                        txtStartTime.isEnabled = true
+                        checkAllDay.isChecked = false
+                    }
+
+                    setTaskColorTag()
+                    loadRecyclerReminders()
+                } catch (ex: Exception) {
+                    Log.e("CATCH", "loadTaskDetails: " + ex.message)
+                }
+            }
+
         }
     }
 

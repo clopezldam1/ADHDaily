@@ -1,5 +1,6 @@
 package com.example.adhdaily.UI.activities
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -23,6 +24,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
+import com.example.adhdaily.utils.NotificationHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
 import java.time.LocalTime
@@ -30,7 +32,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
@@ -89,6 +91,20 @@ class MainActivity : AppCompatActivity() {
             gotoAjustes()
         }
 
+        //Comprobar que tenemos permiso de notifs concedido
+        with(NotificationManagerCompat.from(this)) {
+            if (ActivityCompat.checkSelfPermission(
+                    this@MainActivity,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS), 123
+                )
+            }
+        }
+
     }
 
     /***
@@ -117,52 +133,26 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
-    //TODO: convertir en notificacion emergente
-    //TODO: hacer que sean stackables (same group)
-    //TODO: hacer que tengan un botón de marcar como hecho (IMPORTANT)
-    //TODO: hacer que tengan otro boton para aplazar el reminder
-    //Crear nueva notificación de recordatorio
-    fun createReminderNotif(taskTitle: String, taskDesc: String) {
-        var builder = NotificationCompat.Builder(this, "com.example.adhdaily.reminders")
-            .setSmallIcon(R.drawable.app_icon_nobg)
-            .setColorized(true)
-            .setContentTitle(taskTitle)
-            .setContentText(taskDesc)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            //.setGroup("reminders")
-            //.setGroupSummary(true)
 
-        //Comprobar que tenemos permiso de notifs concedido
-        with(NotificationManagerCompat.from(this)) {
-            if (ActivityCompat.checkSelfPermission(
-                    this@MainActivity,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 123)
-            }
-
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(1, builder.build())
-        }
-    }
-
-    //Crear canal para notificiones para recordatorios
+    /**
+     * Crear canal para notificiones para recordatorios
+     */
     private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because the NotificationChannel class is not in the Support Library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "ADHDailyReminders"
-            val descriptionText = "Calendario para gestionar tareas"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("com.example.adhdaily.reminders", name, importance).apply {
-                description = descriptionText
-                enableLights(true)
-                lightColor = Color.BLUE
-            }
+        //val notificationHelper = NotificationHelper(this)
+        //notificationHelper.createNotificationChannel()
 
-            //NotificationChannelGroup("com.example.adhdaily.reminders", "reminders")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val name = this.resources.getString(R.string.notifChannelNameReminders)
+            val descriptionText = this.resources.getString(R.string.notifChannelDescReminders)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+
+            val channel =
+                NotificationChannel("com.example.adhdaily.reminders", name, importance).apply {
+                    description = descriptionText
+                    enableLights(true)
+                    lightColor = Color.BLUE
+                }
 
             // Register the channel with the system.
             val notificationManager: NotificationManager =

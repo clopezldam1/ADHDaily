@@ -7,8 +7,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.SpinnerAdapter
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import com.example.adhdaily.R
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Reminder
@@ -17,10 +17,9 @@ import com.example.adhdaily.utils.ReminderHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
-class ReminderPickerDialog(context: Context, private val selectedReminderId : Long?, selectedTask: Task) : Dialog(context, R.style.CustomDialogTheme1){
+class ReminderPickerDialog(context: Context, private val selectedReminderId : Long?, private val selectedTask: Task) : Dialog(context, R.style.CustomDialogTheme1){
 
     //VARIABLES DE LA VISTA
     var btnConfirmar: Button
@@ -29,11 +28,11 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
     var spinnerTimeUnitSelector: Spinner
 
     //VARIABLES DEL FRAGMENT:
-    var reminderId: Long = 0 //en el init, segun editemos o creemos, le damos un id u otro
-    var reminderText: String = ""
-    var reminderDateTime: LocalDateTime = LocalDateTime.now()
-    var reminderTimeValue: Long = 0
-    var reminderTimeUnitId: Long = 0 //id de la lista del selector
+    var remId: Long = 0 //en el init, segun editemos o creemos, le damos un id u otro
+    var remText: String = ""
+    var remDateTime: LocalDateTime = LocalDateTime.now()
+    var timeValue: Long = 5
+    var timeUnitId: Long = 0 //id de la lista del selector
     var taskFk: Long = selectedTask.TaskId
 
     init{
@@ -51,6 +50,12 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         }
 
         txtTimeValue = findViewById(R.id.txt_timeValueSelector)
+        txtTimeValue.doOnTextChanged { text, _, _, _ ->
+            if (!txtTimeValue.text.isNullOrEmpty()) {
+                timeValue = txtTimeValue.text.toString().toLong()
+
+            }
+        }
 
         //inicializar selector de timeUnit y ponerle el adapter con el array
         spinnerTimeUnitSelector = findViewById(R.id.spinner_timeUnitSelector)
@@ -66,7 +71,6 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         if (selectedReminderId != null) {
             //editar reminder existente
             loadReminderDetails()
-
         } else {
             //crear nuevo reminder
             setDefaultDataInFields()
@@ -76,21 +80,25 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
 
     /**
      * Según el recordatorio exista o no,
-     * se hará UPDATE o INSERT
+     * se hará UPDATE o INSERTs
      */
     private fun saveReminder() {
         buildReminderText()
-        reminderTimeValue = txtTimeValue.text.toString().toLong()
-        reminderTimeUnitId = spinnerTimeUnitSelector.selectedItemId
+
+        //timeValue = txtTimeValue.text.toString().toLong()
+        //timeUnitId = spinnerTimeUnitSelector.selectedItemId
+        buildReminderDateTime()
+
         if (selectedReminderId != null) {
             //editar reminder existente
             updateReminder()
         } else {
             //crear nuevo reminder
             createReminder()
-            //TODO: PARA AÑADIR REMINDER CUANDO LA TAREA AÚN NO SE HA CREADO -> la fk falla porque intentas referenciarla cuando aún no existe la tareea
         }
+
         this.dismiss() //cerrar después de guardar
+
     }
 
     /**
@@ -101,7 +109,17 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         val timeValue = txtTimeValue.text.toString()
         val timeUnitText = spinnerTimeUnitSelector.selectedItem.toString()
         val strReminderText_before = context.resources.getString(R.string.txt_reminderFormBefore)
-        reminderText = "${timeValue} ${timeUnitText} ${strReminderText_before}"
+        remText = "${timeValue} ${timeUnitText} ${strReminderText_before}"
+    }
+
+    private fun buildReminderDateTime(){
+        timeValue = txtTimeValue.text.toString().toLong()
+        timeUnitId = spinnerTimeUnitSelector.selectedItemId
+
+        //Actualizamos la hora del recordatorio cuando terminamos de editar tarea
+        val reminderHelper = ReminderHelper(context)
+        remDateTime = reminderHelper.setReminderDateTime(timeValue, timeUnitId, selectedTask)
+        Log.i("reminder", "saveReminder: " +  remDateTime.toString())
     }
 
     /**
@@ -127,18 +145,18 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
             reminder?.let {
                 Log.i("reminder", "loadReminderDetails: 2")
                 //almacenar datos del reminder en variables globales
-                reminderText = reminder.Text
-                reminderDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
-                reminderTimeValue = reminder.TimeValue
-                reminderTimeUnitId = reminder.TimeUnitId
+                remText = reminder.Text
+                remDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
+                timeValue = reminder.TimeValue
+                timeUnitId = reminder.TimeUnitId
                 taskFk = reminder.TaskId_FK
 
                 Log.i("reminder", "loadReminderDetails: reminder.TimeValue:" + reminder.TimeValue)
-                Log.i("reminder", "loadReminderDetails: reminderTimeValue:" + reminderTimeValue)
+                Log.i("reminder", "loadReminderDetails: reminderTimeValue:" + timeValue)
 
                 //rellenar form con datos del recordatorio
-                txtTimeValue.setText(reminderTimeValue.toString())
-                spinnerTimeUnitSelector.setSelection(reminderTimeUnitId.toInt())
+                txtTimeValue.setText(timeValue.toString())
+                spinnerTimeUnitSelector.setSelection(timeUnitId.toInt())
             }
         }
     }
@@ -170,7 +188,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 Log.i("reminder", "createReminder: taskFK: " + taskFk)
-                localDB.reminderDao().insertReminderIntoTask(reminderText, reminderDateTime.toString(), reminderTimeValue, reminderTimeUnitId, taskFk)
+                localDB.reminderDao().insertReminderIntoTask(remText, remDateTime.toString(), timeValue, timeUnitId, taskFk)
             } catch (ex: Exception) {
                 Log.i("CATCH", "createReminder: " + ex.message)
             }
@@ -186,7 +204,7 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val reminder = Reminder(selectedReminderId!!, reminderText, reminderDateTime.toString(), reminderTimeValue, reminderTimeUnitId, taskFk)
+                val reminder = Reminder(selectedReminderId!!, remText, remDateTime.toString(), timeValue, timeUnitId, taskFk)
                 localDB.reminderDao().update(reminder)
                 Toast.makeText(context.applicationContext, R.string.toast_reminderEditedSuccess, Toast.LENGTH_SHORT).show()
             } catch (ex: Exception) {

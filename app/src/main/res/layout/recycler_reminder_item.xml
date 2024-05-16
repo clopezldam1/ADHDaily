@@ -49,7 +49,6 @@
                 android:layout_weight="4.75"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/click_ripple_effect_yesbg_2"
                 android:gravity="start|center"
                 android:inputType="text"
                 android:text="10 minutos antes"
