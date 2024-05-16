@@ -89,10 +89,12 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
 
         if (selectedReminderId != null) {
             //editar reminder existente
+            remId = selectedReminderId
             updateReminder()
             updateNotification(oldReminderDateTime)
         } else {
             //crear nuevo reminder
+            getLastReminderId()
             createReminder()
             createNotification()
         }
@@ -213,9 +215,22 @@ class ReminderPickerDialog(context: Context, private val selectedReminderId : Lo
         }
     }
 
+    private fun getLastReminderId(){
+        val localDB = LocalDatabase.getInstance(this.context)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                remId = localDB.reminderDao().selectLastReminderId() +1
+            } catch (ex: Exception) {
+                Log.i("CATCH", "getLastReminderId: " + ex.message)
+            }
+        }
+    }
+
     private fun createNotification(){
         val reminderHelper = ReminderHelper(context)
-       reminderHelper.createReminderNotif(selectedTask,remId,remDateTime)
+        Log.i("notif", "createNotification: REMINDER ID: " + remId)
+        reminderHelper.createReminderNotif(selectedTask,remId,remDateTime)
     }
 
     private fun updateNotification(oldReminderDateTime: LocalDateTime){

@@ -17,9 +17,11 @@ import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Reminder
 import com.example.adhdaily.model.entity.Task
+import com.example.adhdaily.utils.NotificationHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class RemindersTaskRecycler(private val reminderList: List<Reminder>, private val taskDetailsDialog: TaskDetailsDialog, private val selectedTask: Task)
     : RecyclerView.Adapter<RemindersTaskRecycler.ViewHolder>() {
@@ -76,11 +78,14 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>, private va
          */
         private fun OpenEditReminder(reminder: Reminder) {
             Log.i("reminder", "OpenEditReminder: OPEN EDIT ENTER" + reminder.ReminderId)
+            val oldReminderDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
             val reminderPickerDialog = ReminderPickerDialog(context, reminder.ReminderId, selectedTask)
             reminderPickerDialog.show()
 
             reminderPickerDialog.setOnDismissListener {
                 onReminderDeletedOrEdited()
+                val newReminderDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
+                updateReminderNotif(selectedTask,reminder.ReminderId,oldReminderDateTime,newReminderDateTime)
             }
         }
 
@@ -102,6 +107,9 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>, private va
             }
             Toast.makeText(context.applicationContext, R.string.toast_reminderDeletedSuccess, Toast.LENGTH_SHORT).show()
             onReminderDeletedOrEdited()
+
+            val reminderDateTime = LocalDateTime.parse(reminder.DateTimeReminder)
+            deleteReminderNotif(selectedTask, reminder.ReminderId,reminderDateTime)
         }
 
         /**
@@ -110,6 +118,22 @@ class RemindersTaskRecycler(private val reminderList: List<Reminder>, private va
          fun onReminderDeletedOrEdited() {
             taskDetailsDialog.loadRecyclerReminders()
          }
+
+        /**
+         * Actualizar notificacion al actualizar recordatorio
+         */
+        fun updateReminderNotif(selectedTask: Task, reminderId: Long, oldReminderDateTime: LocalDateTime, newReminderDateTime: LocalDateTime){
+            val notificationHelper = NotificationHelper(context)
+            notificationHelper.updateNotification(selectedTask, reminderId, oldReminderDateTime, newReminderDateTime)
+        }
+
+        /**
+         * Cancelar notificacion al eliminar recordatorio
+         */
+        fun deleteReminderNotif( selectedTask: Task, reminderId: Long, oldReminderDateTime: LocalDateTime){
+            val notificationHelper = NotificationHelper(context)
+            notificationHelper.cancelNotification(selectedTask, reminderId, oldReminderDateTime)
+        }
 
     }
 

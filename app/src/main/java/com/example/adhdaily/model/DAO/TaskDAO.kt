@@ -26,6 +26,7 @@ interface TaskDAO {
 
     @Query("SELECT TaskId FROM Task ORDER BY TaskId DESC LIMIT 1;")
     fun selectLastTaskId(): Long
+
     @Query("SELECT * FROM Task WHERE TaskId = :taskId;")
     fun selectTaskById(taskId: Long): Task
 

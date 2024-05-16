@@ -29,6 +29,9 @@ interface ReminderDAO {
     @Query("SELECT * FROM Reminder;")
     fun selectAllReminders(): List<Reminder>
 
+    @Query("SELECT ReminderId FROM Reminder ORDER BY ReminderId DESC LIMIT 1;")
+    fun selectLastReminderId(): Long
+
     @Update
     fun update(reminder: Reminder)
 

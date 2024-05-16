@@ -35,7 +35,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val taskStartTime = intent.getStringExtra("taskStartTime")
         val taskDesc = intent.getStringExtra("taskDesc")
 //        val remId = intent.getStringExtra("remId")
-        val taskIconResId = intent.getIntExtra("taskIconResId", R.drawable.app_icon_bg)
+
 
         val notificationManager = ContextCompat.getSystemService(
             context,
@@ -55,7 +55,7 @@ class NotificationReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE)
 
         val notificationBuilder = NotificationCompat.Builder(context, REMINDER_CHANNEL_ID)
-            .setSmallIcon(taskIconResId)
+            .setSmallIcon(R.drawable.app_icon_bg)
             .setContentTitle(contentTitle)
             .setContentText(taskDesc)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

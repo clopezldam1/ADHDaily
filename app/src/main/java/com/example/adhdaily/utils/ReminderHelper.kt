@@ -50,6 +50,7 @@ class ReminderHelper(private val context: Context) {
      */
     fun createReminderNotif( selectedTask: Task, reminderId: Long, reminderDateTime: LocalDateTime,){
         val notificationHelper = NotificationHelper(context)
+        Log.i("notif", "createReminderNotif: REMINDER ID: " + reminderId)
         notificationHelper.scheduleNotification(selectedTask, reminderId, reminderDateTime)
     }
 
