@@ -49,4 +49,6 @@
     <string name="toast_reminderEditedSuccess">Recordatorio actualizado</string>
     <string name="notifChannelNameReminders">ADHDailyRemainders</string>
     <string name="notifChannelDescReminders">Recordatorio</string>
+    <string name="lbl_markCompleted">Completar</string>
+    <string name="lbl_openApp">Abrir aplicación</string>
 </resources>

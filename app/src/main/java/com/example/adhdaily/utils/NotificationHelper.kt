@@ -22,20 +22,27 @@ import java.time.ZoneOffset
 
 class NotificationHelper(private val context: Context): MainActivity() {
 
+    /**
+     * Para actualizar una notificación, cancelamos la existente
+     * y creamos una nueva
+     */
     fun updateNotification(task: Task, reminderId: Long, oldRemDateTime: LocalDateTime, newRemDateTime: LocalDateTime) {
-        // Cancelar la notificación existente
         cancelNotification(task, reminderId, oldRemDateTime)
-
-        // Programar una nueva notificación con la hora actualizada
         scheduleNotification(task, reminderId, newRemDateTime)
     }
 
+
+    /**
+     * Crear notificación programada para una fecha y hora concreta
+     */
     @SuppressLint("ScheduleExactAlarm")
     fun scheduleNotification(task: Task, reminderId: Long, remDateTime: LocalDateTime) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("taskTitle", task.Title)
             putExtra("taskStartTime", task.StartTime)
+            putExtra("taskDesc", task.Desc)
+            putExtra("remId", reminderId)
             putExtra("taskIconResId", task.ColorTag_FK) // Si tienes un ID de recurso para el icono
         }
         val pendingIntent = PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
@@ -55,13 +62,18 @@ class NotificationHelper(private val context: Context): MainActivity() {
                 pendingIntent
             )
         }
+
+
     }
 
     fun cancelNotification(task: Task, reminderId: Long, oldRemDateTime: LocalDateTime) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("title", task.Title)
-            putExtra("desc", task.Desc)
+            putExtra("taskTitle", task.Title)
+            putExtra("taskStartTime", task.StartTime)
+            putExtra("taskDesc", task.Desc)
+            putExtra("remId", reminderId)
+            putExtra("taskIconResId", task.ColorTag_FK) // Si tienes un ID de recurso para el icono
         }
         val pendingIntent = PendingIntent.getBroadcast(context, reminderId.toInt(), intent,  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 

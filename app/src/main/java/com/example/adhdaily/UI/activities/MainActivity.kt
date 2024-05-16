@@ -3,6 +3,7 @@ package com.example.adhdaily.UI.activities
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -25,6 +26,7 @@ import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
 import com.example.adhdaily.utils.NotificationHelper
+import com.example.adhdaily.utils.NotificationReceiver
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
 import java.time.LocalTime
@@ -36,6 +38,8 @@ open class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
+
+
 
     //Toolbar
     lateinit var btnSelectDate: ImageButton
@@ -149,6 +153,9 @@ open class MainActivity : AppCompatActivity() {
                     description = descriptionText
                     enableLights(true)
                     lightColor = Color.BLUE
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        isBlockable = true
+                    }
                 }
 
             // Register the channel with the system.

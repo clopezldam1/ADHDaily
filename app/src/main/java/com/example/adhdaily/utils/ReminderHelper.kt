@@ -27,9 +27,9 @@ class ReminderHelper(private val context: Context) {
      */
     fun setReminderDateTime(timeValue: Long, timeUnitId: Long, selectedTask: Task): LocalDateTime {
         val startDateTask: LocalDate = LocalDate.parse(selectedTask.StartDate)
-        var startTimeTask: LocalTime = LocalTime.parse(selectedTask.StartTime)
-        if (selectedTask.StartTime.equals("null")) {
-            startTimeTask = MainActivity().defaultStartTimeOfTask //default startTime of tasks
+        var startTimeTask: LocalTime = MainActivity().defaultStartTimeOfTask //default startTime of tasks
+        if (!selectedTask.StartTime.equals("null")) {
+            startTimeTask = LocalTime.parse(selectedTask.StartTime)
         }
         val startDateTimeTask = LocalDateTime.of(startDateTask, startTimeTask)
 
