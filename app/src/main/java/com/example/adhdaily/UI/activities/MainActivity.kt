@@ -1,6 +1,7 @@
 package com.example.adhdaily.UI.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -146,10 +147,10 @@ open class MainActivity : AppCompatActivity() {
 
             val name = this.resources.getString(R.string.notifChannelNameReminders)
             val descriptionText = this.resources.getString(R.string.notifChannelDescReminders)
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
 
             val channel =
-                NotificationChannel("com.example.adhdaily.reminders", name, importance).apply {
+                NotificationChannel(NotificationReceiver().REMINDER_CHANNEL_ID, name, importance).apply {
                     description = descriptionText
                     enableLights(true)
                     lightColor = Color.BLUE
@@ -158,7 +159,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                 }
 
-            // Register the channel with the system.
+            //Register the channel with the system
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
