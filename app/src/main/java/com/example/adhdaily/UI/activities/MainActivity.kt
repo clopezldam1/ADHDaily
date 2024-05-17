@@ -127,7 +127,6 @@ open class MainActivity : AppCompatActivity() {
      */
     private fun gotoAjustes(){
         val intent = Intent(this, AppSettingsActivity::class.java)
-        Toast.makeText(this.applicationContext, "switched to ajustes", Toast.LENGTH_SHORT).show()
         startActivity(intent)
 
         //Cambiar transicion a la activity de forma personalizada

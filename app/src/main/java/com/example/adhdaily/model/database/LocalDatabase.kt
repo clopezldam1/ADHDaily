@@ -70,7 +70,7 @@ abstract class LocalDatabase : RoomDatabase() {
                         LocalDatabase::class.java,
                         DB_ADHDAILY
                     )
-                        .fallbackToDestructiveMigration() // En vez de hacer migración, destruyes lo anterior
+                        //.fallbackToDestructiveMigration() // En vez de hacer migración, destruyes lo anterior
                         //.addTypeConverter(TypeConverters())
                         .build()
 

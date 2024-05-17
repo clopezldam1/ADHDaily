@@ -47,7 +47,6 @@ class AppSettingsActivity : AppCompatActivity() {
      */
     private fun goBack() {
         val intent = Intent(this, MainActivity::class.java)
-        Toast.makeText(this.applicationContext, "retroceso", Toast.LENGTH_SHORT).show()
         startActivity(intent)
         //Cambiar transicion a la activity de forma personalizada
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
