@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
-import android.util.Log
 import android.widget.DatePicker
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity

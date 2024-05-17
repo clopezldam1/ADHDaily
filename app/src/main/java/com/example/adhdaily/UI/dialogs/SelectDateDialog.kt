@@ -4,20 +4,13 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.icu.util.Calendar
-import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.R
-import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.databinding.DialogSelectDateBinding
-import com.example.adhdaily.utils.DateTimePickerDialogs
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class SelectDateDialog(context: Context) : Dialog(context,R.style.CustomDialogTheme1) {
 

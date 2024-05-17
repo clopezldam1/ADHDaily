@@ -2,24 +2,17 @@ package com.example.adhdaily.utils
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.media.metrics.LogSessionId
 import android.os.Build
 import android.util.Log
-import androidx.core.app.NotificationCompat
 
-import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.model.entity.Task
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 class NotificationHelper(private val context: Context): MainActivity() {
 

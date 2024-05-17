@@ -23,16 +23,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.UI.dialogs.ColorSelectDialog
-import com.example.adhdaily.UI.dialogs.ReminderPickerDialog
-import com.example.adhdaily.UI.recyclers.RemindersTaskRecycler
 import com.example.adhdaily.databinding.FragmentNewTaskBinding
 import com.example.adhdaily.model.database.LocalDatabase
-import com.example.adhdaily.model.entity.Reminder
 import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 

@@ -1,13 +1,11 @@
 package com.example.adhdaily.UI.activities
 
-import android.app.UiModeManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.ActivityAppSettingsBinding
 import com.example.adhdaily.model.database.LocalDatabase

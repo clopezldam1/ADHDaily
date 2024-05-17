@@ -1,10 +1,5 @@
 package com.example.adhdaily.utils
 
-import android.content.Context
-import com.example.adhdaily.model.entity.NotificationSettings
-import com.example.adhdaily.model.entity.Settings
-import com.example.adhdaily.utils.DeviceSettings
-
 class AppConfig {
     /*
     fun setDefaultSettings(context: Context): Settings {

@@ -8,7 +8,6 @@ import android.widget.CalendarView
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.adhdaily.UI.activities.MainActivity
 import com.example.adhdaily.databinding.FragmentCalendarViewBinding

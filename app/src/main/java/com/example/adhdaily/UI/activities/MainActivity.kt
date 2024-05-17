@@ -1,10 +1,8 @@
 package com.example.adhdaily.UI.activities
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +14,6 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -26,7 +23,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.dialogs.SelectDateDialog
 import com.example.adhdaily.databinding.ActivityMainBinding
-import com.example.adhdaily.utils.NotificationHelper
 import com.example.adhdaily.utils.NotificationReceiver
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate

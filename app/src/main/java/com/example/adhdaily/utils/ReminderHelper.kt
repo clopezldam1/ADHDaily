@@ -1,21 +1,12 @@
 package com.example.adhdaily.utils
 
 import android.content.Context
-import android.content.res.Resources
-import android.net.LocalSocketAddress
 import android.util.Log
-import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
-import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZoneOffset
-import kotlin.time.TimedValue
 
 class ReminderHelper(private val context: Context) {
 

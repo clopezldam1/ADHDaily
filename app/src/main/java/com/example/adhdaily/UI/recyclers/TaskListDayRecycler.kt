@@ -3,7 +3,6 @@ package com.example.adhdaily.UI.recyclers
 import android.content.Context
 import android.graphics.Paint
 import android.text.InputFilter
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adhdaily.R
-import com.example.adhdaily.UI.dialogs.ConfirmDeleteTaskDialog
 import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
 import com.example.adhdaily.UI.fragments.dayView.DayViewFragment
 import com.example.adhdaily.model.database.LocalDatabase

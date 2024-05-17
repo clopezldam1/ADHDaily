@@ -2,14 +2,12 @@ package com.example.adhdaily.model.database
 
 import android.content.Context
 import android.icu.util.ULocale
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.adhdaily.UI.activities.AppSettingsActivity
 import com.example.adhdaily.model.DAO.ColorTagsTaskDAO
 import com.example.adhdaily.model.DAO.NotificationSettingsDAO
 import com.example.adhdaily.model.DAO.ReminderDAO

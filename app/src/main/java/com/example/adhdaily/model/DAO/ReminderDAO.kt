@@ -7,8 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.adhdaily.model.entity.Reminder
-import com.example.adhdaily.model.entity.Task
-import java.time.LocalDateTime
 
 @Dao
 interface ReminderDAO {

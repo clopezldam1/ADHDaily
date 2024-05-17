@@ -8,8 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 
 import com.example.adhdaily.model.entity.Task
-import java.sql.Date
-import java.time.LocalDate
 
 
 @Dao

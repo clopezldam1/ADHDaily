@@ -2,10 +2,7 @@ package com.example.adhdaily.utils
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.BlendMode
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.os.Build
 import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout

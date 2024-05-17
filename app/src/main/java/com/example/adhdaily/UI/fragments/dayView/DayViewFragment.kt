@@ -1,38 +1,28 @@
 package com.example.adhdaily.UI.fragments.dayView
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.example.adhdaily.R
 import com.example.adhdaily.UI.activities.MainActivity
-import com.example.adhdaily.UI.dialogs.TaskDetailsDialog
 import com.example.adhdaily.UI.recyclers.TaskListDayRecycler
 import com.example.adhdaily.databinding.FragmentDayViewBinding
 import com.example.adhdaily.model.database.LocalDatabase
 import com.example.adhdaily.model.entity.Task
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.Locale
 
 

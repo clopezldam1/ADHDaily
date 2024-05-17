@@ -1,12 +1,9 @@
 package com.example.adhdaily.model.entity
 
-import android.icu.util.Calendar
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
-import java.util.Date
 
 @Entity(tableName = "Settings",
         foreignKeys = [ForeignKey(entity = NotificationSettings::class,
