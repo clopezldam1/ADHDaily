@@ -183,13 +183,18 @@ class NewTaskFragment : Fragment() {
     private fun createNewTask(){
         val localDB = LocalDatabase.getInstance(this.requireContext())
 
+        startDate = LocalDate.parse(txtStartDate.text.toString(),MainActivity().dateTimeFormatter)
+        MainActivity().selectedDate = startDate
+
         //Abrimos hilo para operar en base de datos
         GlobalScope.launch(Dispatchers.IO) {
             titulo = txtTitle.text.toString()
             descripcion = txtDesc.text.toString()
-            //val startDate = txtStartDate.text.toString()
+            //startDate = LocalDate.parse(txtStartDate.text.toString(),MainActivity().dateTimeFormatter)
+
             try {
                 newTask = Task(newTaskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
+
                 localDB.taskDao().insert(newTask)
             }catch (ex:Exception){
                 Log.e("CATCH", "createNewTask: " + ex.message)
