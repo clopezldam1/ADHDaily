@@ -190,7 +190,6 @@ class NewTaskFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             titulo = txtTitle.text.toString()
             descripcion = txtDesc.text.toString()
-            //startDate = LocalDate.parse(txtStartDate.text.toString(),MainActivity().dateTimeFormatter)
 
             try {
                 newTask = Task(newTaskId, titulo, descripcion, startDate.toString(), startTime.toString(), endDate ,endTime, completed, colorTagId)
@@ -237,7 +236,7 @@ class NewTaskFragment : Fragment() {
                 startDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
                 txtStartDate.setText(formattedDate)
 
-                MainActivity().selectedDate = LocalDate.parse(formattedDate, MainActivity().dateTimeFormatter)
+                MainActivity().selectedDate = startDate
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
