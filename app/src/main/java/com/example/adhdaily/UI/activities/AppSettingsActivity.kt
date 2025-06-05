@@ -1,19 +1,23 @@
 package com.example.adhdaily.UI.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.adhdaily.R
 import com.example.adhdaily.databinding.ActivityAppSettingsBinding
 import com.example.adhdaily.model.database.LocalDatabase
+
 
 class AppSettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppSettingsBinding
     private lateinit var btnBack: ImageButton
+    private lateinit var linkPrivacyPolicy: TextView
     private lateinit var btnDeleteDb: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,12 @@ class AppSettingsActivity : AppCompatActivity() {
         btnBack = binding.btnBack
         btnBack.setOnClickListener {
             goBack()
+        }
+
+        linkPrivacyPolicy = binding.txtSettingsFooterPrivacyPolicy
+        linkPrivacyPolicy.setPaintFlags(linkPrivacyPolicy.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG) //underline text
+        linkPrivacyPolicy.setOnClickListener {
+            gotoPrivacyPolicy()
         }
 
         /*
@@ -51,6 +61,20 @@ class AppSettingsActivity : AppCompatActivity() {
         //Cambiar transicion a la activity de forma personalizada
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
+
+    /**
+     * Redirect link to view privacy policy
+     */
+    private fun gotoPrivacyPolicy() {
+        var url = "https://docs.google.com/document/d/1mTlu6-hdVZo2u_F0KsLPKP_OiEEL2U57/edit?usp=sharing&ouid=112296565227382915150&rtpof=true&sd=true"
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://$url"
+        }
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
+    }
+
 
     /**
      * Eliminar todos los datos de la base de datos y empezar de cero
